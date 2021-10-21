@@ -1,5 +1,12 @@
+# Dev files
+?.*
+*.temp.*
+
 # Dependencies
 node_modules
+
+# Database
+database
 
 # yarn error logs
 yarn-error.log
