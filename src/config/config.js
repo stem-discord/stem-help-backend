@@ -32,6 +32,7 @@ const envVarsSchema = Joi.object()
       `the from field in the emails sent by the app`,
     ),
     CORS: Joi.boolean().default(true).description(`Enable CORS`),
+    API_URL: Joi.string().description(`url to make api calls to. used by src/static`),
   })
   .unknown();
 
@@ -46,6 +47,7 @@ if (error) {
 module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
+  apiURL: envVars.API_URL,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === `test` ? `-test` : ``),
     options: {

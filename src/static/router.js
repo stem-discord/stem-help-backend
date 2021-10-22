@@ -1,12 +1,21 @@
 const express = require(`express`);
+const { config, logger } = require(`../config`);
 
-const router = express.Router();
+const app = express();
 
-router
+const base = {
+  apiURL: config.apiURL ?? `http://localhost:${config.port}/v1/`,
+};
+
+app.set(`view engine`, `ejs`);
+
+app
   .route(`/`)
-  .get(
-  
-  );
+  .get((req, res) => {
+    res.render(`index`, {base});
+  });
+
+app.use(express.static(`./`));
 
 
-module.exports = router;
+module.exports = app;
