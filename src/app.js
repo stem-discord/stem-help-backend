@@ -9,8 +9,7 @@ const cors = require(`cors`);
 const passport = require(`passport`);
 const httpStatus = require(`http-status`);
 
-const config = require(`./config/config`);
-const morgan = require(`./config/morgan`);
+const { config, morgan, logger } = require(`./config`);
 const { jwtStrategy } = require(`./config/passport`);
 const { authLimiter } = require(`./middlewares/rateLimiter`);
 
@@ -63,6 +62,7 @@ app.use(`/v1`, routes);
 
 // Static pages for testing
 app.use(`/static`, static);
+logger.info(`Static route loaded http://localhost:${config.port}/v1/docs`);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
