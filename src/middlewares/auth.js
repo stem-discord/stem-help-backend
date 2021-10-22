@@ -1,7 +1,10 @@
 const passport = require(`passport`);
 const httpStatus = require(`http-status`);
+
+const { roles } = require(`../config`);
+const { roleRights } = roles;
+
 const ApiError = require(`../utils/ApiError`);
-const { roleRights } = require(`../config/roles`);
 
 const verifyCallback =
   (req, resolve, reject, requiredRights) => async (err, user, info) => {

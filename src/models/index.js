@@ -1,3 +1,5 @@
-module.exports.Token = require(`./token.model`);
-module.exports.User = require(`./user.model`);
-module.exports.POTD = require(`./potd.model`);
+module.exports = {
+  Token: require(`./token.model`),
+  User: require(`./user.model`),
+  POTD: require(`./potd.model`),
+};
