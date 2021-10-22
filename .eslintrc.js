@@ -14,6 +14,7 @@ module.exports = {
     "consistent-return": `off`,
     "jest/expect-expect": `off`,
     "security/detect-object-injection": `off`,
+    "no-unused-vars": `warn`,
 
     "linebreak-style": [`error`, `unix`],
     semi: [`error`, `always`],
