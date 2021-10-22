@@ -2,6 +2,10 @@
 ?.*
 *.temp.*
 
+# IDE
+.vscode
+.idea
+
 # Dependencies
 node_modules
 
