@@ -29,6 +29,11 @@ const potdSchema = mongoose.Schema(
         ref: `User`,
       },
     ],
+    images: [
+      {
+        type: String,
+      },
+    ],
     // json metadata
     metadata: {
       type: String,
