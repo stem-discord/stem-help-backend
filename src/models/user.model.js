@@ -11,12 +11,21 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    email: {
+    user_id: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
-      lowercase: true,
+      unique: true,
+      validate(s) {
+        // 1~32
+        return !!s.match(/^[a-z_][a-z0-9_-]{0,31}/);
+      },
+    },
+    email: {
+      type: String,
+      required: false,
+      unique: false,
+      trim: true,
       validate(value) {
         if (!validator.isEmail(value)) {
           throw new Error(`Invalid email`);
@@ -25,7 +34,7 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       minlength: 8,
       validate(value) {
@@ -37,15 +46,16 @@ const userSchema = mongoose.Schema(
       },
       private: true, // used by the toJSON plugin
     },
-    role: {
+    roles: [{
       type: String,
       enum: roles,
       default: `user`,
-    },
+    }],
     isEmailVerified: {
       type: Boolean,
       default: false,
     },
+    
   },
   {
     timestamps: true,
