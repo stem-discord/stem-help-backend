@@ -23,8 +23,7 @@ app
     res.render(`test`, { ...base });
   });
 
-// app.use(express.static(path.join(__dirname, `views`), { extensions: [`ejs`, `html`]}));
-
+// TODO: fix this sloppy hack
 app.get(`*`, (req, res) => {
   info(`Serving default directory`);
   res.render(path.join(__dirname, `views`, req.path, `index.ejs`), { ...base }, (err, html) => {
