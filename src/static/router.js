@@ -1,5 +1,8 @@
 const express = require(`express`);
+const path = require(`path`);
+
 const { config, logger } = require(`../config`);
+const { info } = logger;
 
 const app = express();
 
@@ -7,15 +10,31 @@ const base = {
   apiURL: config.apiURL ?? `http://localhost:${config.port}/v1/`,
 };
 
+app.set(`views`, path.join(__dirname, `views`));
 app.set(`view engine`, `ejs`);
 
+// app.engine(`html`, require(`ejs`).renderFile);
+app.engine(`.ejs`, require(`ejs`).renderFile);
+
+
 app
-  .route(`/`)
-  .get((req, res) => {
-    res.render(`index`, {base});
+  .get(`/test`, (req, res) => {
+    info(`test page has been viewed`);
+    res.render(`test`, { ...base });
   });
 
-app.use(express.static(`./`));
+// app.use(express.static(path.join(__dirname, `views`), { extensions: [`ejs`, `html`]}));
 
+app.get(`*`, (req, res) => {
+  info(`Serving default directory`);
+  res.render(path.join(__dirname, `views`, req.path, `index.ejs`), { ...base }, (err, html) => {
+    if (err) {
+      info(err);
+      res.status(404).render(`404`);
+    } else {
+      res.send(html);
+    }
+  });
+});
 
 module.exports = app;

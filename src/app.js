@@ -62,7 +62,7 @@ app.use(`/v1`, routes);
 
 // Static pages for testing
 app.use(`/static`, static);
-logger.info(`Static route loaded http://localhost:${config.port}/v1/docs`);
+logger.info(`Static route loaded http://localhost:${config.port}/static`);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
