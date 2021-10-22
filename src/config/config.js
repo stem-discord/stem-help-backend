@@ -31,6 +31,7 @@ const envVarsSchema = Joi.object()
     EMAIL_FROM: Joi.string().description(
       `the from field in the emails sent by the app`,
     ),
+    CORS: Joi.boolean().default(true).description(`Enable CORS`),
   })
   .unknown();
 
@@ -72,4 +73,5 @@ module.exports = {
     },
     from: envVars.EMAIL_FROM,
   },
+  cors: envVars.CORS,
 };

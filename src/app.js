@@ -38,12 +38,14 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // enable cors
-app.use(cors());
-app.options(`*`, cors());
+if (config.env.cors) {
+  app.use(cors());
+  app.options(`*`, cors());
+}
 
 // jwt authentication
-app.use(passport.initialize());
-passport.use(`jwt`, jwtStrategy);
+// app.use(passport.initialize());
+// passport.use(`jwt`, jwtStrategy);
 
 // limit repeated failed requests to auth endpoints
 if (config.env === `production`) {
