@@ -60,9 +60,11 @@ if (config.env === `production`) {
 // v1 api routes
 app.use(`/v1`, routes);
 
-// Static pages for testing
-app.use(`/static`, static);
-logger.info(`Static route loaded http://localhost:${config.port}/static`);
+if (config.env === `development`) {
+  // Static pages for testing
+  app.use(`/static`, static);
+  logger.info(`Static route loaded http://localhost:${config.port}/static`);
+}
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

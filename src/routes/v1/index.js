@@ -5,6 +5,7 @@ const { config } = require(`../../config`);
 const authRoute = require(`./auth.route`);
 const userRoute = require(`./user.route`);
 const potdRoute = require(`./potd.route`);
+
 const docsRoute = require(`./docs.route`);
 
 const router = express.Router();
@@ -14,10 +15,10 @@ const defaultRoutes = [
     path: `/auth`,
     route: authRoute,
   },
-  {
-    path: `/users`,
-    route: userRoute,
-  },
+  // {
+  //   path: `/users`,
+  //   route: userRoute,
+  // },
   {
     path: `/potd`,
     route: potdRoute,

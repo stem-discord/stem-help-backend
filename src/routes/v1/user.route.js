@@ -1,6 +1,6 @@
 const express = require(`express`);
 
-const auth = require(`../../middlewares/auth`);
+const auth = require(`../../middlewares/authorize`);
 const validate = require(`../../middlewares/validate`);
 
 const userValidation = require(`../../validations/user.validation`);

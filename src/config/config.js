@@ -33,6 +33,9 @@ const envVarsSchema = Joi.object()
     ),
     CORS: Joi.boolean().default(true).description(`Enable CORS`),
     API_URL: Joi.string().description(`url to make api calls to. used by src/static`),
+    DISCORD_BOT_TOKEN: Joi.string().required().description(`discord bot token`),
+    // temporary
+    DISCORD_OAUTH_URI: Joi.string().required().description(`discord bot token`),
   })
   .unknown();
 
@@ -76,4 +79,6 @@ module.exports = {
     from: envVars.EMAIL_FROM,
   },
   cors: envVars.CORS,
+  discordToken: envVars.DISCORD_TOKEN,
+  discordOAuth: envVars.DISCORD_OAUTH_URI,
 };

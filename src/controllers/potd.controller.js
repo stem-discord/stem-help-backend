@@ -2,7 +2,7 @@ const httpStatus = require(`http-status`);
 
 const { potdService } = require(`../services`);
 const catchAsync = require(`../utils/catchAsync`);
-const { userUpload } = require(`../base`);
+const { userUpload } = require(`./base`);
 
 const create = catchAsync(async (req, res) => {
   const {

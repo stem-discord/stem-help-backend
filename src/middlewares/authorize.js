@@ -1,3 +1,4 @@
+/* eslint-disable */
 const passport = require(`passport`);
 const httpStatus = require(`http-status`);
 
@@ -42,4 +43,4 @@ const auth =
         .catch((err) => next(err));
     };
 
-module.exports = auth;
+module.exports = () => { throw new Error(`do not use this module`); };

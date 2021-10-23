@@ -1,44 +1,75 @@
 const express = require(`express`);
 
-const validate = require(`../../middlewares/validate`);
-const authValidation = require(`../../validations/auth.validation`);
-const authController = require(`../../controllers/auth.controller`);
-const auth = require(`../../middlewares/auth`);
+// going to rewrite this system later
+// const validate = require(`../../middlewares/validate`);
+// const authValidation = require(`../../validations/auth.validation`);
+// const authController = require(`../../controllers/auth.controller`);
+// const auth = require(`../../middlewares/auth`);
+
+// const auth = require;
 
 const router = express.Router();
 
-router.post(
-  `/register`,
-  validate(authValidation.register),
-  authController.register,
-);
-router.post(`/login`, validate(authValidation.login), authController.login);
-router.post(`/logout`, validate(authValidation.logout), authController.logout);
-router.post(
-  `/refresh-tokens`,
-  validate(authValidation.refreshTokens),
-  authController.refreshTokens,
-);
-router.post(
-  `/forgot-password`,
-  validate(authValidation.forgotPassword),
-  authController.forgotPassword,
-);
-router.post(
-  `/reset-password`,
-  validate(authValidation.resetPassword),
-  authController.resetPassword,
-);
-router.post(
-  `/send-verification-email`,
-  auth(),
-  authController.sendVerificationEmail,
-);
-router.post(
-  `/verify-email`,
-  validate(authValidation.verifyEmail),
-  authController.verifyEmail,
-);
+// for (const authMethod of [`discord`]) {
+//   const module = require(`./authenticate`)[authMethod];
+//   for (const authModule of [`login`]) {
+//     // however routes are construced like /login/discord
+//     router.use(`/${authModule}/${authMethod}`, (req, res) => {
+//       res.send(`${authMethod} ${authModule}`);
+//     });
+//   }
+// }
+
+// I have no idea what I'm doing here
+
+console.log(require(`./authenticate`));
+
+router
+  .post(`/login/discord`, 
+    require(`./authenticate`).discord.login,
+  );
+
+
+
+// router
+//   .use(`/:authMethod/:module`, (req, res, next) => {
+//     const authMethod = req.params.authMethod;
+//     const module = req.params.module;
+    
+//   });
+
+// router.post(
+//   `/register`,
+//   validate(authValidation.register),
+//   authController.register,
+// );
+// router.post(`/login`, validate(authValidation.login), authController.login);
+// router.post(`/logout`, validate(authValidation.logout), authController.logout);
+// router.post(
+//   `/refresh-tokens`,
+//   validate(authValidation.refreshTokens),
+//   authController.refreshTokens,
+// );
+// router.post(
+//   `/forgot-password`,
+//   validate(authValidation.forgotPassword),
+//   authController.forgotPassword,
+// );
+// router.post(
+//   `/reset-password`,
+//   validate(authValidation.resetPassword),
+//   authController.resetPassword,
+// );
+// router.post(
+//   `/send-verification-email`,
+//   auth(),
+//   authController.sendVerificationEmail,
+// );
+// router.post(
+//   `/verify-email`,
+//   validate(authValidation.verifyEmail),
+//   authController.verifyEmail,
+// );
 
 module.exports = router;
 
