@@ -24,5 +24,6 @@ module.exports = {
     strict: 0,
     "comma-dangle": [`error`, `always-multiline`],
     "space-infix-ops": [`error`, { int32Hint: false }],
+    "eol-last": [`error`, `always`],
   },
 };
