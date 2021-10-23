@@ -1,6 +1,8 @@
 const httpStatus = require(`http-status`);
+
 const { potdService } = require(`../services`);
 const catchAsync = require(`../utils/catchAsync`);
+const { userUpload } = require(`../base`);
 
 const create = catchAsync(async (req, res) => {
   const {
@@ -11,6 +13,7 @@ const create = catchAsync(async (req, res) => {
   } = req.body;
 
   const newPotd = await potdService.create({
+    ...userUpload(req),
     question,
     answer,
     explanation,
