@@ -3,8 +3,8 @@ const config = require(`./config`);
 const { logger } = require(`./tool`);
 
 const apiServer = app.listen(config.port, () => {
-  logger.info(`Listening to port ${config.port}`);
   logger.info(`App is on '${config.env}' mode`);
+  logger.info(`Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`);
 });
 
 let staticServer;
