@@ -6,7 +6,7 @@ const { logger } = require(`../../tool`);
 const ph = `[Mongo]`;
 
 const connection = mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-  logger.info(`${ph} Connected to MongoDB`);
+  logger.info(`${ph} Connected to MongoDB ${config.mongoose.url}`);
 });
 
 const model = (dbName, schema, plural) => {
@@ -21,6 +21,7 @@ const model = (dbName, schema, plural) => {
     }
     logger.info(`${ph} loading ${collectionName}...`);
     const count = await m.countDocuments({});
+    logger.info(`${ph} ${count} entries found for ${collectionName}`);
   })().catch(logger.error);
   return m;
 };
