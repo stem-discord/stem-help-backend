@@ -1,7 +1,7 @@
 const winston = require(`winston`);
 
-const config = require(`./config`);
-const { time } = require(`./util`);
+const config = require(`../config`);
+const { time } = require(`../util`);
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
@@ -18,7 +18,7 @@ const logger = winston.createLogger({
       ? winston.format.colorize()
       : winston.format.uncolorize(),
     winston.format.splat(),
-    winston.format.printf(({ level, message }) => `[🕜${time}] ${level}: ${message}`),
+    winston.format.printf(({ level, message }) => `[⌚ ${time()}] ${level}: ${message}`),
   ),
   transports: [
     new winston.transports.Console({

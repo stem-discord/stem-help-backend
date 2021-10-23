@@ -4,7 +4,7 @@ const httpStatus = require(`http-status`);
 const config = require(`../config`);
 const { logger } = require(`../tool`);
 
-const ApiError = require(`../utils/ApiError`);
+const { ApiError } = require(`../util`);
 
 // eslint-disable-next-line no-unused-vars
 const errorConverter = (err, req, res, next) => {

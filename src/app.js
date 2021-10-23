@@ -9,13 +9,13 @@ const cors = require(`cors`);
 const passport = require(`passport`);
 const httpStatus = require(`http-status`);
 
-const { config } = require(`./config`);
+const config = require(`./config`);
 const {  morgan, logger, passport:pass } = require(`./tool`);
 const { jwtStrategy } = pass;
 const { authLimiter, error } = require(`./middlewares`);
 const { errorConverter, errorHandler } = error;
 
-const { ApiError } = require(`./utils`);
+const { ApiError } = require(`./util`);
 
 const routes = require(`./routes/v1`);
 // const static = require(`./static/router`);

@@ -9,11 +9,12 @@ const connections = {
 
 // TODO: improve this connection api
 for (const [name, module] of Object.entries(connections)) {
-  logger.info(`connection [${name}] - ${Object.entries(module).map((k, v) => {
-    if (v.enabled) {
-      return `${k} ✔️`;
+  logger.info(`connection [${name}] - ${Object.entries(module).map(v => {
+    const [name, func] = v;
+    if (func.enabled) {
+      return `${name}✔️ `;
     }
-    return `${k} ❌`;
+    return `${name} ❌`;
   }).join(`, `)}`);
 }
 

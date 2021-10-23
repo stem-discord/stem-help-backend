@@ -10,7 +10,8 @@ const connection = mongoose.connect(config.mongoose.url, config.mongoose.options
 });
 
 const model = (dbName, schema, plural) => {
-  const m = connection.model(dbName, schema, plural);
+  // FIXME: create some sort of initializer for these stuff. actually, just fix the entire connection api later
+  const m = mongoose.model(dbName, schema, plural);
   (async () => {
     let collectionName;
     if (plural) {

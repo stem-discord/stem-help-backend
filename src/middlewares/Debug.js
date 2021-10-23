@@ -1,5 +1,5 @@
 const { logger } = require(`../tool`);
-const { randomIdentifier } = require(`../utils`);
+const { randomIdentifier } = require(`../util`);
 
 // eslint-disable-next-line no-unused-vars
 const log = (msg, a) => {

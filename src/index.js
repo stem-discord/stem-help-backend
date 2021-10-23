@@ -1,6 +1,6 @@
 const app = require(`./app`);
 const config = require(`./config`);
-const logger = require(`./logger`);
+const { logger } = require(`./tool`);
 
 const apiServer = app.listen(config.port, () => {
   logger.info(`Listening to port ${config.port}`);

@@ -1,7 +1,7 @@
 const mongoose = require(`mongoose`);
 
 // Must be loaded first
-const { Token } = require(`./types`);
+const { Token } = require(`../types`);
 
 const { toJSON } = require(`./plugins`);
 
