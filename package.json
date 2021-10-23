@@ -1,11 +1,10 @@
 {
-  "name": "create-nodejs-express-app",
+  "name": "stem-help-backend",
   "version": "1.7.0",
-  "description": "Create a Node.js app for building production-ready RESTful APIs using Express, by running one command",
-  "bin": "bin/createNodejsApp.js",
+  "description": "REST and serve stem.help",
   "main": "src/index.js",
-  "repository": "https://github.com/hagopj13/node-express-boilerplate.git",
-  "author": "Hagop Jamkojian <hagopj13@gmail.com>",
+  "repository": "https://github.com/stem-discord/stem-help-backend.git",
+  "author": "nopeless",
   "license": "MIT",
   "engines": {
     "node": ">=12.0.0"
@@ -64,11 +63,12 @@
     "swagger-ui-express": "^4.1.6",
     "validator": "^13.0.0",
     "winston": "^3.2.1",
-    "xss-clean": "^0.1.1"
+    "xss-clean": "^0.1.1",
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "coveralls": "^3.0.7",
-    "eslint": "^7.0.0",
+    "eslint": "^7.5.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.18.2",
