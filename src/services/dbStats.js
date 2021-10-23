@@ -5,7 +5,7 @@ const { User } = require(`../shared`).mongo;
 const ApiError = require(`../utils/ApiError`);
 
 const getCount = async (id) => {
-  return await User.count({});
+  return await User.countDocuments({});
 };
 
 module.exports = {

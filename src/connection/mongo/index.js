@@ -20,8 +20,7 @@ const model = (dbName, schema, plural) => {
       collectionName = `collection of '${dbName}'s`;
     }
     logger.info(`${ph} loading ${collectionName}...`);
-    const count = await m.count({});
-    logger.info(`${ph} ${count} entries found`);
+    const count = await m.countDocuments({});
   })().catch(logger.error);
   return m;
 };
