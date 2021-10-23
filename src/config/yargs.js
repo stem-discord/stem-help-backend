@@ -34,7 +34,7 @@ const argv = yargs
     describe: `Port number`,
     type: `number`,
   })
-  .option(staticRoute, {
+  .option(staticRoute[0], {
     alias: `p`,
     describe: `Route used by the static-server (means you can use external api server with the mini server)`,
     type: `string`,
