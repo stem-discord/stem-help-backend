@@ -8,7 +8,7 @@ const argv = require(`./yargs`);
 
 const proc = require(`./process`);
 
-let config = {};
+let config = {...process.env};
 
 // populate using yargs
 Object.assign(config, argv);
