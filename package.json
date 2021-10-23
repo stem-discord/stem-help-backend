@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
-    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --throw-deprecation --trace-deprecation src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "database": "echo 'This assumes that you already installed mongo. I just use it for my convinience' && mongod --dbpath ./database --port"
