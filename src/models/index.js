@@ -1,5 +1,5 @@
 module.exports = {
-  Token: require(`./token.model`),
-  User: require(`./user.model`),
-  POTD: require(`./potd.model`),
+  Token: require(`./token`),
+  User: require(`./user`),
+  POTD: require(`./potd`),
 };

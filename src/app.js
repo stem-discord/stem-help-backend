@@ -9,15 +9,16 @@ const cors = require(`cors`);
 const passport = require(`passport`);
 const httpStatus = require(`http-status`);
 
-const { config, morgan, logger, passport:pass } = require(`./config`);
+const { config } = require(`./config`);
+const {  morgan, logger, passport:pass } = require(`./tool`);
 const { jwtStrategy } = pass;
-const { authLimiter } = require(`./middlewares/rateLimiter`);
+const { authLimiter, error } = require(`./middlewares`);
+const { errorConverter, errorHandler } = error;
+
+const { ApiError } = require(`./utils`);
 
 const routes = require(`./routes/v1`);
-const static = require(`./static/router`);
-
-const { errorConverter, errorHandler } = require(`./middlewares/error`);
-const ApiError = require(`./utils/ApiError`);
+// const static = require(`./static/router`);
 
 const app = express();
 
@@ -60,8 +61,9 @@ if (config.env === `production`) {
 // v1 api routes
 app.use(`/v1`, routes);
 
-if (config.env === `development`) {
+if (config.staticRote === `development`) {
   // Static pages for testing
+  const static = require(`./static`);
   app.use(`/static`, static);
   logger.info(`Static route loaded http://localhost:${config.port}/static`);
 }

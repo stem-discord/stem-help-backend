@@ -1,8 +1,12 @@
 const mongoose = require(`mongoose`);
 const httpStatus = require(`http-status`);
-const { config, logger } = require(`../config`);
+
+const config = require(`../config`);
+const { logger } = require(`../tool`);
+
 const ApiError = require(`../utils/ApiError`);
 
+// eslint-disable-next-line no-unused-vars
 const errorConverter = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof ApiError)) {

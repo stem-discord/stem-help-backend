@@ -1,3 +1,4 @@
+// Provides an App for the static/ directory
 const express = require(`express`);
 const path = require(`path`);
 
@@ -7,7 +8,7 @@ const { info } = logger;
 const app = express();
 
 const base = {
-  apiURL: config.apiURL ?? `http://localhost:${config.port}/v1/`,
+  apiURL: config.apiURL ?? `http://localhost:${config.staticApp}/v1/`,
 };
 
 app.set(`views`, path.join(__dirname, `views`));

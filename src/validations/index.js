@@ -1,5 +1,6 @@
+// TODO: use semantic grouping instead of REST structure
 module.exports = {
-  authValidation: require(`./auth.validation`),
-  userValidation: require(`./user.validation`),
-  potdValidation: require(`./potd.validation`),
+  authValidation: require(`./auth`),
+  userValidation: require(`./user`),
+  potdValidation: require(`./potd`),
 };
