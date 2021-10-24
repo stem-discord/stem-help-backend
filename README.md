@@ -59,13 +59,13 @@ models - #module - **mongoose Schemas** (does not initiate connection with mongo
 ├───env.js
 └───index.js #export
 
-connections - #(config) - clients, connections, apis: might be offline. It is up to the service to implement custom functions. If connection field is none, return null
+connection - #(config) - clients, connections, apis: might be offline. It is up to the service to implement custom functions. If connection field is none, return null
 └───index.js #export
 
 shared - #(config, connections) - shared initialization. For example, client.channels.cache.get(`839399426643591188`). 
 └───index.js #export, single
 
-services #(services, models(mongo), connections(everything else), shared) - functions: interacts with models, connections, and each other. return 503 if any of the according connection(s) are unavailable.
+service #(services, models(mongo), connections(everything else), shared) - functions: interacts with models, connections, and each other. return 503 if any of the according connection(s) are unavailable.
 ├───<file>.js
 └───index.js #export
 
