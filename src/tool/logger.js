@@ -42,9 +42,9 @@ function Logger(name, printPath = false) {
     const absPath = getCallerDir(moduleRoot, 2);
     const paths = path.relative(srcRoot, path.dirname(absPath)).split(path.sep);
     paths.push(path.parse(absPath).name);
-    pp = `► ${paths.join(`/`)} `;
+    pp = `▷ ${paths.join(`‣`)} `;
   }
-  return WinstonLogger(({ level, message }) => `[⌚ ${time()}] ${level}: [${name}] ${pp}${message}`);
+  return WinstonLogger(({ level, message }) => `[⌚ ${time()}] ${level}: [${name}] ${pp}: ${message}`);
 }
 
 module.exports = { logger, Logger };
