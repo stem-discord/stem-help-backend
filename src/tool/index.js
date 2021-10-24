@@ -1,5 +1,8 @@
+const { logger, Logger } = require(`./logger.js`);
+
 module.exports = {
-  logger: require(`./logger.js`),
+  logger,
+  Logger,
   passport: require(`./passport.js`),
 
   morgan: require(`./morgan.js`),
