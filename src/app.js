@@ -63,7 +63,7 @@ if (config.env === `production`) {
 // v1 api routes
 app.use(`/v1`, routes);
 
-if (config.staticRote) {
+if (config.staticRoute) {
   // Static pages for testing
   const static = require(`./static`);
   app.use(`/static`, static);
