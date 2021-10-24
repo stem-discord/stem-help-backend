@@ -60,6 +60,10 @@ function generateConfig(env) {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        bufferMaxEntries : 0,
+        bufferCommands: false,
+        connectTimeoutMS: 5000,
+        socketTimeoutMS: 5000,
       },
     },
     jwt: {
