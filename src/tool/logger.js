@@ -44,6 +44,7 @@ function Logger(name, printPath = false) {
     paths.push(path.parse(absPath).name);
     pp = `▷ ${paths.join(`‣`)} `;
   }
+  // I don't know if making a new winston logger every time is a good idea, but it works.
   return WinstonLogger(({ level, message }) => `[⌚ ${time()}] ${level}: [${name}] ${pp}: ${message}`);
 }
 
