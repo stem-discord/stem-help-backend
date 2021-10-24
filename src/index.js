@@ -1,6 +1,7 @@
 const app = require(`./app`);
 const config = require(`./config`);
-const { logger } = require(`./tool`);
+const { Logger } = require(`./tool`);
+const logger = new Logger(`Index`);
 
 const apiServer = app.listen(config.port, () => {
   logger.info(`App is on '${config.env}' mode`);
@@ -10,14 +11,7 @@ const apiServer = app.listen(config.port, () => {
 let staticServer;
 
 const exitHandler = () => {
-  if (apiServer) {
-    apiServer.close(() => {
-      logger.info(`Server closed`);
-      process.exit(1);
-    });
-  } else {
-    process.exit(1);
-  }
+  process.emit(`SIGTERM`, 1);
 };
 
 const unexpectedErrorHandler = (error) => {
@@ -28,8 +22,20 @@ const unexpectedErrorHandler = (error) => {
 process.on(`uncaughtException`, unexpectedErrorHandler);
 process.on(`unhandledRejection`, unexpectedErrorHandler);
 
-process.on(`SIGTERM`, () => {
-  logger.info(`SIGTERM received`);
-  apiServer.close();
-  staticServer?.close();
+process.on(`SIGTERM`, async (code = 0) => {
+  logger.info(`SIGTERM signal received`);
+  const funcs = [
+    apiServer.close,
+    staticServer?.close,
+  ];
+  const promises = [];
+  for (const f of funcs) {
+    if (f) {
+      let p = new Promise(r => f(r));
+      promises.push(p);
+    }
+  }
+  await Promise.all(promises);
+  logger.info(`released resources`);
+  process.exit(code);
 });
