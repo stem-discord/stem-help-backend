@@ -5,13 +5,20 @@ const { logger } = require(`../../tool`);
 
 const ph = `[Mongo]`;
 
-const connection = mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
+const connection = mongoose.createConnection(config.mongoose.url, config.mongoose.options);
+
+connection.then(() => {
   logger.info(`${ph} Connected to MongoDB ${config.mongoose.url}`);
+}).catch(e => {
+  logger.error(`${ph} Error connecting to MongoDB ${config.mongoose.url}`, e);
+});
+
+connection.on(`error`, e => {
+  logger.error(`${ph} MongoDB connection error`, e);
 });
 
 const model = (dbName, schema, plural) => {
-  // FIXME: create some sort of initializer for these stuff. actually, just fix the entire connection api later
-  const m = mongoose.model(dbName, schema, plural);
+  const m = connection.model(dbName, schema, plural);
   (async () => {
     let collectionName;
     if (plural) {
@@ -20,6 +27,9 @@ const model = (dbName, schema, plural) => {
       collectionName = `collection of '${dbName}'s`;
     }
     logger.info(`${ph} loading ${collectionName}...`);
+    // console.log(await connection);
+    // await (await connection).asPromise();
+    logger.info(`conn`);
     const count = await m.countDocuments({});
     logger.info(`${ph} ${count} entries found for ${collectionName}`);
   })().catch(logger.error);
