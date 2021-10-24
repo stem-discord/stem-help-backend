@@ -4,6 +4,8 @@ const { logger } = require(`./logger`);
 
 morgan.token(`message`, (req, res) => res.locals.errorMessage || ``);
 
+// TODO: access.log append stream
+
 const getIpFormat = () =>
   config.env === `production` ? `:remote-addr - ` : ``;
 const successResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms`;
