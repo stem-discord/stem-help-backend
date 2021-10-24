@@ -1,5 +1,6 @@
 
-const { logger } = require(`../tool`);
+const { Logger } = require(`../tool`);
+const logger = new Logger(`ConnectionManager`);
 
 const connections = {
   google: require(`./google`),
