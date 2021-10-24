@@ -3,6 +3,8 @@ const config = require(`./config`);
 const { Logger } = require(`./tool`);
 const logger = new Logger(`Index`);
 
+logger.info(`Node version: ${process.version}${process.arch}-${process.platform}`);
+
 const apiServer = app.listen(config.port, () => {
   logger.info(`App is on '${config.env}' mode`);
   logger.info(`Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`);
