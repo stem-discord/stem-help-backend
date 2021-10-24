@@ -10,7 +10,9 @@ const passport = require(`passport`);
 const httpStatus = require(`http-status`);
 
 const config = require(`./config`);
-const {  morgan, logger, passport:pass } = require(`./tool`);
+const {  morgan, Logger, passport:pass } = require(`./tool`);
+const logger = Logger(`Express`);
+
 const { jwtStrategy } = pass;
 const { authLimiter, error } = require(`./middlewares`);
 const { errorConverter, errorHandler } = error;
@@ -61,11 +63,13 @@ if (config.env === `production`) {
 // v1 api routes
 app.use(`/v1`, routes);
 
-if (config.staticRote === `development`) {
+if (config.staticRote) {
   // Static pages for testing
   const static = require(`./static`);
   app.use(`/static`, static);
   logger.info(`Static route loaded http://localhost:${config.port}/static`);
+} else {
+  logger.info(`Static route`);
 }
 
 // send back a 404 error for any unknown api request
