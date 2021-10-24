@@ -8,4 +8,5 @@ module.exports = {
   randomIdentifier: require(`./randomIdentifier`),
 
   async: require(`./async`),
+  getCallerDir: require(`./getCallerDir`),
 };
