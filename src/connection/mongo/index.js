@@ -1,18 +1,17 @@
 const mongoose = require(`mongoose`);
 
 const config = require(`../../config`);
-const { logger } = require(`../../tool`);
+const { Logger } = require(`../../tool`);
+const logger = new Logger(`MongoDB`, true);
 
-const {sleep} = require(`../../util`).async;
-
-const ph = `[Mongo]`;
+const { sleep } = require(`../../util`).async;
 
 const connection = mongoose.createConnection(config.mongoose.url, config.mongoose.options);
 
 connection.then(() => {
-  logger.info(`${ph} Connected to MongoDB ${config.mongoose.url}`);
+  logger.info(`Connected to MongoDB ${config.mongoose.url}`);
 }).catch(e => {
-  logger.error(`${ph} Error connecting to MongoDB ${config.mongoose.url}`, e);
+  logger.error(`Error connecting to MongoDB ${config.mongoose.url}`, e);
 });
 
 let dbOpen;
@@ -22,7 +21,7 @@ const open = new Promise(resolve => {
 });
 
 connection.on(`error`, e => {
-  logger.error(`${ph} MongoDB connection error`, e);
+  logger.error(`Error while connecting to database`, e);
 });
 
 connection.on(`open`, () => {
@@ -39,10 +38,10 @@ const model = (dbName, schema, plural) => {
     } else {
       collectionName = `collection of '${dbName}'s`;
     }
-    logger.info(`${ph} loading ${collectionName}...`);
+    logger.info(`loading ${collectionName}...`);
     await open;
     const count = await m.countDocuments({});
-    logger.info(`${ph} ${count} entries found for ${collectionName}`);
+    logger.info(`${count} entries found for ${collectionName}`);
   })().catch(logger.error);
   return m;
 };
