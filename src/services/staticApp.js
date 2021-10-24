@@ -1,4 +1,5 @@
 // Provides an App for the static/ directory
+// TODO: rewrite this
 const express = require(`express`);
 const path = require(`path`);
 
