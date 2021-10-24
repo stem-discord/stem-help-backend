@@ -39,6 +39,10 @@ const envVarsSchema = Joi.object()
   })
   .unknown();
 
+function bool(s) {
+  return s === `true`;
+}
+
 function generateConfig(env) {
 
   const { value: envVars, error } = envVarsSchema
@@ -89,10 +93,10 @@ function generateConfig(env) {
     discord: {
       TOKEN: envVars.DISCORD_BOT_TOKEN,
     },
-    staticServer: envVars.STATIC_SERVER,
+    staticServer: bool(envVars.STATIC_SERVER),
     staticServerPort: envVars.STATIC_SERVER_PORT,
     staticServerApiURL: envVars.STATIC_SERVER_API_URL,
-    staticRoute: envVars.STATIC_ROUTE,
+    staticRoute: bool(envVars.STATIC_ROUTE),
   };
 }
 
