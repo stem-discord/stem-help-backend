@@ -69,7 +69,7 @@ if (config.staticRote) {
   app.use(`/static`, static);
   logger.info(`Static route loaded http://localhost:${config.port}/static`);
 } else {
-  logger.info(`Static route`);
+  logger.info(`Static route is not deployed`);
 }
 
 // send back a 404 error for any unknown api request
