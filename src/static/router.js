@@ -7,7 +7,9 @@ const { info } = logger;
 const app = express();
 
 const base = {
-  apiURL: config.apiURL ?? `http://localhost:${config.port}/v1/`,
+  env: {
+    apiURL: config.apiURL ?? `http://localhost:${config.port}/v1/`,
+  },
 };
 
 app.set(`views`, path.join(__dirname, `views`));
