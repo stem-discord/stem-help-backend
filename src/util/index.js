@@ -1,4 +1,7 @@
 module.exports = {
+  async: require(`./async`),
+  git: require(`./git`),
+
   ApiError: require(`./ApiError`),
 
   time: require(`./time`),
@@ -7,6 +10,5 @@ module.exports = {
   objMerge: require(`./objMerge`),
   randomIdentifier: require(`./randomIdentifier`),
 
-  async: require(`./async`),
   getCallerDir: require(`./getCallerDir`),
 };
