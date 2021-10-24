@@ -6,5 +6,5 @@ module.exports = {
   // utilization
   validations: require(`../../validations`),
   middlewares: require(`../../middlewares`),
-  services: require(`../../services`),
+  services: require(`../../service`),
 };
