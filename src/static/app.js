@@ -1,7 +1,9 @@
 const express = require(`express`);
 const path = require(`path`);
 
-const { config, logger } = require(`../config`);
+const config = require(`../config`);
+const { Logger } = require(`../tool`);
+const logger = new Logger(`static`);
 const { info } = logger;
 
 const app = express();
