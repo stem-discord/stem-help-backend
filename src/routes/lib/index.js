@@ -1,17 +1,25 @@
+const config = require(`../../config`);
 const util = require(`../../util`);
+
+
+const validations = require(`../../validations`);
+const middlewares = require(`../../middlewares`);
+const services = require(`../../service`);
+
+const tool = require(`../../tool`);
 
 module.exports = {
   // standalones
-  config: require(`../../config`),
+  config,
   util,
 
   // utilization
-  validations: require(`../../validations`),
-  middlewares: require(`../../middlewares`),
-  services: require(`../../service`),
+  validations,
+  middlewares,
+  services,
 
   // easy access
   Router: require(`express`).Router,
-  logger: util.logger,
-  info: util.logger.info,
+  logger: tool.logger,
+  info: tool.logger.info,
 };
