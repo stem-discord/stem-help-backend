@@ -1,10 +1,9 @@
-const express = require(`express`);
+const lib = require(`../../lib`);
 
-const router = express.Router();
+const { Validate } = lib.middlewares;
+const { query } = lib.validations.queryValidation; 
 
-const { Validate } = require(`../../lib`).middlewares;
-
-const { query } = require(`../../lib`).validations.queryValidation; 
+const router = lib.Router();
 
 router.route(`/`)
   .get((req, res) => {

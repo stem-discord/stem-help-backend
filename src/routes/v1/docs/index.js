@@ -1,7 +1,8 @@
-const express = require(`express`);
-const router = express.Router();
+const lib = require(`../../lib`);
 
-const { swagger } = require(`../../lib`).services;
+const { swagger } = lib.services;
+
+const router = lib.Router();
 
 router.use(`/`, swagger.serve);
 router.get(

@@ -1,16 +1,13 @@
-const express = require(`express`);
+const httpStatus = require(`http-status`);
 
 const lib = require(`../../lib`);
 
 const { config } = lib.config;
 const { discord } = lib.util;
 const { urlBuilder } = discord.oauth;
-
 const { ApiError } = lib.util;
-const httpStatus = require(`http-status`);
 
-const router = express.Router();
-
+const router = lib.Router();
 
 // returns the OAuth URI
 router.route(`/discord`)
