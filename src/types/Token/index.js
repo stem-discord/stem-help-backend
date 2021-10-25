@@ -1,6 +1,8 @@
-module.exports = {
+const Lock = require(`../Lock`);
+
+module.exports = Lock({
   ACCESS: `ACCESS`,
   REFRESH: `REFRESH`,
   RESET_PASSWORD: `RESET_PASSWORD`,
   VERIFY_EMAIL: `VERIFY_EMAIL`,
-};
+});
