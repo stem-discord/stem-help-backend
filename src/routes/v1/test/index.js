@@ -4,6 +4,8 @@ const router = express.Router();
 
 const { Validate } = require(`../../lib`).middlewares;
 
+const { query } = require(`../../lib`).validations.queryValidation; 
+
 router.route(`/`)
   .get((req, res) => {
     res.json({
@@ -13,9 +15,9 @@ router.route(`/`)
 
 router.route(`/no-db`)
   .get(
-    Validate(),
+    Validate(query),
     (req, res) => {
-
+      res.send(`u are authorized to see this` + Date.now());
     });
 
 module.exports = router;
