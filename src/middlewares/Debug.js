@@ -1,6 +1,7 @@
 const { logger } = require(`../tool`);
 const { randomIdentifier } = require(`../util`);
 
+// TODO: disable in production
 // eslint-disable-next-line no-unused-vars
 const log = (msg, a) => {
   if (a) {

@@ -43,4 +43,6 @@ app.get(`*`, (req, res) => {
   });
 });
 
+// TODO: write as a contructor function so multiple base directories can be accepted
+
 module.exports = app;

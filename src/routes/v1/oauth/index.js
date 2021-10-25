@@ -9,6 +9,7 @@ const { ApiError } = lib.util;
 
 const router = lib.Router();
 
+// == DISCORD ==
 // returns the OAuth URI
 router.route(`/discord`)
   .get((req, res) => {
