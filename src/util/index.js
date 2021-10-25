@@ -1,6 +1,7 @@
 module.exports = {
   async: require(`./async`),
   git: require(`./git`),
+  discord: require(`./discord`),
 
   ApiError: require(`./ApiError`),
 
