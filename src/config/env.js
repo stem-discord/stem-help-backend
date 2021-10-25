@@ -52,7 +52,8 @@ function generateConfig(env) {
     },
     cors: bool(envVars.CORS),
     discord: {
-      TOKEN: envVars.DISCORD_BOT_TOKEN,
+      botToken: envVars.DISCORD_BOT_TOKEN,
+      OAuthUri: envVars.DISCORD_OAUTH_URI,
     },
     staticServer: bool(envVars.STATIC_SERVER),
     staticServerPort: envVars.STATIC_SERVER_PORT,
