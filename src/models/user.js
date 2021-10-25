@@ -1,7 +1,7 @@
 const mongoose = require(`mongoose`);
 const validator = require(`validator`);
 const { toJSON, paginate } = require(`./plugins`);
-const { roles } = require(`../config`);
+const { Role } = require(`../types`);
 
 const userSchema = mongoose.Schema(
   {
@@ -43,7 +43,7 @@ const userSchema = mongoose.Schema(
     },
     roles: [{
       type: String,
-      enum: roles,
+      enum: Object.values(Role),
       default: `user`,
     }],
     isEmailVerified: {
@@ -92,5 +92,31 @@ const userSchema = mongoose.Schema(
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
+
+userSchema.methods.hasRole = function (role) {
+  return this.roles.includes(role);
+};
+
+userSchema.methods.hasAnyRole = function (roles) {
+  return roles.some((role) => this.hasRole(role));
+};
+
+userSchema.methods.hasAllRoles = function (roles) {
+  return roles.every((role) => this.hasRole(role));
+};
+
+userSchema.methods.addRole = async function (role) {
+  if (!this.hasRole(role)) {
+    this.roles.push(role);
+    return await this.save();
+  }
+};
+
+userSchema.methods.removeRole = async function (role) {
+  if (this.hasRole(role)) {
+    this.roles = this.roles.filter((r) => r !== role);
+    return await this.save();
+  }
+};
 
 module.exports = userSchema;
