@@ -3,4 +3,5 @@ module.exports = {
   authValidation: require(`./auth`),
   userValidation: require(`./user`),
   potdValidation: require(`./potd`),
+  queryValidation: require(`./dataQuery`),
 };

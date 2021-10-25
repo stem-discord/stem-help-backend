@@ -4,4 +4,6 @@ const query = {
   data: Joi.string().required(),
 };
 
-module.exports = query;
+module.exports = {
+  query,
+};
