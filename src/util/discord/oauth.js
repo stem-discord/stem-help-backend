@@ -1,5 +1,5 @@
 
-function buildUrl(
+function buildUri(
   client_id,
   redirect,
   scopes,
@@ -14,5 +14,5 @@ function buildUrl(
 }
 
 module.exports = {
-  buildUrl,
+  buildUri,
 };

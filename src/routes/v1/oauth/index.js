@@ -4,7 +4,7 @@ const lib = require(`../../lib`);
 
 const config = lib.config;
 const { discord } = lib.util;
-const { urlBuilder } = discord.oauth;
+const { buildUri } = discord.oauth;
 const { ApiError } = lib.util;
 
 const router = lib.Router();
