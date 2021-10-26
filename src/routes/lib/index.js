@@ -25,7 +25,5 @@ module.exports = {
   logger: tool.logger,
   info: tool.logger.info,
 
-  // ejs stuff
-  render: ejs.render,
   pages: require(`../../pages`),
 };
