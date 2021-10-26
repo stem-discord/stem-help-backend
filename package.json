@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
-    "dev": "cross-env NODE_ENV=development nodemon --throw-deprecation --trace-deprecation --watch *.ejs --watch .yml src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --throw-deprecation --trace-deprecation --watch *.ejs --watch *.yml src/index.js",
     "env:help": "node script/envHelp.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
