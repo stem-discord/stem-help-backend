@@ -1,5 +1,5 @@
 module.exports = {
-  Token: require(`./token`),
+  Session: require(`./session`),
   User: require(`./user`),
   POTD: require(`./potd`),
 };

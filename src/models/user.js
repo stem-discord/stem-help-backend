@@ -2,6 +2,7 @@ const mongoose = require(`mongoose`);
 const validator = require(`validator`);
 const { toJSON, paginate } = require(`./plugins`);
 const { Role } = require(`../types`);
+const session = require(`./session`);
 
 const userSchema = mongoose.Schema(
   {
@@ -50,6 +51,12 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    sessions: [
+      {
+        type: session,
+      },
+    ],
     // discord module
     discord: {
       access_token: {
