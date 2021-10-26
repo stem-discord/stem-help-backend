@@ -5,7 +5,6 @@ module.exports = {
   ServePage: require(`./ServePage`),
 
   // configured
-  authorize: require(`./authorize`),
   error: require(`./error`),
   rateLimiter: require(`./rateLimiter`),
   redirect: require(`./redirect`),

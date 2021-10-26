@@ -1,6 +1,6 @@
 const ejs = require(`ejs`);
 
-const ServePage = (page, obj) => {
+function ServePage(page, obj) {
   if (typeof obj === `string`) {
     obj = {
       message: obj,
@@ -14,4 +14,6 @@ const ServePage = (page, obj) => {
       ),
     );
   };
-};
+}
+
+module.exports = ServePage;
