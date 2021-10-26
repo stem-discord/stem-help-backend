@@ -155,22 +155,3 @@ Returns new
     "sid": "session id"
 }
 ```
-
-after going to the oauth page
-redirect to the API server with a ?redirect=https://frontend/signing_in
-then, the API server checks if the code is valid. if it is not, deny returning to the front end server.
-if the code is valid, redirect the user to the frontend 
-https://frontend/signing_in?token=
-with a jwt in the header so the client can use it
-the frontend then sends an auth request to backend
-if success, go
-https://frontend/login_success
-
-
-on website: user clicks on login
-website: retrieves current oauth url from https://backend/oauth
-website: after retrieving the discord Oauth url, add ?redirect=https://frontend/signing_in
-website: go to the modified url
-discord: authorize, redirect to backend with https://backend/auth/discord?code=somecode&redirect=https://frontend/signing_in
-backend: find the user with matching discord id, generate the JWT access token, and redirect user to https://frontend/signing_in?refresh_token=
-website: javascript loads and checks if refresh_token exists. then, it stores it in localStorage and uses it to retreive access_token for future use 
