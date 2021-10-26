@@ -106,3 +106,52 @@ index.js - #(app.js, db.js) registers top level process hooks and exits.
 ```
 
 `script` folder is used for helpers in `npm run`
+
+# Auth flow (database)
+
+## User
+
+Has multiple sessions
+
+```js
+{
+    sessions: [Sessions]
+}
+```
+
+## Session (user can delete)
+
+```js
+{
+    tokens: [Tokens],
+    active: "active token ref"
+}
+```
+
+## Token (expires after year)
+
+```js
+{
+    invalid: Boolean
+}
+```
+
+# JWT
+
+## Refresh token
+```json
+{
+    "sub": "db index for token",
+    "type": "refresh",
+    "sid": "session id"
+}
+```
+
+Returns new
+```json
+{
+    "sub": "db index for token",
+    "type": "refresh",
+    "sid": "session id"
+}
+```
