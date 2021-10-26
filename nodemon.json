@@ -1,0 +1,12 @@
+{
+  "verbose": false,
+  "execMap": {
+    "rb": "ruby",
+    "pde": "--throw-deprecation --trace-deprecation"
+  },
+  "watch": [
+    "env",
+    "src"
+  ],
+  "ext": "js,yml,ejs"
+}
