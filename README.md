@@ -56,7 +56,6 @@ models - #module - **mongoose Schemas** (does not initiate connection with mongo
 │   ├───<file>.js
 │   └───index.js #export
 ├───env.js
-├───env.js
 └───index.js #export
 
 connection - #(config) - clients, connections, apis: might be offline. It is up to the service to implement custom functions. If connection field is none, return null
@@ -82,6 +81,10 @@ validations - #module - joi validations. semantic grouping instead of functional
 └───index.js #export
 
 // There is no controller. Controllers should be implemented in the route itself.
+
+pages - #module - ejs html pages
+// These exist to return a friendly error html page in a case something is misconfigured in the server
+└───index.js # export
 
 routes - #(validations, services) - project structure matches end point
 ├───index.js # exports { v1: require('v1') }
