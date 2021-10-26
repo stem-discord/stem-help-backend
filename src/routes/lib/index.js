@@ -1,3 +1,5 @@
+const ejs = require(`ejs`);
+
 const config = require(`../../config`);
 const util = require(`../../util`);
 
@@ -22,4 +24,8 @@ module.exports = {
   Router: require(`express`).Router,
   logger: tool.logger,
   info: tool.logger.info,
+
+  // ejs stuff
+  render: ejs.render,
+  pages: require(`../../pages`),
 };
