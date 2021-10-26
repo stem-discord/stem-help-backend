@@ -7,7 +7,7 @@ function ServePage(page, obj) {
     };
   }
   return (req, res) => {
-    res.render(
+    res.send(
       ejs.render(
         page,
         obj,
