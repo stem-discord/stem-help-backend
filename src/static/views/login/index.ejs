@@ -9,32 +9,15 @@
   </head>
 
   <body>
-    <button click="login"> Click to login </button>
+    <button onclick="login()"> Click to login using Discord OAuth </button>
   </body>
   <script>
+    const env = JSON.parse(`<%- JSON.stringify(env) %>`);
     console.log('login sript loaded');
 
     function login() {
       console.log('redirecting to discord oauth')
-      window.href = env.apiURL;
-      // console.log('login clicked');
-      // // const form = document.getElementById('')
-      // // const fd = new FormData(form);
-      // fetch(API_URI + `/auth/login`, {
-      //   method: 'POST',
-      //   // headers: {
-      //   //   'Content-Type': 'multipart/form-data'
-      //   // },
-      //   // body: fd
-      // }).then(res => res.json()).then(data => {
-      //   console.log(data);
-      //   if (data.success) {
-      //     alert(data.message);
-      //   }
-      //   if (data.redirect) {
-      //     window.location.href = data.redirect;
-      //   }
-      // }).catch(err => console.log(err));
+      document.location.href = env.apiURL;
     }
 
   </script>
