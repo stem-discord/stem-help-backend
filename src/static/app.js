@@ -6,6 +6,8 @@ const { Logger } = require(`../tool`);
 const logger = new Logger(`static`);
 const { info } = logger;
 
+const { expressCspHeader, INLINE, SELF } = require(`express-csp-header`);
+
 const app = express();
 
 const base = {
@@ -16,6 +18,12 @@ const base = {
     baseURL: `http://localhost:${config.port}/static`,
   },
 };
+
+app.use(expressCspHeader({
+  directives: {
+    'script-src': [SELF, INLINE],
+  },
+}));
 
 app.set(`views`, path.join(__dirname, `views`));
 app.set(`view engine`, `ejs`);
