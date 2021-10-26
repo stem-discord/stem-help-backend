@@ -54,6 +54,8 @@ function generateConfig(env) {
     discord: {
       botToken: envVars.DISCORD_BOT_TOKEN,
       OAuthUri: envVars.DISCORD_OAUTH_URI,
+      clientID: envVars.DISCORD_CLIENT_ID,
+      clientSecret: envVars.DISCORD_CLIENT_SECRET,
     },
     staticServer: bool(envVars.STATIC_SERVER),
     staticServerPort: envVars.STATIC_SERVER_PORT,

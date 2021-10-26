@@ -29,13 +29,16 @@ const envVarsSchema = Joi.object()
     ),
     CORS: Joi.string().valid(`true`, `false`).description(`Enable CORS`),
     API_URL: Joi.string().description(`url to make api calls to. used by src/static`),
-    DISCORD_BOT_TOKEN: Joi.string().required().description(`discord bot token`),
+    DISCORD_BOT_TOKEN: Joi.string().description(`discord bot token`),
     // temporary
-    DISCORD_OAUTH_URI: Joi.string().required().description(`discord bot token`),
+    DISCORD_OAUTH_URI: Joi.string().description(`discord bot token`),
+    DISCORD_CLIENT_ID: Joi.string().description(`discord app id`),
+    DISCORD_CLIENT_SECRET: Joi.string().description(`discord app secret`),
+    
     STATIC_SERVER: Joi.string().valid(`true`, `false`).description(`discord bot token`),
     STATIC_SERVER_PORT: Joi.number().description(`The port for another static server (if true, both api server and static server will be online)`),
     STATIC_SERVER_API_URL: Joi.string().description(`The API url this static server should use`),
-    STATIC_ROUTE: Joi.string().valid(`true`, `false`).description(`Serve /static`),
+    STATIC_ROUTE: Joi.string().valid(`true`, `false`).description(`Serve /static`),  
   })
   .unknown();
 
