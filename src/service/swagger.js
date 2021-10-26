@@ -5,7 +5,7 @@ const swaggerDefinition = require(`../docs`);
 
 const specs = swaggerJsdoc({
   swaggerDefinition,
-  apis: [`src/docs/*.yml`, `src/routes/*.js`],
+  apis: [`src/docs/v1/**/*.yml`],
 });
 
 module.exports = {
