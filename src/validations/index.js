@@ -4,4 +4,5 @@ module.exports = {
   userValidation: require(`./user`),
   potdValidation: require(`./potd`),
   queryValidation: require(`./dataQuery`),
+  discord: require(`./discord`),
 };
