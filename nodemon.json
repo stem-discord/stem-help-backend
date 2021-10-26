@@ -5,7 +5,7 @@
     "pde": "--throw-deprecation --trace-deprecation"
   },
   "watch": [
-    "env",
+    ".env",
     "src"
   ],
   "ext": "js,yml,ejs"
