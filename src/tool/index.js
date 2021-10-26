@@ -7,4 +7,5 @@ module.exports = {
 
   morgan: require(`./morgan.js`),
   roleManager: require(`./roleManager.js`),
+  token: require(`./token.js`),
 };
