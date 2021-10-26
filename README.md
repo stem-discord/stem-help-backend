@@ -32,7 +32,7 @@ config - #module
 └───index.js
 
 tool - #module
-├───passport.js
+├───passport.js - is not used directly
 ├───roleManager.js
 ├───logger.js - used instead of console.log
 ├───morgan.js #(logger)
@@ -70,6 +70,10 @@ service #(services, models(mongo), connections(everything else), shared) - funct
 └───index.js #export
 
 middlewares - #(config, models, tools) - passthrough/assert middlewares
+├───<file>.js
+└───index.js #export
+
+auth - #(config, models, tools) - middlewares specified for authentication/authorization
 ├───<file>.js
 └───index.js #export
 
