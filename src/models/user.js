@@ -59,6 +59,11 @@ const userSchema = mongoose.Schema(
     ],
     // discord module
     discord: {
+      id: {
+        type: String,
+        required: true,
+        unique: true,
+      },
       access_token: {
         type: String,
         required: true,
@@ -75,6 +80,7 @@ const userSchema = mongoose.Schema(
         type: String,
         required: true,
       },
+      // ??
       scope: {
         type: String,
         required: true,
@@ -84,12 +90,6 @@ const userSchema = mongoose.Schema(
         required: true,
       },
     },
-    
-    // sessions: [{
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: `Session`,
-    // }],
   },
   {
     timestamps: true,

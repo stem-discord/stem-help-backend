@@ -9,10 +9,9 @@ const { info } = logger;
 const { expressCspHeader, INLINE, SELF } = require(`express-csp-header`);
 
 const app = express();
-
 const base = {
   env: {
-    apiURL: config.apiURL ?? `http://localhost:${config.port}/v1`,
+    apiURL: config.staticServerApiURL,
     // FIXME: because of this issue, two static servers cannot run at the same time
     // It is either a /static route or /
     baseURL: `http://localhost:${config.port}/static`,

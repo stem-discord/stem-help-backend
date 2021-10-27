@@ -4,6 +4,7 @@ const lib = require(`../../lib`);
 
 const config = lib.config;
 const { discord } = lib.util;
+
 const { buildUri } = discord.oauth;
 const { ApiError } = lib.util;
 
@@ -20,5 +21,12 @@ router.route(`/discord`)
     throw new ApiError(httpStatus.NOT_FOUND, `DISCORD_OAUTH_URI is not set`, true);
   },
   );
+
+router.route(`/refresh`)
+  .get((req, res) => {
+    
+  },
+  );
+  
 
 module.exports = router;
