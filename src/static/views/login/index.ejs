@@ -14,10 +14,26 @@
   <script>
     const env = JSON.parse(`<%- JSON.stringify(env) %>`);
     console.log('login sript loaded');
-
-    function login() {
-      console.log('redirecting to discord oauth')
-      document.location.href = env.apiURL;
+    async function login() {
+      console.log('fetching auth link...')
+      let res;
+      try {
+        // TODO: add state support via localstorage
+        res = await fetch(`${env.apiURL}/oauth/discord`);
+      } catch (err) {
+        alert('Something went wrong')
+        return console.log(err);
+      }
+      if (!res) {
+        alert('Something went wrong')
+        return console.log('no response');
+      }
+      res = await res.json();
+      if (res.status !== `OK`) {
+        alert('Something went wrong')
+        return console.log(res);
+      }
+      document.location.href = res.message;
     }
 
   </script>

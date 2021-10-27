@@ -13,5 +13,35 @@
       <input type="submit" value="submit">
     </form> -->
   </body>
+  <script>
+    const env = JSON.parse(`<%- JSON.stringify(env) %>`);
+    const up = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(up);
+    console.log(params);
+    if (params.code) {
+      console.log(`
+        THIS IS A BAD WAY OF LOGGING IN. normally,
+        its good to have a separate landing page for oauth redirects.
+        but since this is only a test website, i dont care`)
+      // make a post api call to /oauth/discord
+      // and send the code
+      // the return { refresh_token: access_token: } will be the refresh token and an access token
+      // and using access token we can make other api calls
+      console.log('logging in');
+      let o = window.location.href;
+      o = o.substring(0, o.indexOf('?'));
+      (async () => {
+        const res = await fetch(`${env.apiURL}/oauth/discord?code=${params.code}&here=${o}`, {
+          method: 'POST',
+          body: JSON.stringify({
+            code: params.code
+          })
+        });
+        const data = await res.json();
+        console.log(data);
+      })();
+    }
+
+  </script>
 
 </html>
