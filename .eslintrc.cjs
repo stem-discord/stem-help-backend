@@ -24,8 +24,33 @@ module.exports = {
     indent: [`error`, 2],
     "quote-props": [`error`, `as-needed`],
     strict: 0,
-    "comma-dangle": [`error`, `always-multiline`],
+    "comma-dangle": [`error`, {
+      arrays: `always-multiline`,
+      objects: `always-multiline`,
+      imports: `always-multiline`,
+      exports: `always-multiline`,
+      functions: `always-multiline`,
+    }],
+    "no-trailing-spaces": `error`,
     "space-infix-ops": [`error`, { int32Hint: false }],
     "eol-last": [`error`, `always`],
+    "comma-style": [
+      `error`,
+      `last`,
+      {
+        exceptions: {
+          ImportDeclaration: true,
+        },
+      },
+    ],
+
+    // this rule isn't customzied enough
+    // "sort-imports": [`error`, {
+    //   ignoreCase: true,
+    //   ignoreDeclarationSort: false,
+    //   ignoreMemberSort: false,
+    //   memberSyntaxSortOrder: [`none`, `single`, `all`, `multiple`],
+    //   allowSeparatedGroups: true,
+    // }],
   },
 };
