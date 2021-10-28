@@ -2,7 +2,6 @@ import s from "../src/config/envVarsSchema";
 
 // TODO: make this better
 function print(joiKey) {
-  console.log(joiKey.NODE_ENV);
   for (const v of Object.values(joiKey)) {
     const flags = v.flags;
     delete v.flags;
@@ -20,6 +19,7 @@ function print(joiKey) {
       v.default = `required`;
     }
   }
+  // eslint-disable-next-line no-console
   console.table(joiKey, [`default`, `type`, `options`, `description`]);
 }
 
