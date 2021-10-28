@@ -13,10 +13,24 @@ module.exports = {
     "no-console": `warn`,
     "func-names": `off`,
     "no-underscore-dangle": `off`,
-    "consistent-return": `off`,
+    "consistent-return": `error`,
     "jest/expect-expect": `off`,
     "security/detect-object-injection": `off`,
     "no-unused-vars": `warn`,
+
+    "array-callback-return": [`error`, { allowImplicit: true, checkForEach: true }],
+    "no-duplicate-imports": [`error`, { includeExports: true }],
+    "no-promise-executor": `error`,
+    "no-use-before-define": [`error`, { functions: true, classes: true }],
+    "require-atomic-updates": `error`,
+    camelcase: [`warn`, {
+      properties: `always`,
+      ignoreDestructuring: true,
+      ignoreImports: false,
+      ignoreGlobals: false,
+    }],
+    complexity: `warn`,
+
 
     "linebreak-style": [`error`, `unix`],
     semi: [`error`, `always`],
