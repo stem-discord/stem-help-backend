@@ -42,7 +42,6 @@ router.post(`/discord`, async (req, res) => {
   // if (!config.allowedSources.includes(source)) { unauthorized origin }
   const source = req.headers.origin;
   const allowedSources = [`http://localhost:4000`];
-  console.log(source);
   if (!allowedSources.includes(source)) {
     return void res.status(httpStatus.UNAUTHORIZED).send(`unauthroized`);
   }
@@ -64,8 +63,6 @@ router.post(`/discord`, async (req, res) => {
     headers,
   }).then(v => v.json());
 
-  // FIXME: remove this
-  console.log(response);
   if (response.error) {
     res.json({ error: `error in request` });
     return;
