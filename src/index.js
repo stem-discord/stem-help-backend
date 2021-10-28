@@ -5,9 +5,8 @@ import { git } from "./util";
 const { status } = git;
 
 const logger = new Logger(`Index`);
-logger.info(`Node version: ${process.version}${process.arch}-${process.platform}`);
 
-
+// Log
 (async () => {
   const o = {
     branch: await status.getBranch(),
@@ -28,6 +27,7 @@ logger.info(`Node version: ${process.version}${process.arch}-${process.platform}
     }
   }
   logger.info(l.join(`\n\n`));
+  logger.info(`Node version: ${process.version}${process.arch}-${process.platform}`);
 })();
 
 const apiServer = app.listen(config.port, () => {
