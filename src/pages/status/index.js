@@ -1,6 +1,7 @@
-const fs = require(`fs`);
-const path = require(`path`);
+import fs from "fs";
+import path from "path";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
-  statistics: fs.readFileSync(path.join(__dirname, `./statistics.ejs`), `utf8`),
-};
+const __dirname = dirname(fileURLToPath(import.meta.url));
+export const statistics = fs.readFileSync(path.join(__dirname, `./statistics.ejs`), `utf8`);

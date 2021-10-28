@@ -1,6 +1,8 @@
-const fs = require(`fs`);
-const path = require(`path`);
+import fs from "fs";
+import path from "path";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
-  misconfiguration: fs.readFileSync(path.join(__dirname, `./misconfiguration.ejs`), `utf8`),
-};
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export const misconfiguration = fs.readFileSync(path.join(__dirname, `./misconfiguration.ejs`), `utf8`);

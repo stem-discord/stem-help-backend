@@ -1,25 +1,28 @@
-const express = require(`express`);
+// Express
+import express from "express";
 
-const helmet = require(`helmet`);
-const xss = require(`xss-clean`);
-const mongoSanitize = require(`express-mongo-sanitize`);
-const compression = require(`compression`);
-const cors = require(`cors`);
+import compression from "compression";
+import cors from "cors";
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
+import passport from "passport";
+import xss from "xss-clean";
 
-const passport = require(`passport`);
-const httpStatus = require(`http-status`);
+import httpStatus from "http-status";
 
-const config = require(`./config`);
-const {  morgan, Logger, passport:pass } = require(`./tool`);
+import config from "./config";
+import routes from "./routes/v1";
+import staticRoute from "./static";
+import * as middlewares from "./middlewares";
+import { ApiError } from "./util";
+import { Logger, morgan, passport as pass } from "./tool";
+
 const logger = Logger(`Express`);
 
 const { jwtStrategy } = pass;
-const { authLimiter, error } = require(`./middlewares`);
+const { authLimiter, error } = middlewares;
 const { errorConverter, errorHandler } = error;
 
-const { ApiError } = require(`./util`);
-
-const routes = require(`./routes/v1`);
 // const static = require(`./static/router`);
 
 const app = express();
@@ -61,8 +64,7 @@ app.use(`/v1`, routes);
 
 if (config.staticRoute) {
   // Static pages for testing
-  const static = require(`./static`);
-  app.use(`/static`, static);
+  app.use(`/static`, staticRoute);
   logger.info(`Static route loaded http://localhost:${config.port}/static`);
 } else {
   logger.info(`Static route is not deployed`);
@@ -79,4 +81,4 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

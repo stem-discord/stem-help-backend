@@ -1,13 +1,12 @@
-const httpStatus = require(`http-status`);
+import httpStatus from "http-status";
 
-const { User } = require(`../shared`).mongo;
+import { mongo } from "../shared";
+import ApiError from "../utils/ApiError";
 
-const ApiError = require(`../utils/ApiError`);
+const { User } = { mongo }.mongo;
 
 const getCount = async () => {
   return await User.countDocuments({});
 };
 
-module.exports = {
-  getCount,
-};
+export { getCount };

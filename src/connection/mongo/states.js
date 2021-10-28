@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   0: `disconnected`,
   1: `connected`,
   2: `connecting`,

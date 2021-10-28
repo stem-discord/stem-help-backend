@@ -1,4 +1,4 @@
-const envVarsSchema = require(`./envVarsSchema`);
+import envVarsSchema from "./envVarsSchema.js";
 
 function bool(s) {
   return s === `true`;
@@ -9,11 +9,11 @@ function generateConfig(env) {
   const { value: envVars, error } = envVarsSchema
     .prefs({ errors: { label: `key` } })
     .validate(env);
-  
+
   if (error) {
     throw new Error(`Config validation error: ${error.message}`);
   }
-  
+
   // TODO: deepMerge
   return {
     env: envVars.NODE_ENV,
@@ -25,7 +25,7 @@ function generateConfig(env) {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        bufferMaxEntries : 0,
+        bufferMaxEntries: 0,
         bufferCommands: false,
         connectTimeoutMS: 5000,
         socketTimeoutMS: 5000,
@@ -35,8 +35,7 @@ function generateConfig(env) {
       secret: envVars.JWT_SECRET,
       accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
       refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
-      resetPasswordExpirationMinutes:
-        envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
+      resetPasswordExpirationMinutes: envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
       verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
     },
     email: {
@@ -64,4 +63,4 @@ function generateConfig(env) {
   };
 }
 
-module.exports = generateConfig;
+export default generateConfig;

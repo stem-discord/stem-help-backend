@@ -1,11 +1,8 @@
-module.exports = {
-  // templates
-  Debug: require(`./Debug`),
-  Validate: require(`./Validate`),
-  ServePage: require(`./ServePage`),
+export { default as Debug } from "./Debug";
+export { default as Validate } from "./Validate";
+export { default as ServePage } from "./ServePage";
 
-  // configured
-  error: require(`./error`),
-  rateLimiter: require(`./rateLimiter`),
-  redirect: require(`./redirect`),
-};
+export { default as redirect } from "./redirect";
+
+export * as error from "./error";
+export * as rateLimiter from "./rateLimiter";

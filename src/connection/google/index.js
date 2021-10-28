@@ -1,1 +1,1 @@
-const config = require(`../../config`);
+import config from "../../config";

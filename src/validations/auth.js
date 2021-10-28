@@ -1,5 +1,5 @@
-const Joi = require(`joi`);
-const { password } = require(`./custom`);
+import Joi from "joi";
+import { password } from "./custom.js";
 
 const register = {
   body: Joi.object().keys({
@@ -48,13 +48,4 @@ const verifyEmail = {
     token: Joi.string().required(),
   }),
 };
-
-module.exports = {
-  register,
-  login,
-  logout,
-  refreshTokens,
-  forgotPassword,
-  resetPassword,
-  verifyEmail,
-};
+export { register, login, logout, refreshTokens, forgotPassword, resetPassword, verifyEmail };

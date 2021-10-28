@@ -1,14 +1,12 @@
-module.exports = {
-  async: require(`./async`),
-  git: require(`./git`),
-  discord: require(`./discord`),
-  
-  ApiError: require(`./ApiError`),
+// named exports
+export * as async from "./async";
+export * as git from "./git";
+export * as discord from "./discord";
 
-  time: require(`./time`),
-  pick: require(`./pick`),
-  catchAsync: require(`./catchAsync`),
-  objMerge: require(`./objMerge`),
-  randomIdentifier: require(`./randomIdentifier`),
-  getCallerDir: require(`./getCallerDir`),
-};
+export { default as ApiError } from "./ApiError";
+export { default as time } from "./time";
+export { default as pick } from "./pick";
+export { default as catchAsync } from "./catchAsync";
+export { default as objMerge } from "./objMerge";
+export { default as randomIdentifier } from "./randomIdentifier";
+export { default as getCallerDir } from "./getCallerDir";

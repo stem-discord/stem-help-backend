@@ -1,5 +1,7 @@
-const { User: UserSchema } = require(`../models`);
+import { User as UserSchema } from "../models";
 
+import connection from "../connection";
+import connection$0 from "../connection";
 // eslint-disable-next-line no-unused-vars
 const example = {
   syncValue: 1,
@@ -7,14 +9,11 @@ const example = {
 };
 
 const mongo = {
-  User: require(`../connection`).mongo.model(`User`, UserSchema),
+  User: connection.mongo.model(`User`, UserSchema),
 };
 
 const discord = {
-  generalChannel: () => require(`../connection`).discord.channels.fetch(`839399426643591188`),
+  generalChannel: () => connection$0.discord.channels.fetch(`839399426643591188`),
 };
 
-module.exports = {
-  mongo,
-  discord,
-};
+export { mongo, discord };

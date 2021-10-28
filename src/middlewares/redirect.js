@@ -5,4 +5,4 @@ const redirect = (err, req, res, next) => {
   next();
 };
 
-module.exports = redirect;
+export default redirect;

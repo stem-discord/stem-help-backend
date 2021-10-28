@@ -1,19 +1,16 @@
-const mongoose = require(`mongoose`);
+import { default as mongoose } from "mongoose";
 
 // stores the id of refresh tokens
-const tokenSchema = mongoose.Schema(
-  {
-    invalid: {
-      type: Boolean,
-      default: false,
-    },
+const tokenSchema = mongoose.Schema({
+  invalid: {
+    type: Boolean,
+    default: false,
   },
-  {
-    timestamps: true,
-  },
-);
+}, {
+  timestamps: true,
+});
 
 // TODO: softcode this
-tokenSchema.index({}, {expireAfterSeconds: 60 * 60 * 24 * 7});
+tokenSchema.index({}, { expireAfterSeconds: 60 * 60 * 24 * 7 });
 
-module.exports = tokenSchema;
+export default tokenSchema;

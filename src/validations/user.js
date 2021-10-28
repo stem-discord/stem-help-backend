@@ -1,5 +1,6 @@
-const Joi = require(`joi`);
-const { password, objectId } = require(`./custom`);
+import Joi from "joi";
+
+import { objectId, password } from "./custom.js";
 
 const createUser = {
   body: Joi.object().keys({
@@ -44,11 +45,5 @@ const deleteUser = {
     userId: Joi.string().custom(objectId),
   }),
 };
+export { createUser, getUsers, getUser, updateUser, deleteUser };
 
-module.exports = {
-  createUser,
-  getUsers,
-  getUser,
-  updateUser,
-  deleteUser,
-};

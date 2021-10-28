@@ -1,6 +1,6 @@
-const httpStatus = require(`http-status`);
+import httpStatus from "http-status";
 
-const lib = require(`../../lib`);
+import * as lib from "../../lib";
 
 const config = lib.config;
 const { discord } = lib.util;
@@ -19,14 +19,10 @@ router.route(`/discord`)
       return res.redirect(uri);
     }
     throw new ApiError(httpStatus.NOT_FOUND, `DISCORD_OAUTH_URI is not set`, true);
-  },
-  );
+  });
 
 router.route(`/refresh`)
   .get((req, res) => {
-    
-  },
-  );
-  
+  });
 
-module.exports = router;
+export default router;

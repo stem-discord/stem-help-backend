@@ -1,9 +1,9 @@
-const lib = require(`../lib`);
+import test from "./test";
+import docs from "./docs";
+import auth from "./auth";
+import oauth from "./oauth";
 
-const test = require(`./test`);
-const docs = require(`./docs`);
-const auth = require(`./auth`);
-const oauth = require(`./oauth`);
+import * as lib from "../lib ";
 
 const router = new lib.Router();
 
@@ -15,4 +15,4 @@ router.use(`/auth`, auth);
 
 router.use(`/oauth`, oauth);
 
-module.exports = router;
+export default router;

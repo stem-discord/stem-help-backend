@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 /**
  * A mongoose schema plugin which applies the following in the toJSON transform call:
  *  - removes __v, createdAt, updatedAt, and any path that has private: true
@@ -40,4 +38,4 @@ const toJSON = (schema) => {
   });
 };
 
-module.exports = toJSON;
+export default toJSON;

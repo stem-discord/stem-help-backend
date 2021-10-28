@@ -1,3 +1,1 @@
-module.exports = {
-  status: require(`./status`),
-};
+export * as status from "./status";

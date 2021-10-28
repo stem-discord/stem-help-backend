@@ -1,9 +1,7 @@
-const Joi = require(`joi`);
+import Joi from "joi";
 
 const query = {
   data: Joi.string().required(),
 };
 
-module.exports = {
-  query,
-};
+export { query };

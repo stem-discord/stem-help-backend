@@ -1,12 +1,14 @@
+import * as google from "./google";
+import * as mongo from "./mongo";
+import { Logger } from "../tool";
 
-const { Logger } = require(`../tool`);
+
 const logger = new Logger(`ConnectionManager`);
 
 const connections = {
-  google: require(`./google`),
-  mongo: require(`./mongo`),
+  google,
+  mongo,
 };
-
 
 // TODO: improve this connection api
 for (const [name, module] of Object.entries(connections)) {
@@ -19,4 +21,4 @@ for (const [name, module] of Object.entries(connections)) {
   }).join(`, `)}`);
 }
 
-module.exports = connections;
+export default connections;

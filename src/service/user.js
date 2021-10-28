@@ -1,8 +1,9 @@
-const httpStatus = require(`http-status`);
+import httpStatus from "http-status";
 
-const { User } = require(`../shared`).mongo;
+import { mongo } from "../shared";
+import { ApiError } from "../util";
 
-const { ApiError } = require(`../util`);
+const { User } = { mongo }.mongo;
 
 const getUserById = async (id) => {
   return User.findById(id);
@@ -16,8 +17,4 @@ const discord = {
   },
 };
 
-module.exports = {
-  getUserById,
-  createUser,
-  discord,
-};
+export { getUserById, createUser, discord };

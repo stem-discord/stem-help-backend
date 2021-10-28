@@ -7,11 +7,11 @@ function Lock(obj) {
         }
         throw new Error(`${key} does not exist`);
       },
-      set: () => { throw new Error(`Cannot set key for locked object` );},
+      set: () => { throw new Error(`Cannot set key for locked object`); },
     });
   }
 
   return obj;
 }
 
-module.exports = Lock;
+export default Lock;

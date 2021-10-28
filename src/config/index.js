@@ -1,15 +1,17 @@
-const path = require(`path`);
-const dotenv = require(`dotenv`);
+import path from "path";
+import dotenv from "dotenv";
+
+import env from "./env.js";
+import argv from "./yargs.js";
+import proc from "./process.js";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 
 dotenv.config({ path: path.join(__dirname, `../../.env`) });
-
-const env = require(`./env`);
-const argv = require(`./yargs`);
-
-const proc = require(`./process`);
-
-let config = {...process.env};
-
+let config = { ...process.env };
 // populate using yargs
 Object.assign(config, argv);
 
@@ -19,4 +21,4 @@ config = env(config);
 // separate final validation logic
 proc(config);
 
-module.exports = config;
+export default config;

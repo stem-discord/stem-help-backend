@@ -1,6 +1,6 @@
-const Lock = require(`../Lock`);
+import Lock from "../Lock.js";
 
-module.exports = Lock({
+export default Lock({
   ADMINISTRATOR: `ADMINISTRATOR`,
   POTD_MANAGER: `POTD_MANAGER`,
 });

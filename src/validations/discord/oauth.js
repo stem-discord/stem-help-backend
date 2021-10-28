@@ -1,4 +1,4 @@
-const Joi = require(`joi`);
+import Joi from "joi";
 
 const token = (value, helpers) => {
   // TODO: I'm not sure if this is the correct regex, but its from observation
@@ -8,13 +8,10 @@ const token = (value, helpers) => {
   return value;
 };
 
-
 const redirectUri = {
   query: Joi.object().keys({
     code: Joi.string().custom(token).required(),
   }),
 };
 
-module.exports = {
-  redirectUri,
-};
+export { redirectUri };

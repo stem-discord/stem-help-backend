@@ -1,7 +1,7 @@
-const Joi = require(`joi`);
-const httpStatus = require(`http-status`);
+import Joi from "joi";
+import httpStatus from "http-status";
 
-const { pick, ApiError } = require(`../util`);
+import { ApiError, pick } from "../util";
 
 const validate = (schema) => (req, res, next) => {
   const validSchema = pick(schema, [`params`, `query`, `body`]);
@@ -20,4 +20,4 @@ const validate = (schema) => (req, res, next) => {
   return next();
 };
 
-module.exports = validate;
+export default validate;

@@ -1,4 +1,4 @@
-const s = require(`../src/config/envVarsSchema`);
+import s from "../src/config/envVarsSchema";
 
 // TODO: make this better
 function print(joiKey) {

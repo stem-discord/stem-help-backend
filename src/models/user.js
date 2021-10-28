@@ -1,100 +1,98 @@
-const mongoose = require(`mongoose`);
-const validator = require(`validator`);
-const { toJSON, paginate } = require(`./plugins`);
-const { Role } = require(`../types`);
-const session = require(`./session`);
+import mongoose from "mongoose";
+import validator from "validator";
 
-const userSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
+import { paginate, toJSON } from "./plugins";
+
+import { Role } from "../types";
+import session from "./session.js";
+
+const userSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  user_id: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    validate(s) {
+      // 1~32
+      return !!s.match(/^[a-z_][a-z0-9_-]{0,31}/);
     },
-    user_id: {
+  },
+  email: {
+    type: String,
+    required: false,
+    unique: false,
+    trim: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error(`Invalid email`);
+      }
+    },
+  },
+  hash: {
+    type: String,
+    required: false,
+    private: true, // used by the toJSON plugin
+  },
+  salt: {
+    type: String,
+    required: false,
+    private: true, // used by the toJSON plugin
+  },
+  roles: [{
+    type: String,
+    enum: Object.values(Role),
+    default: `user`,
+  }],
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  sessions: [
+    {
+      type: session,
+    },
+  ],
+  // discord module
+  discord: {
+    id: {
       type: String,
       required: true,
-      trim: true,
       unique: true,
-      validate(s) {
-        // 1~32
-        return !!s.match(/^[a-z_][a-z0-9_-]{0,31}/);
-      },
     },
-    email: {
+    access_token: {
       type: String,
-      required: false,
-      unique: false,
-      trim: true,
-      validate(value) {
-        if (!validator.isEmail(value)) {
-          throw new Error(`Invalid email`);
-        }
-      },
+      required: true,
     },
-    hash: {
+    token_type: {
       type: String,
-      required: false,
-      private: true, // used by the toJSON plugin
+      required: true,
     },
-    salt: {
+    expires_in: {
+      type: Number,
+      required: true,
+    },
+    refresh_token: {
       type: String,
-      required: false,
-      private: true, // used by the toJSON plugin
+      required: true,
     },
-    roles: [{
+    // ??
+    scope: {
       type: String,
-      enum: Object.values(Role),
-      default: `user`,
-    }],
-    isEmailVerified: {
-      type: Boolean,
-      default: false,
+      required: true,
     },
-
-    sessions: [
-      {
-        type: session,
-      },
-    ],
-    // discord module
-    discord: {
-      id: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      access_token: {
-        type: String,
-        required: true,
-      },
-      token_type: {
-        type: String,
-        required: true,
-      },
-      expires_in: {
-        type: Number,
-        required: true,
-      },
-      refresh_token: {
-        type: String,
-        required: true,
-      },
-      // ??
-      scope: {
-        type: String,
-        required: true,
-      },
-      response_cache: {
-        type: Object,
-        required: true,
-      },
+    response_cache: {
+      type: Object,
+      required: true,
     },
   },
-  {
-    timestamps: true,
-  },
-);
+}, {
+  timestamps: true,
+});
 
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
@@ -126,4 +124,4 @@ userSchema.methods.removeRole = async function (role) {
   }
 };
 
-module.exports = userSchema;
+export default userSchema;

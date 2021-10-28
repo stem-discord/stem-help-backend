@@ -1,16 +1,13 @@
-const swaggerJsdoc = require(`swagger-jsdoc`);
-const swaggerUi = require(`swagger-ui-express`);
-
-const swaggerDefinition = require(`../docs`);
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import swaggerDefinition from "../docs";
 
 const specs = swaggerJsdoc({
   swaggerDefinition,
   apis: [`src/docs/v1/**/*.yml`],
 });
 
-module.exports = {
-  serve: swaggerUi.serve,
-  middleware: swaggerUi.setup(specs, {
-    explorer: true,
-  }),
-};
+export const serve = swaggerUi.serve;
+export const middleware = swaggerUi.setup(specs, {
+  explorer: true,
+});

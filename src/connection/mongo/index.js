@@ -1,10 +1,11 @@
-const mongoose = require(`mongoose`);
+import mongoose from "mongoose";
 
-const config = require(`../../config`);
-const { Logger } = require(`../../tool`);
+import config from "../../config";
+import { Logger } from "../../tool";
+import { async } from "../../util";
+
+const { sleep } = async;
 const logger = new Logger(`MongoDB`, true);
-
-const { sleep } = require(`../../util`).async;
 
 const connection = mongoose.createConnection(config.mongoose.url, config.mongoose.options);
 
@@ -27,7 +28,6 @@ connection.on(`error`, e => {
 connection.on(`open`, () => {
   dbOpen();
 });
-
 
 const model = (dbName, schema, plural) => {
   const m = connection.model(dbName, schema, plural);
@@ -53,7 +53,4 @@ if (config.mongoose.url) {
   getConnection.enabled = true;
 }
 
-module.exports = {
-  model,
-  getConnection,
-};
+export { model, getConnection };

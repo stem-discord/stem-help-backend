@@ -1,3 +1,1 @@
-module.exports = {
-  oauth: require(`./oauth`),
-};
+export * as oauth from "./oauth";

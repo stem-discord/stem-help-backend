@@ -1,13 +1,17 @@
-const express = require(`express`);
-const path = require(`path`);
+import express from "express";
+import path from "path";
+import expressCspHeader from "express-csp-header";
+import { renderFile } from "ejs";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const config = require(`../config`);
-const { Logger } = require(`../tool`);
+import config from "../config";
+import { Logger } from "../tool";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const logger = new Logger(`static`);
 const { info } = logger;
-
-const { expressCspHeader, INLINE, SELF } = require(`express-csp-header`);
-
+const { INLINE, SELF, expressCspHeader: expressCspHeaderMiddleware } = expressCspHeader;
 const app = express();
 const base = {
   env: {
@@ -18,7 +22,7 @@ const base = {
   },
 };
 
-app.use(expressCspHeader({
+app.use(expressCspHeaderMiddleware({
   directives: {
     'script-src': [SELF, INLINE],
   },
@@ -28,9 +32,7 @@ app.set(`views`, path.join(__dirname, `views`));
 app.set(`view engine`, `ejs`);
 
 // app.engine(`html`, require(`ejs`).renderFile);
-app.engine(`.ejs`, require(`ejs`).renderFile);
-
-
+app.engine(`.ejs`, renderFile);
 app
   .get(`/test`, (req, res) => {
     info(`test page has been viewed`);
@@ -52,4 +54,4 @@ app.get(`*`, (req, res) => {
 
 // TODO: write as a contructor function so multiple base directories can be accepted
 
-module.exports = app;
+export default app;

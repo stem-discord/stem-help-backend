@@ -1,4 +1,4 @@
-const jwt = require(`jsonwebtoken`);
+import jwt from "jsonwebtoken";
 
 function createToken() {
 
@@ -12,7 +12,4 @@ function createRefreshToken() {
 
 }
 
-module.exports = {
-  createAccessToken,
-  createRefreshToken,
-};
+export { createAccessToken, createRefreshToken };

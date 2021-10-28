@@ -16,4 +16,4 @@ function generate() {
   return words[count];
 }
 
-module.exports = generate;
+export default generate;

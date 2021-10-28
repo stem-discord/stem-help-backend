@@ -1,9 +1,10 @@
-const app = require(`./app`);
-const config = require(`./config`);
-const { Logger } = require(`./tool`);
-const logger = new Logger(`Index`);
-const { status } = require(`./util`).git;
+import app from "./app.js";
+import config from "./config";
+import { Logger } from "./tool";
+import { git } from "./util";
+const { status } = git;
 
+const logger = new Logger(`Index`);
 logger.info(`Node version: ${process.version}${process.arch}-${process.platform}`);
 
 

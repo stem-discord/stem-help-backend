@@ -1,4 +1,4 @@
-const ejs = require(`ejs`);
+import ejs from "ejs";
 
 function ServePage(page, obj) {
   if (typeof obj === `string`) {
@@ -7,13 +7,8 @@ function ServePage(page, obj) {
     };
   }
   return (req, res) => {
-    res.send(
-      ejs.render(
-        page,
-        obj,
-      ),
-    );
+    res.send(ejs.render(page, obj));
   };
 }
 
-module.exports = ServePage;
+export default ServePage;

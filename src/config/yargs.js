@@ -1,12 +1,6 @@
-// recieve configurations from command line arguments
-const yargs = require(`yargs`);
+import yargs from "yargs";
 
-const
-  port = [`port`, `p`], 
-  staticServer = [`static-server`, `STATIC_SERVER`],
-  staticServerPort = [`static-server-port`, `STATIC_SERVER_PORT`],
-  staticServerApiURL = [`static-server=api-url`, `STATIC_SERVER_API_URL`],
-  staticRoute = [`static-route`, `STATIC_ROUTE`];
+const port = [`port`, `p`], staticServer = [`static-server`, `STATIC_SERVER`], staticServerPort = [`static-server-port`, `STATIC_SERVER_PORT`], staticServerApiURL = [`static-server=api-url`, `STATIC_SERVER_API_URL`], staticRoute = [`static-route`, `STATIC_ROUTE`];
 
 // TODO: finish this
 const argv = yargs
@@ -41,4 +35,4 @@ const argv = yargs
   })
   .argv;
 
-module.exports = argv;
+export default argv;

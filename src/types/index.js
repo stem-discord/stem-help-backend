@@ -1,4 +1,2 @@
-module.exports = {
-  Token: require(`./Token`),
-  Role: require(`./Role`),
-};
+export { default as Token } from "./Token";
+export { default as Role } from "./Role";

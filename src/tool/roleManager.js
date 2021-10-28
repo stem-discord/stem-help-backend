@@ -1,3 +1,3 @@
-const { Role } = require(`../types`);
+import { Role } from "../types";
 
-
+export default {};

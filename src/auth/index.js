@@ -1,3 +1,1 @@
-module.exports = {
-  jwt: require(`./jwt`),
-};
+export const jwt = require(`./jwt`);

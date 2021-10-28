@@ -1,12 +1,12 @@
-const mongoose = require(`mongoose`);
+import mongoose from "mongoose";
 
-module.exports = {
-  author: {
+export default {
+  author:{
     type: mongoose.Schema.Types.ObjectId,
     ref: `User`,
     required: true,
   },
-  upload_date: {
+  upload_date:{
     type: Date,
     default: Date.now,
   },

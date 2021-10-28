@@ -1,4 +1,4 @@
-module.exports = function (config) {
+export default (function (config) {
   // poulate the config as well as validate
   // TODO: add joi validations (final)
   if (config.NODE_ENV === `production` && config.STATIC_SERVER) {
@@ -10,4 +10,4 @@ module.exports = function (config) {
   if (config.staticServer || config.staticServerPort) {
     throw new Error(`staticServer, staticServerPort are in development`);
   }
-};
+});

@@ -1,11 +1,6 @@
-const { logger, Logger } = require(`./logger.js`);
+export { logger, Logger } from "./logger.js";
 
-module.exports = {
-  logger,
-  Logger,
-  passport: require(`./passport.js`),
-
-  morgan: require(`./morgan.js`),
-  roleManager: require(`./roleManager.js`),
-  token: require(`./token.js`),
-};
+export * as passport from "./passport";
+export * as morgan from "./morgan.js";
+export * as roleManager from "./roleManager.js";
+export * as token from "./token.js";

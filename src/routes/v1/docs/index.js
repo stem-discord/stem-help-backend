@@ -1,13 +1,10 @@
-const lib = require(`../../lib`);
+import * as lib from "../../lib";
 
 const { swagger } = lib.services;
 
 const router = lib.Router();
 
 router.use(`/`, swagger.serve);
-router.get(
-  `/`,
-  swagger.middleware,
-);
+router.get(`/`, swagger.middleware);
 
-module.exports = router;
+export default router;

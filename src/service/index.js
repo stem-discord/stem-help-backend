@@ -1,4 +1,2 @@
-module.exports = {
-  userService: require(`./user`),
-  swagger: require(`./swagger`),
-};
+export * as userService from "./user";
+export * as swagger from "./swagger";

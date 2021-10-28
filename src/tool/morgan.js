@@ -1,13 +1,12 @@
-const morgan = require(`morgan`);
-const config = require(`../config`);
-const { logger } = require(`./logger`);
+import morgan from "morgan";
+
+import config from "../config";
+import { logger } from "./logger.js";
 
 morgan.token(`message`, (req, res) => res.locals.errorMessage || ``);
 
 // TODO: access.log append stream
-
-const getIpFormat = () =>
-  config.env === `production` ? `:remote-addr - ` : ``;
+const getIpFormat = () => config.env === `production` ? `:remote-addr - ` : ``;
 const successResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms`;
 const errorResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms - message: :message`;
 
@@ -21,7 +20,4 @@ const errorHandler = morgan(errorResponseFormat, {
   stream: { write: (message) => logger.error(message.trim()) },
 });
 
-module.exports = {
-  successHandler,
-  errorHandler,
-};
+export { successHandler, errorHandler };

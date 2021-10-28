@@ -1,19 +1,16 @@
-const mongoose = require(`mongoose`);
-const httpStatus = require(`http-status`);
-
-const config = require(`../config`);
-const { logger } = require(`../tool`);
-
-const { ApiError } = require(`../util`);
+import mongoose from "mongoose";
+import httpStatus from "http-status";
+import config from "../config";
+import { logger } from "../tool";
+import { ApiError } from "../util";
 
 // eslint-disable-next-line no-unused-vars
 const errorConverter = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof ApiError)) {
-    const statusCode =
-      error.statusCode || error instanceof mongoose.Error
-        ? httpStatus.BAD_REQUEST
-        : httpStatus.INTERNAL_SERVER_ERROR;
+    const statusCode = error.statusCode || error instanceof mongoose.Error
+      ? httpStatus.BAD_REQUEST
+      : httpStatus.INTERNAL_SERVER_ERROR;
     const message = error.message || httpStatus[statusCode];
     error = new ApiError(statusCode, message, false, err.stack);
   }
@@ -43,7 +40,4 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).send(response);
 };
 
-module.exports = {
-  errorConverter,
-  errorHandler,
-};
+export { errorConverter, errorHandler };

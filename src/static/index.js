@@ -1,1 +1,1 @@
-module.exports = require(`./app`);
+export { default } from "./app.js";

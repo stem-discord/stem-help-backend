@@ -1,29 +1,15 @@
-const ejs = require(`ejs`);
+import express from "express";
 
-const config = require(`../../config`);
-const util = require(`../../util`);
+export { default as config } from "../../config";
+export * as util from "../../util";
+export * as validations from "../../validations";
+export * as middlewares from "../../middlewares";
+export * as services from "../../service";
+export * as pages from "../../pages";
 
+import * as tool from "../../tool";
 
-const validations = require(`../../validations`);
-const middlewares = require(`../../middlewares`);
-const services = require(`../../service`);
-
-const tool = require(`../../tool`);
-
-module.exports = {
-  // standalones
-  config,
-  util,
-
-  // utilization
-  validations,
-  middlewares,
-  services,
-
-  // easy access
-  Router: require(`express`).Router,
-  logger: tool.logger,
-  info: tool.logger.info,
-
-  pages: require(`../../pages`),
-};
+export const Router = express.Router;
+export const logger = tool.logger;
+export const info = tool.logger.info;
+export { tool };

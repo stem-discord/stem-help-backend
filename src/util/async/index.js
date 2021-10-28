@@ -1,3 +1,1 @@
-module.exports = {
-  sleep: require(`./sleep`),
-};
+export { default as sleep } from "./sleep";

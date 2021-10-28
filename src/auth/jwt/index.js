@@ -1,12 +1,12 @@
-const passport = require(`passport`);
+import passport from "passport";
+import passportJwt from "passport-jwt";
+import Joi from "Joi";
 
-const { JwtStrategy, ExtractJwt } = require(`passport-jwt`);
+import config from "../../../config";
+import service from "../../../service";
 
-const Joi = require('Joi');
-
-const config = require(`../../../config`);
-
-const { getUserById } = require(`../../../service`).user;
+const { JwtStrategy, ExtractJwt } = passportJwt;
+const { getUserById } = service.user;
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -14,8 +14,8 @@ const options = {
   algorithms: [`RS256`],
 };
 
-const centuralizedStrategy = new JwtStrategy(options, function(jwt_payload, done) {
-  getUserById({_id: jwt_payload.sub }, (err, user) => {
+const centuralizedStrategy = new JwtStrategy(options, function (jwt_payload, done) {
+  getUserById({ _id: jwt_payload.sub }, (err, user) => {
     if (err) {
       return done(err, false);
     }
@@ -33,30 +33,27 @@ const optionsSchema = {
       return helpers.message(`expiration in minutes`);
     }
     return value;
-  })
-}
-
-const DecenturalizedStrategy = (options) => new JwtStrategy(options, function(jwt_payload, done) {
-  getUserById({_id: jwt_payload.sub }, (err, user) => {
+  }),
+};
+const DecenturalizedStrategy = (options) => new JwtStrategy(options, function (jwt_payload, done) {
+  getUserById({ _id: jwt_payload.sub }, (err, user) => {
     if (err) {
       return done(err, false);
     }
     if (user) {
       return done(null, user);
-    } else {
+    }
+    else {
       return done(null, false);
     }
   });
 });
 
 const centuralized = passport.authenticate(hitDb);
+const Decenturalized = options => passport.authenticate(DecenturalizedStrategy(options));
+const decenturalized = passport.authenticate(DecenturalizedStrategy({}));
 
-const decenturalized = passport.authenticate(DecenturalizedStrategy({ }))
 
-function DecenturalizedStrategy
-
-module.exports = {
-  centuralized,
-  decenturalized,
-  Decenturalized,
-}
+export { centuralized };
+export { decenturalized };
+export { Decenturalized };

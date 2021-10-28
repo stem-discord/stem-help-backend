@@ -1,3 +1,1 @@
-module.exports = {
-  v1: require(`./v1`),
-};
+export const v1 = require(`./v1`);

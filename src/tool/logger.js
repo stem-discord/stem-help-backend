@@ -1,9 +1,12 @@
-const path = require(`path`);
+import path from "path";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const winston = require(`winston`);
+import config from "../config";
+import { default as winston } from "winston";
+import { getCallerDir, time } from "../util";
 
-const config = require(`../config`);
-const { time, getCallerDir } = require(`../util`);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const moduleRoot = __dirname;
 const srcRoot = path.join(__dirname, `../`);
@@ -18,14 +21,9 @@ const enumerateErrorFormat = winston.format((info) => {
 function WinstonLogger(fmt) {
   return winston.createLogger({
     level: config.env === `development` ? `debug` : `info`,
-    format: winston.format.combine(
-      enumerateErrorFormat(),
-      config.env === `development`
-        ? winston.format.colorize()
-        : winston.format.uncolorize(),
-      winston.format.splat(),
-      winston.format.printf(fmt),
-    ),
+    format: winston.format.combine(enumerateErrorFormat(), config.env === `development`
+      ? winston.format.colorize()
+      : winston.format.uncolorize(), winston.format.splat(), winston.format.printf(fmt)),
     transports: [
       new winston.transports.Console({
         stderrLevels: [`error`],
@@ -48,4 +46,4 @@ function Logger(name, printPath = false) {
   return WinstonLogger(({ level, message }) => `[⌚ ${time()}] ${level}: [${name}] ${pp}: ${message}`);
 }
 
-module.exports = { logger, Logger };
+export { logger, Logger };

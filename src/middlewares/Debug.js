@@ -1,5 +1,5 @@
-const { logger } = require(`../tool`);
-const { randomIdentifier } = require(`../util`);
+import { logger } from "../tool";
+import { randomIdentifier } from "../util";
 
 // TODO: disable in production
 // eslint-disable-next-line no-unused-vars
@@ -10,10 +10,10 @@ const log = (msg, a) => {
   if (!msg) {
     msg = randomIdentifier();
   }
-  return(err, req, res, next) => {
+  return (err, req, res, next) => {
     logger.debug(`DEBUG 🗿 ${msg} 🗿 `);
     next();
   };
 };
 
-module.exports = log;
+export default log;
