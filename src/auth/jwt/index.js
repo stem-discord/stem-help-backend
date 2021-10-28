@@ -14,8 +14,8 @@ const options = {
   algorithms: [`RS256`],
 };
 
-const centuralizedStrategy = new JwtStrategy(options, function (jwt_payload, done) {
-  getUserById({ _id: jwt_payload.sub }, (err, user) => {
+const centuralizedStrategy = new JwtStrategy(options, function (payload, done) {
+  getUserById({ _id: payload.sub }, (err, user) => {
     if (err) {
       return done(err, false);
     }
@@ -35,8 +35,8 @@ const optionsSchema = {
     return value;
   }),
 };
-const DecenturalizedStrategy = (options) => new JwtStrategy(options, function (jwt_payload, done) {
-  getUserById({ _id: jwt_payload.sub }, (err, user) => {
+const DecenturalizedStrategy = (options) => new JwtStrategy(options, function (payload, done) {
+  getUserById({ _id: payload.sub }, (err, user) => {
     if (err) {
       return done(err, false);
     }
@@ -49,7 +49,7 @@ const DecenturalizedStrategy = (options) => new JwtStrategy(options, function (j
   });
 });
 
-const centuralized = passport.authenticate(hitDb);
+const centuralized = passport.authenticate();
 const Decenturalized = options => passport.authenticate(DecenturalizedStrategy(options));
 const decenturalized = passport.authenticate(DecenturalizedStrategy({}));
 

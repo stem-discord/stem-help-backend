@@ -14,7 +14,7 @@ const router = lib.Router();
 
 router.get(`/discord`, (req, res) => {
   if (config.discord.OAuthUri) {
-    return res.status(httpStatus.OK).json({
+    return void res.status(httpStatus.OK).json({
       status: `OK`,
       message: config.discord.OAuthUri,
     });
@@ -26,14 +26,14 @@ router.get(`/discord`, (req, res) => {
 });
 router.post(`/discord`, async (req, res) => {
   if (!req.query.code) {
-    return res.status(httpStatus.BAD_REQUEST).json({
+    return void res.status(httpStatus.BAD_REQUEST).json({
       status: `ERROR`,
       message: `missing code`,
     });
   }
   const here = req.query.here;
   if (!here) {
-    return res.status(httpStatus.BAD_REQUEST).json({
+    return void res.status(httpStatus.BAD_REQUEST).json({
       status: `ERROR`,
       message: `missing source url`,
     });
@@ -44,7 +44,7 @@ router.post(`/discord`, async (req, res) => {
   const allowedSources = [`http://localhost:4000`];
   console.log(source);
   if (!allowedSources.includes(source)) {
-    return res.status(httpStatus.UNAUTHORIZED).send(`unauthroized`);
+    return void res.status(httpStatus.UNAUTHORIZED).send(`unauthroized`);
   }
   const payload = {
     client_id: config.discord.clientID,
@@ -89,7 +89,7 @@ router.post(`/discord`, async (req, res) => {
 
   if (!user) {
     // user does not exist. create user
-    return res.json({ error: `user does not exist` });
+    return void res.json({ error: `user does not exist` });
     // userService.createUser({
     //   name: discordUser.tag,
     //   user_id: {}

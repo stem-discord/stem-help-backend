@@ -2,12 +2,12 @@ import express from "express";
 import path from "path";
 import expressCspHeader from "express-csp-header";
 import { renderFile } from "ejs";
-import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 import config from "../config";
 import { Logger } from "../tool";
 
+const { dirname } = path;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const logger = new Logger(`static`);
 const { info } = logger;

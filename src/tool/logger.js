@@ -1,11 +1,11 @@
 import path from "path";
-import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 import config from "../config";
 import { default as winston } from "winston";
 import { getCallerDir, time } from "../util";
 
+const { dirname } = path;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const moduleRoot = __dirname;

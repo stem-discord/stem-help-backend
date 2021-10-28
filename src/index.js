@@ -60,7 +60,7 @@ process.on(`SIGTERM`, async (code = 0) => {
     const promises = [];
     for (const f of funcs) {
       if (f) {
-        let p = new Promise(r => f(() => r()));
+        let p = f();
         promises.push(p);
       }
     }

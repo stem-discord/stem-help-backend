@@ -13,7 +13,7 @@ const deleteAtPath = (obj, path, index) => {
 };
 
 const toJSON = (schema) => {
-  let transform;
+  let transform = () => undefined;
   if (schema.options.toJSON && schema.options.toJSON.transform) {
     transform = schema.options.toJSON.transform;
   }
@@ -31,9 +31,7 @@ const toJSON = (schema) => {
       delete ret.__v;
       delete ret.createdAt;
       delete ret.updatedAt;
-      if (transform) {
-        return transform(doc, ret, options);
-      }
+      return transform(doc, ret, options);
     },
   });
 };

@@ -115,6 +115,7 @@ userSchema.methods.addRole = async function (role) {
     this.roles.push(role);
     return await this.save();
   }
+  return false;
 };
 
 userSchema.methods.removeRole = async function (role) {
@@ -122,6 +123,7 @@ userSchema.methods.removeRole = async function (role) {
     this.roles = this.roles.filter((r) => r !== role);
     return await this.save();
   }
+  return false;
 };
 
 export default userSchema;
