@@ -27,7 +27,7 @@ const logger = new Logger(`Index`);
     }
   }
   logger.info(l.join(`\n\n`));
-  logger.info(`Node version: ${process.version}${process.arch}-${process.platform}`);
+  logger.info(`Node version: ${process.version}${process.arch}-${process.platform} mode: ${config.env}`);
 })();
 
 const apiServer = app.listen(config.port, () => {
