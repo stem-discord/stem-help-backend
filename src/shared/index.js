@@ -1,6 +1,6 @@
 import { User as UserSchema } from "../models";
 
-import connection from "../connection";
+import * as connection from "../connection";
 // eslint-disable-next-line no-unused-vars
 const example = {
   syncValue: 1,
@@ -12,7 +12,7 @@ const mongo = {
 };
 
 const discord = {
-  generalChannel: () => connection.discord.channels.fetch(`839399426643591188`),
+  // generalChannel: () => connection.discord.channels.fetch(`839399426643591188`),
 };
 
 export { mongo, discord };
