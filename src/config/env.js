@@ -20,7 +20,7 @@ function generateConfig(env) {
     port: envVars.PORT,
     apiURL: envVars.API_URL,
     mongoose: {
-      url: envVars.MONGODB_URL + (envVars.NODE_ENV === `test` ? `-test` : ``),
+      url: envVars.MONGODB_URL,
       options: {
         useCreateIndex: true,
         useNewUrlParser: true,
