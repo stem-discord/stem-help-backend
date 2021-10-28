@@ -2,8 +2,10 @@
 export * as async from "./async";
 export * as git from "./git";
 export * as discord from "./discord";
+export * as http from "./http";
 
 export { default as ApiError } from "./ApiError";
+export { default as NotImplementedError } from "./NotImplementedError";
 export { default as time } from "./time";
 export { default as pick } from "./pick";
 export { default as catchAsync } from "./catchAsync";
