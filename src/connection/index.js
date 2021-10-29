@@ -28,7 +28,7 @@ const initializations = connections.map(c => c.init());
   const reports = [];
   const WIDTH = 20;
   for (const connection of connections) {
-    reports.push(`➣ [${connection.name}]`.padEnd(WIDTH) + (connection.config ? `: ${connection.isOperational() ? `✔️ ` : `❌ `} ${connection.state}` : `⚠️  No configuration provided`));
+    reports.push(`➣ [${connection.name}]`.padEnd(WIDTH) + (!connection.isNull() ? `: ${connection.isOperational() ? `✔️ ` : `❌ `} ${connection.state}` : `⚠️  ${connection.rejectReason}`));
   }
   logger.info(
     `== Initialization Report ==\n` +

@@ -59,7 +59,7 @@ if (config.mongoose.url) {
     heartbeat: () => true,
   });
 } else {
-  connection = new NullConnection(ns);
+  connection = new NullConnection(ns, `config.mongoose.url is missing`);
 }
 
 export { connection, mongooseConnection, model };
