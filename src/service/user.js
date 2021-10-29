@@ -1,19 +1,15 @@
-import httpStatus from "http-status";
-
 import { mongo } from "../shared";
 import { ApiError } from "../util";
 
-const { User } = mongo.mongo;
-
 const getUserById = async (id) => {
-  return User.findById(id);
+  return mongo.User.findById(id);
 };
 
-const createUser = User.create;
+const createUser = (...arg) => mongo.User.create(...arg);
 
 const discord = {
   getUserById: async (id) => {
-    return User.findOne({ "discord.id": id });
+    return mongo.User.findOne({ "discord.id": id });
   },
 };
 
