@@ -1,5 +1,7 @@
 import * as google from "./google";
 import * as mongo from "./mongo";
+import * as discord from "./discord";
+
 import { Logger } from "../tool";
 import { async } from "../util";
 const { sleep } = async;
@@ -8,6 +10,7 @@ const logger = new Logger(`ConnectionManager`);
 
 const modules = {
   mongo,
+  discord,
 };
 
 const connections = Object.values(modules).map(m => m.connection);
@@ -37,4 +40,4 @@ const initializations = connections.map(c => c.init());
 })();
 
 
-export { mongo };
+export { mongo, discord };
