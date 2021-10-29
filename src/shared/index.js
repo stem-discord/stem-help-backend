@@ -1,18 +1,20 @@
 import { User as UserSchema } from "../models";
 
 import * as connection from "../connection";
-// eslint-disable-next-line no-unused-vars
-const example = {
-  syncValue: 1,
-  asyncValue: new Promise(r => { setTimeout(r(true), 0); }),
-};
+import { RequireProxy } from "./RequireProxy";
 
-const mongo = {
+const mongo = new RequireProxy(() => connection.mongo.connection.isOperational(), {
   User: connection.mongo.model(`User`, UserSchema),
-};
+});
 
-const discord = {
-  // generalChannel: () => connection.discord.channels.fetch(`839399426643591188`),
-};
+// console.log(connection.discord.client);
+
+const stem = new RequireProxy(() => connection.discord.connection.isOperational(), {
+  get generalChannel() { return connection.discord.client.chanels.fetch(`839399426643591188`); },
+});
+
+const discord = new RequireProxy(connection.discord.isOperational, {
+  stem,
+});
 
 export { mongo, discord };
