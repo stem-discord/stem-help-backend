@@ -1,7 +1,6 @@
 import { default as mongoose } from "mongoose";
 
 import token from "./token.js";
-import { toJSON } from "./plugins";
 
 const sessionSchema = mongoose.Schema({
   name: {
@@ -9,11 +8,6 @@ const sessionSchema = mongoose.Schema({
     required: true,
     default: () => `Session ` + `${Math.random()}`.substring(2),
   },
-  tokens: [
-    {
-      type: token,
-    },
-  ],
   active: {
     type: token,
   },

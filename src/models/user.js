@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema({
       return !!s.match(/^[a-z_][a-z0-9_-]{0,31}/);
     },
   },
+  info: {
+    type: Object,
+  },
   email: {
     type: String,
     required: false,
@@ -124,6 +127,12 @@ userSchema.methods.removeRole = async function (role) {
     return await this.save();
   }
   return false;
+};
+
+userSchema.static.createUniqueUsername = async function (username) {
+  // Add numbers at the end of a string username until it is unique
+  // TODO: implement this
+  return username;
 };
 
 export default userSchema;

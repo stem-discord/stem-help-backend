@@ -2,10 +2,7 @@ import { default as mongoose } from "mongoose";
 
 // stores the id of refresh tokens
 const tokenSchema = mongoose.Schema({
-  invalid: {
-    type: Boolean,
-    default: false,
-  },
+  // storing only entries
 }, {
   timestamps: true,
 });
