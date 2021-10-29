@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import { mongo } from "../shared";
 import { ApiError } from "../util";
 
-const { User } = { mongo }.mongo;
+const { User } = mongo.mongo;
 
 const getUserById = async (id) => {
   return User.findById(id);
