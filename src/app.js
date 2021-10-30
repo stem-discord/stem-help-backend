@@ -6,7 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
-
+import passport from "passport";
 import httpStatus from "http-status";
 
 import config from "./config";
@@ -56,6 +56,9 @@ if (config.env.cors) {
 if (config.env === `production`) {
   app.use(`/v1/auth`, authLimiter);
 }
+
+// initialize passport object on every request
+app.use(passport.initialize());
 
 // v1 api routes
 app.use(`/v1`, routes);
