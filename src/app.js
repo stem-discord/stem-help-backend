@@ -5,7 +5,6 @@ import compression from "compression";
 import cors from "cors";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
-import passport from "passport";
 import xss from "xss-clean";
 
 import httpStatus from "http-status";
@@ -15,11 +14,10 @@ import routes from "./routes/v1";
 import staticRoute from "./static";
 import * as middlewares from "./middlewares";
 import { ApiError } from "./util";
-import { Logger, morgan, passport as pass } from "./tool";
+import { Logger, morgan } from "./tool";
 
 const logger = Logger(`Express`);
 
-const { jwtStrategy } = pass;
 const { authLimiter, error } = middlewares;
 const { errorConverter, errorHandler } = error;
 
