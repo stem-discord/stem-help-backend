@@ -4,6 +4,7 @@ export { default as config } from "../../config";
 export * as util from "../../util";
 export * as validations from "../../validations";
 export * as middlewares from "../../middlewares";
+export * as auth from "../../auth";
 export * as services from "../../service";
 export * as pages from "../../pages";
 

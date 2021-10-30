@@ -1,3 +1,3 @@
-export * as userService from "./user";
+export * as getUser from "./getUser";
 export * as swagger from "./swagger";
-export * as TokenService from "./token";
+export * as token from "./token";

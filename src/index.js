@@ -6,6 +6,8 @@ const { status } = git;
 
 const logger = new Logger(`Index`);
 
+logger.info(`Finished importing modules`);
+
 // Log
 (async () => {
   const o = {
