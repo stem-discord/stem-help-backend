@@ -3,11 +3,11 @@ const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string()
       .valid(`production`, `development`, `test`)
-      .default(`development`)
-      .required(),
+      .default(`development`),
     PORT: Joi.number().default(3000).description(`The port for the API server`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
-    JWT_SECRET: Joi.string().description(`JWT secret key`),
+    JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
+    JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
       .default(30)
       .description(`minutes after which access tokens expire`),
