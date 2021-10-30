@@ -1,59 +1,80 @@
-import passport from "passport";
-import passportJwt from "passport-jwt";
-import Joi from "Joi";
+import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+import mongoose from "mongoose";
 
-import config from "../../../config";
-import service from "../../../service";
+import config from "../config";
+import { Token } from "../types";
+import { mongo } from "../shared";
 
-const { JwtStrategy, ExtractJwt } = passportJwt;
-const { getUserById } = service.user;
-
-const options = {
+const jwtOptions = {
+  secretOrKey: config.jwt.privatekey,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: config.jwt.secret,
   algorithms: [`RS256`],
 };
 
-const centuralizedStrategy = new JwtStrategy(options, function (payload, done) {
-  getUserById({ _id: payload.sub }, (err, user) => {
-    if (err) {
-      return done(err, false);
+const jwtRefresh = async (payload, done) => {
+  try {
+    if (payload.type !== Token.REFRESH) {
+      throw new Error(`Expected type '${Token.REFRESH}' got '${payload.type}'`);
     }
-    if (user) {
-      return done(null, user);
-    } else {
-      return done(null, false);
+    const user = await mongo.User.findById(payload.sub);
+    if (!user) {
+      throw new Error(`Deleted user`);
     }
-  });
-});
-
-const optionsSchema = {
-  expiration: Joi.number().custom((value, helpers) => {
-    if (value < 0) {
-      return helpers.message(`expiration in minutes`);
+    if (!user.sessions.include(payload.session)) {
+      // This session was abandoned by the user.
+      // therefore this refresh token is compromised
+      // alert the user
+      mongo.Session.deleteOne({ _id: payload.session });
+      mongo.Token.deleteOne({ _id: payload.jti });
+      throw new Error(`Refresh token is comproimsed. Log in again`);
     }
-    return value;
-  }),
+    const token = await mongo.Token.findById(payload.jti);
+    if (!token) {
+      // user is providing a valid token that has a valid session but itself not valid
+      // this refresh token is compromised. therefore, we should alert the user about this
+      // and delete their current active refresh token and session
+      user.sessions.filter(session => session !== payload.session);
+      // user.markModified('sessions');
+      user.save(); // might have parallel save issues. Deal with it after it happens
+      mongo.Session.deleteOne({ _id: payload.session });
+      // maybe store a separate "compromised sessions"
+      throw new Error(`Refresh token is compromised. Deleting session as well`);
+    }
+    user.session = mongoose.Types.ObjectId(payload.session);
+    done(null, user);
+  } catch (e) {
+    done(e, false);
+  }
 };
-const DecenturalizedStrategy = (options) => new JwtStrategy(options, function (payload, done) {
-  getUserById({ _id: payload.sub }, (err, user) => {
-    if (err) {
-      return done(err, false);
-    }
-    if (user) {
-      return done(null, user);
-    }
-    else {
-      return done(null, false);
-    }
-  });
-});
 
-const centuralized = passport.authenticate();
-const Decenturalized = options => passport.authenticate(DecenturalizedStrategy(options));
-const decenturalized = passport.authenticate(DecenturalizedStrategy({}));
+const jwtAccessWithDB = async (payload, done) => {
+  try {
+    if (payload.type !== Token.REFRESH) {
+      throw new Error(`Expected type '${Token.REFRESH}' got '${payload.type}'`);
+    }
+    const user = await mongo.User.findById(payload.sub);
+    done(null, user);
+  } catch (e) {
+    done(e, false);
+  }
+};
 
+/**
+ * Does not return the full user information. Only information in the jwt
+ */
+const jwtAccessWithoutDB = async (payload, done) => {
+  try {
+    if (payload.type !== Token.ACCESS) {
+      throw new Error(`Expected type '${Token.REFRESH}' got '${payload.type}'`);
+    }
+    done(null, { ...payload.data, _id: payload.sub } );
+  } catch (e) {
+    done(e, false);
+  }
+};
 
-export { centuralized };
-export { decenturalized };
-export { Decenturalized };
+const jwtRefreshStrategy = new JwtStrategy(jwtOptions, jwtRefresh);
+const jwtAccessWithDBStrategy = new JwtStrategy(jwtOptions, jwtAccessWithDB);
+const jwtAccessWithoutDBStrategy = new JwtStrategy(jwtOptions, jwtAccessWithoutDB);
+
+export { jwtRefreshStrategy, jwtAccessWithDBStrategy, jwtAccessWithoutDBStrategy };

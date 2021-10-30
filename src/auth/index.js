@@ -1,1 +1,1 @@
-export const jwt = require(`./jwt`);
+export * as jwt from "./jwt";
