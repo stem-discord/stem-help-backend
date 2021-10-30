@@ -60,6 +60,10 @@ const userSchema = mongoose.Schema({
       type: session,
     },
   ],
+  // current session
+  session: {
+    type: session,
+  },
   // discord module
   discord: {
     id: {
