@@ -27,7 +27,7 @@ logger.info(`Awaiting for module initialization...`);
 const initializations = connections.map(c => c.init());
 
 (async () => {
-  await Promise.any([sleep(5000), Promise.allSettled(initializations)]);
+  await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
   const WIDTH = 20;
   for (const connection of connections) {
