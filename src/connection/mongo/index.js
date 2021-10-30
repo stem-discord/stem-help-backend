@@ -43,7 +43,7 @@ if (config.mongoose.url) {
       if (plural) {
         collectionName = `collection ${plural} with schema ${dbName}`;
       } else {
-        collectionName = `collection of '${dbName}'s`;
+        collectionName = `collection of '${dbName}'`;
       }
       logger.info(`loading ${collectionName}...`);
       await open;
