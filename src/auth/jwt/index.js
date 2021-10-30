@@ -1,9 +1,9 @@
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import mongoose from "mongoose";
 
-import config from "../config";
-import { Token } from "../types";
-import { mongo } from "../shared";
+import config from "../../config";
+import { Token } from "../../types";
+import { mongo } from "../../shared";
 
 const jwtOptions = {
   secretOrKey: config.jwt.privatekey,
