@@ -19,7 +19,13 @@
     "env:help": "node script/envHelp.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "database": "echo 'This assumes that you already installed mongo. I just use it for my convinience' && mongod --dbpath ./database --port"
+    "database": "echo 'This assumes that you already installed mongo. I just use it for my convinience' && mongod --dbpath ./database --port",
+    "test": "mocha",
+    "test:watch": "mocha --watch --watch-ignore [\"*.json\",\"node_modules\",\".git\"] --bail ./test/**/*.spec.js",
+    "test:one": "npm run test:watch -- --grep",
+    "test:coverage": "nyc --reporter=text npm run test",
+    "test:html": "nyc --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
+    "test:docs": "npm run test test/minreq.spec.js "
   },
   "keywords": [
     "node",
@@ -85,9 +91,11 @@
     "husky": "^7.0.0",
     "jest": "^26.0.1",
     "lint-staged": "^11.0.0",
+    "mocha": "^9.1.3",
     "nock": "^13.1.4",
     "node-mocks-http": "^1.8.0",
     "nodemon": "^2.0.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "supertest": "^6.0.1"
   }
