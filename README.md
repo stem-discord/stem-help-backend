@@ -4,7 +4,13 @@ Enviroment file looks like this
 
 If you have any questions on running this ask me in discord.gg/stem
 
+# Starting the project for yourself
+
 To set up `.env`, run `npm run env:help`
+
+And also type `npm run setup`
+
+# Explanation of the project
 
 project structure
 
