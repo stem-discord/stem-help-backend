@@ -13,6 +13,8 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "cross-env NODE_ENV=development nodemon --experimental-specifier-resolution=node --config nodemon.json src",
+    "nodemon": "nodemon --experimental-specifier-resolution=node --watch .",
+    "setup:keygen": "node script/keygen.js",
     "env:help": "node script/envHelp.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

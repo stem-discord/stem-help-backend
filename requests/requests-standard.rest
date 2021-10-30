@@ -1,0 +1,5 @@
+// Test  if the api is working
+GET http://localhost:4000/v1/test
+
+###
+

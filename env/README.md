@@ -1,0 +1,1 @@
+# This folder contains environment variables that are too long or not easily accessible by .env
