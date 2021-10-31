@@ -27,6 +27,14 @@ jobs:
           eslint: true
           auto_fix: true
       
+      - name: initiate mongo
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: 4.4.2
+      
+      - name: initialize with default configs
+        run: npm run setup
+
       - name: run locov
         run: npm run locov
 
