@@ -1,7 +1,7 @@
 import * as lib from "../../lib";
 
 const { Validate } = lib.middlewares;
-const { query } = lib.validations.queryValidation;
+const { query } = lib.validations.query;
 
 const router = lib.Router();
 
