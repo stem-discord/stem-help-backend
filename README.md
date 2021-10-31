@@ -1,8 +1,8 @@
 # Backend for stem.help
 
 
-![ci badge](https://github.com/stem-help/stem-help-backend/actions/workflows/ci.yaml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/stem-help/stem-help-backend/badge.svg?branch=main)](https://coveralls.io/github/stem-help/stem-help-backend?branch=main)
+![ci badge](https://github.com/stem-discord/stem-help-backend/actions/workflows/ci.yaml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/stem-discord/stem-help-backend/badge.svg?branch=main)](https://coveralls.io/github/stem-discord/stem-help-backend?branch=main)
 ![Dev badge](https://img.shields.io/badge/Developing%20stage-Almost%20Stable-ff69b4)
 
 Enviroment file looks like this
