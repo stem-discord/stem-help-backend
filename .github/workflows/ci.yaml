@@ -37,6 +37,11 @@ jobs:
 
       - name: run locov
         run: npm run locov
+        env:
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          MONGODB_URL: mongodb://127.0.0.1:27017/database
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
