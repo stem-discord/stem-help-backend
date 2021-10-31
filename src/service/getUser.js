@@ -5,15 +5,17 @@ import { jwt } from "../auth";
 const createUser = (...arg) => mongo.User.create(...arg);
 
 function ProxyFactory(path) {
+  this.obj = {};
+  let pathStr = path.join(`.`);
+  if (pathStr === `id`) {
+    pathStr = `_id`;
+  }
   return new Proxy(async function (id) {
-    path = path.join(`.`);
-    if (path === `id`) {
-      path = `_id`;
-    }
-    return mongo.User.findOne({ [path]: id });
+    return mongo.User.findOne({ [pathStr]: id });
   }, {
     get(target, key) {
-      return new ProxyFactory([...path, key]);
+      if (!this.obj[key]) this.obj[key] = new ProxyFactory([...path, key]);
+      return this.obj[key];
     },
   });
 }
