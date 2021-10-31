@@ -16,7 +16,8 @@ database
 yarn-error.log
 
 # Environment varibales
-.env*
+.env
+.test.env
 !.env*.example
 env/
 
