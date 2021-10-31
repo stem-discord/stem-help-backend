@@ -13,3 +13,4 @@ export { default as catchAsync } from "./catchAsync";
 export { default as objMerge } from "./objMerge";
 export { default as randomIdentifier } from "./randomIdentifier";
 export { default as getCallerDir } from "./getCallerDir";
+export { default as UsernameGenerator } from "./UsernameGenerator";
