@@ -12,16 +12,19 @@ class Connection extends EventEmitter {
     heartbeat,
     name,
     description,
+    close,
   }) {
     super();
     if (!init) throw new Error(`init is required`);
     if (!heartbeat) throw new Error(`heartbeat is required`);
     if (!name) throw new Error(`name is required`);
+    if (!close) throw new Error(`close is required`);
     this.name = name;
     this.description = description;
     this._state = ConnectionState.UNINITIALIZED;
     this._init = init;
     this.initialized = false;
+    this.close = close;
 
     for (const [event, state] of [
       [ConnectionEvent.connected, ConnectionState.CONNECTED],
@@ -33,8 +36,12 @@ class Connection extends EventEmitter {
         this.state = state;
       });
     }
+
   }
 
+  async close() {
+    return await this.close();
+  }
   /**
    * Helper function
    *

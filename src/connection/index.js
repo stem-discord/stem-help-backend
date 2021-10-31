@@ -39,5 +39,8 @@ const initializations = connections.map(c => c.init());
     reports.join(`\n`));
 })();
 
+async function closeConnections() {
+  return await Promise.all(connections.map(c => c.close()));
+}
 
-export { mongo, discord };
+export { mongo, discord, closeConnections };

@@ -69,6 +69,9 @@ if (config.mongoose.url) {
     init: open,
     // TODO: fix this
     heartbeat: () => true,
+    close: () => {
+      conn.close();
+    },
   });
 } else {
   connection = new NullConnection(ns, `config.mongoose.url is missing`);

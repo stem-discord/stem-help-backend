@@ -37,6 +37,9 @@ if (config.discord.botToken) {
     ...ns,
     init: open,
     heartbeat: client.isReady,
+    close: () => {
+      client.destroy();
+    },
   });
 } else {
   connection = new NullConnection(ns, `config.discord.botToken is missing`);
