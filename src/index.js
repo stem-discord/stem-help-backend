@@ -29,6 +29,9 @@ logger.info(`Finished importing modules`);
     }
   }
   logger.info(l.join(`\n\n`));
+  if (l.length <= 1) {
+    logger.info(`working directory is in sync`);
+  }
   logger.info(`Node version: ${process.version}${process.arch}-${process.platform} mode: ${config.env}`);
 })();
 
