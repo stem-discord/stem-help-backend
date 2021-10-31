@@ -22,5 +22,6 @@ env/
 
 # Code coverage
 coverage
+.nyc_output
 
 *.copy

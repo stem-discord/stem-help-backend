@@ -155,6 +155,14 @@ Returns new
 }
 ```
 
+# Testing
+
+```
+test/
+client - client side requests. Does not import anything from src. Starts a server to test
+server - server side functional testing. Imports most packeges from src.
+unit   - 0 latency tdd style testing. Unit testing functions.
+```
 # copy pasta
 
 `__dirname`
