@@ -34,18 +34,6 @@ if (config.mongoose.url) {
 
   conn.on(`open`, () => {
     dbOpen();
-    if (config.mongoose.dropAll) {
-      conn.db.listCollections().toArray((err, names) => {
-        names.forEach(function(e) {
-          conn.db.dropCollection(e.name).then(() => {
-            logger.info(`dropped collection ${e.name}`);
-          }).catch(e => {
-            logger.error(`Error dropping collection ${e.name}`);
-            logger.error(e);
-          });
-        });
-      });
-    }
   });
 
   model = (dbName, schema, plural) => {
