@@ -4,7 +4,7 @@ import validator from "validator";
 import { paginate, toJSON } from "./plugins";
 
 import { Role } from "../types";
-import session from "./session.js";
+import Session from "./session.js";
 
 const userSchema = mongoose.Schema({
   name: {
@@ -57,44 +57,44 @@ const userSchema = mongoose.Schema({
   },
   sessions: [
     {
-      type: session,
+      type: Session,
     },
   ],
   // current session
   session: {
-    type: session,
+    type: Session,
   },
   // discord module
   discord: {
     id: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     access_token: {
       type: String,
-      required: true,
+      // required: true,
     },
     token_type: {
       type: String,
-      required: true,
+      // required: true,
     },
     expires_in: {
       type: Number,
-      required: true,
+      // required: true,
     },
     refresh_token: {
       type: String,
-      required: true,
+      // required: true,
     },
     // ??
     scope: {
       type: String,
-      required: true,
+      // required: true,
     },
     response_cache: {
       type: Object,
-      required: true,
+      // required: true,
     },
   },
 }, {
