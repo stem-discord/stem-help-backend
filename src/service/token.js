@@ -19,7 +19,7 @@ class Token {
   }
 
   toString() {
-    return this.getJWT();
+    return this.signedToken;
   }
 
   parse(token) {
@@ -89,7 +89,7 @@ async function createSession(user, sessionName) {
   const session = await mongo.Session.create({
     name: sessionName,
   });
-  const rt = await mongo.Token.create();
+  const rt = await mongo.Token.create({});
   const refreshToken = new RefreshToken(user, session._id, rt._id).toString();
   const accessToken = new AccessToken(user).toString();
   return {
