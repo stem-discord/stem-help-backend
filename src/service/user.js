@@ -1,8 +1,8 @@
 import { mongo } from "../shared";
-import { ApiError } from "../util";
+import { ApiError, crypto } from "../util";
 import { jwt } from "../auth";
 
-const createUser = (...arg) => mongo.User.create(...arg);
+const create = (...arg) => mongo.User.create(...arg);
 
 function ProxyFactory(path) {
   this.obj = {};
@@ -20,7 +20,10 @@ function ProxyFactory(path) {
   });
 }
 
-const by = new ProxyFactory([]);
+function validatePassword(user, password) {
+  return crypto.validatePassword(password, user.hash, user.salt);
+}
 
-export { by };
-export default by;
+const getBy = new ProxyFactory([]);
+
+export { getBy, create, validatePassword };
