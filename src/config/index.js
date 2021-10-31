@@ -10,8 +10,13 @@ import proc from "./process.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 dotenv.config({ path: path.join(__dirname, process.env.NODE_ENV === `test` ? `../../.test.env` : `../../.env`) });
-let config = { ...process.env, ...envLoader(), ...argv };
+let config = { ...process.env};
 
+for (const o of [envLoader(), argv]) {
+  for (const [k, v] of Object.entries(o)) {
+    if (v) config[k] = v;
+  }
+}
 // generate proper config
 config = env(config);
 
@@ -20,7 +25,5 @@ config = env(config);
 
 // separate final validation logic
 proc(config);
-
-console.log(config);
 
 export default config;

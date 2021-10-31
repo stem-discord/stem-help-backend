@@ -54,6 +54,4 @@ for(const [key, value] of arr) {
   }
 }
 
-console.log(opt);
-
 export default opt;
