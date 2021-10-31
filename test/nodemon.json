@@ -4,8 +4,7 @@
     "pde": "--throw-deprecation --trace-deprecation"
   },
   "watch": [
-    ".env",
-    "src"
+    "test"
   ],
   "ext": "js,yml,ejs",
   "delay": 1000

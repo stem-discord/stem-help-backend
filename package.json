@@ -24,6 +24,7 @@
     "test": "npm run mocha -- --recursive ./test/**/*.spec.js",
     "test:unit": "npm run mocha ./test/unit",
     "test:watch": "npm run test -- --watch --watch-ignore [\"*.json\",\"node_modules\",\".git\"] --bail ./test/**/*.spec.js",
+    "test:client:watch": "nodemon --experimental-specifier-resolution=node --config ./test/nodemon.json --exec cross-env ONLY_CLIENT=true npm test",
     "test:one": "npm run test:watch -- --grep",
     "test:coverage": "c8 --reporter=text npm run test",
     "test:html": "c8 --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
