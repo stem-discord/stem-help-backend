@@ -7,6 +7,9 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
+      - name: Set head
+        run: git remote set-head origin main
+
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
         id: nvm
@@ -42,6 +45,7 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
           MONGODB_URL: mongodb://127.0.0.1:27017/database
+          PORT: 4000
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
