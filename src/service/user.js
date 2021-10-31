@@ -1,11 +1,12 @@
 import { mongo } from "../shared";
-import { ApiError, crypto } from "../util";
+import { ApiError, crypto, UsernameGenerator } from "../util";
 import { jwt } from "../auth";
+import { logger } from "../tool";
 
 const create = (...arg) => mongo.User.create(...arg);
 
 function ProxyFactory(path) {
-  this.obj = {};
+  const obj = {};
   let pathStr = path.join(`.`);
   if (pathStr === `id`) {
     pathStr = `_id`;
@@ -14,8 +15,8 @@ function ProxyFactory(path) {
     return mongo.User.findOne({ [pathStr]: id });
   }, {
     get(target, key) {
-      if (!this.obj[key]) this.obj[key] = new ProxyFactory([...path, key]);
-      return this.obj[key];
+      if (!obj[key]) obj[key] = new ProxyFactory([...path, key]);
+      return obj[key];
     },
   });
 }
@@ -26,4 +27,10 @@ function validatePassword(user, password) {
 
 const getBy = new ProxyFactory([]);
 
-export { getBy, create, validatePassword };
+async function getValidUsername(username) {
+  // TODO: implement this with dp lookup getby.user_id
+  const gen = UsernameGenerator(username);
+  return gen.next().value;
+}
+
+export { getBy, create, validatePassword, getValidUsername };
