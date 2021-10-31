@@ -2,6 +2,7 @@ import test from "./test";
 import docs from "./docs";
 import auth from "./auth";
 import oauth from "./oauth";
+import database from "./database";
 
 import * as lib from "../lib ";
 
@@ -14,5 +15,7 @@ router.use(`/docs`, docs);
 router.use(`/auth`, auth);
 
 router.use(`/oauth`, oauth);
+
+router.use(`/database`, database);
 
 export default router;

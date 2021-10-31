@@ -4,7 +4,7 @@ import * as lib from "../../lib";
 
 const config = lib.config;
 const { discord } = lib.util;
-const services = lib.services;
+const services = lib.service;
 
 const { buildUri } = discord.oauth;
 const { ApiError, catchAsync } = lib.util;

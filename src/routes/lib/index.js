@@ -5,7 +5,7 @@ export * as util from "../../util";
 export * as validations from "../../validations";
 export * as middlewares from "../../middlewares";
 export * as auth from "../../auth";
-export * as services from "../../service";
+export * as service from "../../service";
 export * as pages from "../../pages";
 
 import * as tool from "../../tool";

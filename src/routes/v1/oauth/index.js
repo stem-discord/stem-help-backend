@@ -8,7 +8,7 @@ const config = lib.config;
 const { Validate, redirect, ServePage } = lib.middlewares;
 const { discord } = lib.validations;
 const { pages } = lib;
-const { userService } = lib.services;
+const { userService } = lib.service;
 
 const router = lib.Router();
 

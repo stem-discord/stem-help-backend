@@ -1,6 +1,6 @@
 import * as lib from "../../lib";
 
-const { swagger } = lib.services;
+const { swagger } = lib.service;
 
 const router = lib.Router();
 
