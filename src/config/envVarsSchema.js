@@ -6,7 +6,6 @@ const envVarsSchema = Joi.object()
       .default(`development`),
     PORT: Joi.number().default(3000).description(`The port for the API server`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
-    MONGODB_DROP_ALL: Joi.string().valid(`true`, `false`).description(`Drops the entire database for testing`),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
     JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()

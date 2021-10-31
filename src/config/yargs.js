@@ -4,8 +4,7 @@ const port = [`port`, `PORT`],
   staticServer = [`static-server`, `STATIC_SERVER`],
   staticServerPort = [`static-server-port`, `STATIC_SERVER_PORT`],
   staticServerApiURL = [`static-server-api-url`, `STATIC_SERVER_API_URL`],
-  staticRoute = [`static-route`, `STATIC_ROUTE`],
-  dropAll = [`drop-all`, `MONGODB_DROP_ALL`];
+  staticRoute = [`static-route`, `STATIC_ROUTE`];
 
 // TODO: finish this
 const argv = yargs
@@ -35,14 +34,9 @@ const argv = yargs
     describe: `Route used by the static-server (means you can use external api server with the mini server)`,
     type: `string`,
   })
-  .option(dropAll[0], {
-    alias: `D`,
-    describe: `deletes all collections in database for testing purposes`,
-    type: `boolean`,
-  })
   .argv;
 
-const arr = [port, staticServer, staticServerPort, staticServerApiURL, staticRoute, dropAll];
+const arr = [port, staticServer, staticServerPort, staticServerApiURL, staticRoute];
 
 const opt = {};
 
