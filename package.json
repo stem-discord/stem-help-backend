@@ -21,12 +21,12 @@
     "lint:fix": "eslint . --fix",
     "database": "echo 'This assumes that you already installed mongo. I just use it for my convinience' && mongod --dbpath ./database --port",
     "mocha": "mocha --experimental-specifier-resolution=node --config ./test/.mocharc.cjs",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules mocha --config ./test/.mocharc.cjs ./test/example.js",
+    "test": "npm run mocha -- --recursive ./test/**/*.spec.js",
     "test:unit": "npm run mocha ./test/unit",
     "test:watch": "npm run test -- --watch --watch-ignore [\"*.json\",\"node_modules\",\".git\"] --bail ./test/**/*.spec.js",
     "test:one": "npm run test:watch -- --grep",
-    "test:coverage": "nyc --reporter=text npm run test",
-    "test:html": "nyc --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
+    "test:coverage": "c8 --reporter=text npm run test",
+    "test:html": "c8 --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
     "test:docs": "npm run test test/minreq.spec.js "
   },
   "keywords": [
@@ -83,6 +83,7 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
+    "c8": "^7.10.0",
     "chai": "^4.3.4",
     "coveralls": "^3.0.7",
     "eslint": "^8.1.0",
@@ -98,7 +99,6 @@
     "nock": "^13.1.4",
     "node-mocks-http": "^1.8.0",
     "nodemon": "^2.0.0",
-    "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "supertest": "^6.0.1"
   }
