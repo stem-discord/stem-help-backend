@@ -21,6 +21,7 @@ function generateConfig(env) {
     apiURL: envVars.API_URL,
     mongoose: {
       url: envVars.MONGODB_URL,
+      dropAll: envVars.MONGODB_DROP_ALL,
       options: {
         useCreateIndex: true,
         useNewUrlParser: true,

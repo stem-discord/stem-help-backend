@@ -9,15 +9,18 @@ import proc from "./process.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-dotenv.config({ path: path.join(__dirname, `../../.env`) });
-let config = { ...process.env, ...envLoader() };
-// populate using yargs
-Object.assign(config, argv);
+dotenv.config({ path: path.join(__dirname, process.env.NODE_ENV === `test` ? `../../.test.env` : `../../.env`) });
+let config = { ...process.env, ...envLoader(), ...argv };
 
 // generate proper config
 config = env(config);
 
+// populate using yargs
+// Object.assign(config, argv);
+
 // separate final validation logic
 proc(config);
+
+console.log(config);
 
 export default config;
