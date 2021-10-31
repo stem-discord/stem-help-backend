@@ -27,8 +27,8 @@ jobs:
           eslint: true
           auto_fix: true
       
-      - name: run ci
-        run: npm run push
+      - name: run locov
+        run: npm run locov
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
