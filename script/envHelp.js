@@ -1,4 +1,4 @@
-import s from "../src/config/envVarsSchema";
+import s from "../src/config/envVarsSchema.js";
 
 // TODO: make this better
 function print(joiKey) {
