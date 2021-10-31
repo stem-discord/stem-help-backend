@@ -65,38 +65,38 @@ const userSchema = mongoose.Schema({
     type: Session,
   },
   // discord module
-  discord: {
-    id: {
-      type: String,
-      // required: true,
-      unique: true,
-    },
-    access_token: {
-      type: String,
-      // required: true,
-    },
-    token_type: {
-      type: String,
-      // required: true,
-    },
-    expires_in: {
-      type: Number,
-      // required: true,
-    },
-    refresh_token: {
-      type: String,
-      // required: true,
-    },
-    // ??
-    scope: {
-      type: String,
-      // required: true,
-    },
-    response_cache: {
-      type: Object,
-      // required: true,
-    },
-  },
+  discord: {},
+  // id: {
+  //   sparse: true,
+  //   type: String,
+  //   // required: true,
+  //   unique: true,
+  // },
+  // access_token: {
+  //   type: String,
+  //   // required: true,
+  // },
+  // token_type: {
+  //   type: String,
+  //   // required: true,
+  // },
+  // expires_in: {
+  //   type: Number,
+  //   // required: true,
+  // },
+  // refresh_token: {
+  //   type: String,
+  //   // required: true,
+  // },
+  // // ??
+  // scope: {
+  //   type: String,
+  //   // required: true,
+  // },
+  // response_cache: {
+  //   type: Object,
+  //   // required: true,
+  // },
 }, {
   timestamps: true,
 });
@@ -131,12 +131,6 @@ userSchema.methods.removeRole = async function (role) {
     return await this.save();
   }
   return false;
-};
-
-userSchema.static.createUniqueUsername = async function (username) {
-  // Add numbers at the end of a string username until it is unique
-  // TODO: implement this
-  return username;
 };
 
 export default userSchema;
