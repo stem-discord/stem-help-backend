@@ -19,7 +19,6 @@ function print(joiKey) {
       v.default = `required`;
     }
   }
-  // eslint-disable-next-line no-console
   console.table(joiKey, [`default`, `type`, `options`, `description`]);
 }
 
