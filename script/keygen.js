@@ -5,7 +5,7 @@
  */
 
 // source: https://github.com/zachgoll/express-jwt-authentication-starter/blob/final/generateKeypair.js
-
+import "./mkdirEnv.js";
 import crypto from "crypto";
 import fs from "fs";
 
