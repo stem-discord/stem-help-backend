@@ -1,4 +1,5 @@
 import Joi from "joi";
+
 const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string()
