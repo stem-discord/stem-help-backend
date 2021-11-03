@@ -41,6 +41,10 @@ const apiServer = app.listen(config.port, () => {
   logger.info(`Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`);
 });
 
+apiServer.ready = new Promise(r => {
+  apiServer.on(`connect`, () => r());
+});
+
 let staticServer;
 
 const exitHandler = () => {
@@ -77,3 +81,5 @@ process.on(`SIGTERM`, async (code = 0) => {
     // do nothing. let the app crash
   }
 });
+
+export { apiServer };

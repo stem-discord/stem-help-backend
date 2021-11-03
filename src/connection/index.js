@@ -26,7 +26,7 @@ logger.info(`Awaiting for module initialization...`);
 
 const initializations = connections.map(c => c.init());
 
-(async () => {
+const openConnections = (async () => {
   await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
   const WIDTH = 20;
@@ -43,4 +43,4 @@ async function closeConnections() {
   return await Promise.all(connections.map(c => c.close()));
 }
 
-export { mongo, discord, closeConnections };
+export { mongo, discord, openConnections, closeConnections };
