@@ -6,7 +6,7 @@ const envVarsSchema = Joi.object()
       .valid(`production`, `development`, `test`)
       .default(`development`),
     PORT: Joi.number().default(3000).description(`The port for the API server`),
-    LOGGING_ABSOLUTE: Joi.string().valid(`true`, `false`).description(`Logging absolute path`),
+    LOGGING_ABSOLUTE: Joi.string().valid(`true`, `false`).description(`Logging absolute time`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
     JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
