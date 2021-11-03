@@ -1,5 +1,3 @@
-// TODO: implement proper setup with proper exists with connection disconnects
-if (!process.env.ONLY_CLIENT) import(`../../src/index.js`);
 import config from "./config.js";
 import fetch from "node-fetch";
 import { expect, assert } from "chai";
@@ -10,13 +8,16 @@ describe(`client run`, function() {
   if (!process.env.ONLY_CLIENT) before(async function() {
     this.timeout(0);
     // TODO: expose proper status checking api
-    await sleep(10 * 1000);
+    const index = await import(`../../src`);
+    const server = await import(`../../src/server.js`);
+    await index.connection.openConnections;
+    await server.ready;
   });
-  it(`Basic api check`, async function() {
+  it(`should return a message`, async function() {
     const res = await fetch(`${url}/test`).then(r => r.json());
     expect(res).to.be.an(`object`).with.property(`message`);
   });
-  it(`Register user`, async function() {
+  it(`should register user`, async function() {
     const res = await fetch(`${url}/auth/register`, {
       method: `POST`,
       headers: {
