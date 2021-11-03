@@ -24,6 +24,7 @@
     "mocha": "mocha --experimental-specifier-resolution=node --config ./test/.mocharc.cjs --exit",
     "test": "npm run mocha -- --recursive ./test/**/*.spec.js",
     "test:unit": "npm run mocha ./test/unit",
+    "test:client": "npm run mocha ./test/client",
     "test:watch": "npm run test -- --watch --watch-ignore [\"*.json\",\"node_modules\",\".git\"] --bail ./test/**/*.spec.js",
     "test:client:watch": "nodemon --experimental-specifier-resolution=node --config ./test/nodemon.json --exec cross-env ONLY_CLIENT=true npm test",
     "test:one": "npm run test:watch -- --grep",
