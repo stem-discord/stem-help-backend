@@ -38,6 +38,9 @@ const envVarsSchema = Joi.object()
     STATIC_SERVER_PORT: Joi.number().description(`The port for another static server (if true, both api server and static server will be online)`),
     STATIC_SERVER_API_URL: Joi.string().description(`The API url this static server should use`),
     STATIC_ROUTE: Joi.string().valid(`true`, `false`).description(`Serve /static`),
+
+    // Below are not exposed to config object, but only process.env
+    ONLY_CLIENT: Joi.string().valid(`true`, `false`).description(`[TEST] Does not launch a server when testing client`),
   })
   .unknown();
 
