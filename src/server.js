@@ -5,7 +5,7 @@ import { git } from "./util";
 import { Logger } from "./tool";
 
 const { status } = git;
-const logger = new Logger(`Index`);
+const logger = new Logger(`Server`);
 
 logger.info(`Finished importing modules`);
 

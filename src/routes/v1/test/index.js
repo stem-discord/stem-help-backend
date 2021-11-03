@@ -16,4 +16,10 @@ router.route(`/no-db`)
   .get(Validate(query), (req, res) => {
     res.send(`u are authorized to see this` + Date.now());
   });
+
+router.route(`/protected`)
+  .get(Validate(query), (req, res) => {
+    res.send(`u are authorized to see this` + Date.now());
+  });
+
 export default router;
