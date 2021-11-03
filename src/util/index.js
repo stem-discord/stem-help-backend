@@ -4,6 +4,7 @@ export * as git from "./git";
 export * as discord from "./discord";
 export * as http from "./http";
 export * as crypto from "./crypto";
+export * as timeUtil from "./time";
 
 export { default as ApiError } from "./ApiError";
 export { default as NotImplementedError } from "./NotImplementedError";

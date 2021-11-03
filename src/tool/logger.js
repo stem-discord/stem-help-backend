@@ -3,7 +3,11 @@ import { fileURLToPath } from 'url';
 
 import config from "../config";
 import { default as winston } from "winston";
-import { getCallerDir, time } from "../util";
+import { getCallerDir, time as timeDefault, timeUtil } from "../util";
+
+const { startTime } = timeUtil;
+
+const time = config.logging.absolute ? startTime : timeDefault;
 
 const { dirname } = path;
 const __dirname = dirname(fileURLToPath(import.meta.url));

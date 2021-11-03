@@ -19,6 +19,9 @@ function generateConfig(env) {
     env: envVars.NODE_ENV,
     port: envVars.PORT,
     apiURL: envVars.API_URL,
+    logging: {
+      absolute: bool(envVars.LOGGING_ABSOLUTE),
+    },
     mongoose: {
       url: envVars.MONGODB_URL,
       options: {
