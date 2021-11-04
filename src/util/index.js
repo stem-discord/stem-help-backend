@@ -15,3 +15,4 @@ export { default as objMerge } from "./objMerge";
 export { default as randomIdentifier } from "./randomIdentifier";
 export { default as getCallerDir } from "./getCallerDir";
 export { default as UsernameGenerator } from "./UsernameGenerator";
+export { default as extractReference } from "./extractReference";
