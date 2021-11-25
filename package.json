@@ -12,6 +12,7 @@
   "type": "module",
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
+    "static": "node --experimental-specifier-resolution=node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --experimental-specifier-resolution=node --config nodemon.json src/server",
     "cleanserver": "cross-env NODE_ENV=test nodemon --experimental-specifier-resolution=node --config nodemon.json src/server --drop-all",
     "nodemon": "nodemon --experimental-specifier-resolution=node --watch .",
