@@ -56,11 +56,13 @@
       fetch(`${env.apiURL}/auth/login`, {
         method: 'POST',
         body: data
-      }).then(res => res.json()).then(res => {
+      }).then(res => {
         if (!res.ok) {
           alert('Wrong username or password');
-          return;
+          throw new Error('invalid credentials');
         }
+        return res;
+      }).then(res => res.json()).then(res => {
         const tp = res;
         window.localStorage.setItem('access_token', tp.access_token);
         window.localStorage.setItem('refresh_token', tp.refresh_token);
