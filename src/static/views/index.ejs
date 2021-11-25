@@ -17,7 +17,7 @@
     const env = JSON.parse(`<%- JSON.stringify(env) %>`);
     const up = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(up);
-    console.log(params);
+    console.log("params", params);
     if (params.code) {
       console.log(`
         THIS IS A BAD WAY OF LOGGING IN. normally,
