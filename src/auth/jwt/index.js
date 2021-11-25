@@ -8,7 +8,7 @@ import { mongo } from "../../shared";
 const jwtOptions = {
   secretOrKey: config.jwt.privatekey,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  algorithms: [`RS256`],
+  algorithms: [`HS256`],
 };
 
 const jwtRefresh = async (payload, done) => {
@@ -49,8 +49,8 @@ const jwtRefresh = async (payload, done) => {
 
 const jwtAccessWithDB = async (payload, done) => {
   try {
-    if (payload.type !== Token.REFRESH) {
-      throw new Error(`Expected type '${Token.REFRESH}' got '${payload.type}'`);
+    if (payload.type !== Token.ACCESS) {
+      throw new Error(`Expected type '${Token.ACCESS}' got '${payload.type}'`);
     }
     const user = await mongo.User.findById(payload.sub);
     done(null, user);
@@ -63,9 +63,10 @@ const jwtAccessWithDB = async (payload, done) => {
  * Does not return the full user information. Only information in the jwt
  */
 const jwtAccessWithoutDB = async (payload, done) => {
+  console.log(`payload`);
   try {
     if (payload.type !== Token.ACCESS) {
-      throw new Error(`Expected type '${Token.REFRESH}' got '${payload.type}'`);
+      throw new Error(`Expected type '${Token.ACCESS}' got '${payload.type}'`);
     }
     done(null, { ...payload.data, _id: payload.sub } );
   } catch (e) {
