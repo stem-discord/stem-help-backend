@@ -21,7 +21,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "database": "echo 'This assumes that you already installed mongo. I just use it for my convinience' && mongod --dbpath ./database --port",
-    "mocha": "mocha --experimental-specifier-resolution=node --config ./test/.mocharc.cjs --exit",
+    "mocha": "mocha --experimental-specifier-resolution=node --config ./test/.mocharc.cjs --exit --require test/global.js",
     "test": "npm run mocha -- --recursive ./test/**/*.spec.js",
     "test:unit": "npm run mocha ./test/unit",
     "test:client": "npm run mocha ./test/client",
@@ -56,7 +56,6 @@
     "prettier"
   ],
   "dependencies": {
-    "am-i-allowed": "^1.3.0",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -68,6 +67,7 @@
     "express-csp-header": "^5.0.0",
     "express-mongo-sanitize": "^2.0.0",
     "express-rate-limit": "^5.0.0",
+    "hellgate": "^0.4.0-beta",
     "helmet": "^4.1.0",
     "http-status": "^1.4.0",
     "joi": "^17.3.0",
