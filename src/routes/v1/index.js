@@ -7,6 +7,11 @@ import database from "./database";
 import * as lib from "../lib ";
 
 const router = new lib.Router();
+const git = lib.util.git;
+
+router.get(`/`, async (req, res) => {
+  res.status(200).json({ message: `OK`, version: await git.status.getLastCommit() });
+});
 
 router.use(`/test`, test);
 
