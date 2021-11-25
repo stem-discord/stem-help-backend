@@ -9,6 +9,14 @@
   </head>
 
   <body>
+    <!-- login form -->
+    <form id="passwordlogin" action="/login" method="POST">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password">
+      <input type="submit" value="Login">
+    </form>
     <button onclick="login()"> Click to login using Discord OAuth </button>
   </body>
   <script>
@@ -35,6 +43,33 @@
       }
       document.location.href = res.message;
     }
+    document.getElementById('passwordlogin').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      const username = data.get('username');
+      const password = data.get('password');
+      if (!username || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+      fetch(`${env.apiURL}/auth/login`, {
+        method: 'POST',
+        body: data
+      }).then(res => res.json()).then(res => {
+        if (!res.ok) {
+          alert('Wrong username or password');
+          return;
+        }
+        const tp = res;
+        window.localStorage.setItem('access_token', tp.access_token);
+        window.localStorage.setItem('refresh_token', tp.refresh_token);
+        document.location.href = `${env.baseURL}/`;
+      }).catch(err => {
+        alert('Something went wrong')
+        return console.log(err);
+      });
+    });
 
   </script>
 
