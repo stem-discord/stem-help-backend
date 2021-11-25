@@ -1,7 +1,7 @@
 import { logger } from "../tool";
 import { randomIdentifier } from "../util";
 
-// TODO: disable in production
+// TODO: disable in production, add call line
 // eslint-disable-next-line no-unused-vars
 const log = (msg, a) => {
   if (a) {
@@ -10,8 +10,8 @@ const log = (msg, a) => {
   if (!msg) {
     msg = randomIdentifier();
   }
-  return (err, req, res, next) => {
-    logger.debug(`DEBUG 🗿 ${msg} 🗿 `);
+  return (req, res, next) => {
+    logger.info(`DEBUG 🗿 ${msg} 🗿 `);
     next();
   };
 };
