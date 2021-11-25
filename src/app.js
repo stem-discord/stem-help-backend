@@ -13,7 +13,7 @@ import config from "./config";
 import routes from "./routes/v1";
 import staticRoute from "./static";
 import * as middlewares from "./middlewares";
-import { ApiError } from "./util";
+import { ApiError, git } from "./util";
 import { Logger, morgan } from "./tool";
 
 const logger = Logger(`Express`);
@@ -52,6 +52,10 @@ if (config.env.cors) {
   app.options(`*`, cors());
 }
 
+app.get(`/`, async (req, res) => {
+  res.status(200).json({ message: `OK`, version: await git.status.getLastCommit() });
+});
+
 // limit repeated failed requests to auth endpoints
 if (config.env === `production`) {
   app.use(`/v1/auth`, authLimiter);
@@ -83,3 +87,4 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 export default app;
+export * as connection from "./connection";
