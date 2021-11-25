@@ -3,6 +3,7 @@ import docs from "./docs";
 import auth from "./auth";
 import oauth from "./oauth";
 import database from "./database";
+import data from "./data";
 
 import * as lib from "../lib ";
 
@@ -22,5 +23,7 @@ router.use(`/auth`, auth);
 router.use(`/oauth`, oauth);
 
 router.use(`/database`, database);
+
+router.use(`/data`, data);
 
 export default router;
