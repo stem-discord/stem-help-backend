@@ -8,6 +8,8 @@ import mongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
 import passport from "passport";
 import httpStatus from "http-status";
+import bodyParser from "body-parser";
+import multer from 'multer';
 
 import config from "./config";
 import routes from "./routes/v1";
@@ -15,6 +17,8 @@ import staticRoute from "./static";
 import * as middlewares from "./middlewares";
 import { ApiError, git } from "./util";
 import { Logger, morgan } from "./tool";
+
+const upload = multer();
 
 const logger = Logger(`Express`);
 
@@ -35,6 +39,16 @@ app.use(helmet());
 
 // parse json request body
 app.use(express.json());
+
+// parse form data
+app.use(bodyParser.json());
+
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true }));
+// form-urlencoded
+
+// for parsing multipart/form-data
+app.use(upload.array());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
