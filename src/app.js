@@ -75,6 +75,14 @@ if (config.env === `production`) {
   app.use(`/v1/auth`, authLimiter);
 }
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
 // initialize passport object on every request
 app.use(passport.initialize());
 
