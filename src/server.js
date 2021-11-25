@@ -1,6 +1,8 @@
 import app from "./app";
 import config from "./config";
 
+import * as connection from "./connection";
+
 import { git } from "./util";
 import { Logger } from "./tool";
 
@@ -41,9 +43,11 @@ const apiServer = app.listen(config.port, () => {
   logger.info(`Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`);
 });
 
-apiServer.ready = new Promise(r => {
-  apiServer.on(`connect`, () => r());
-});
+apiServer.ready = (async () => {
+  await new Promise(rr => { apiServer.on(`connect`, rr); });
+  await connection.openConnections;
+  return true;
+})();
 
 let staticServer;
 
