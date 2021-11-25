@@ -1,18 +1,30 @@
-import config from "./config.js";
 import fetch from "node-fetch";
-import { expect, assert } from "chai";
-const { api: url } = config;
+
+import env from "../config.js";
+
+let url = env.API_URL;
+
 const sleep = t => new Promise(r => { setTimeout(r, t); });
 
 describe(`client run`, function() {
-  if (!config.onlyClient) before(async function() {
-    this.timeout(0);
-    // TODO: expose proper status checking api
-    const index = await import(`../../src`);
-    const server = await import(`../../src/server.js`);
-    await index.connection.openConnections;
-    await server.ready;
-  });
+  if (url.match(/^https?:\/\/localhost/))
+    before(async function() {
+      const isOnline = await fetch(`${url}`).catch(() => false);
+      if (!isOnline) {
+      // eslint-disable-next-line no-console
+        console.log(`Server is not running (), and url was a local host. creating local server...`);
+      } else {
+        return;
+      }
+
+      this.timeout(20 * 1000);
+      const server = await import(`../../src/server.js`);
+      await server.ready;
+      // eslint-disable-next-line require-atomic-updates
+      url = new URL(url);
+      url.port = server.apiServer.address().port;
+      url = url.toString();
+    });
   it(`should return a message`, async function() {
     const res = await fetch(`${url}/test`).then(r => r.json());
     expect(res).to.be.an(`object`).with.property(`message`);
