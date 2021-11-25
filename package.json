@@ -13,7 +13,7 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "cross-env NODE_ENV=development nodemon --experimental-specifier-resolution=node --config nodemon.json src/server",
-    "cleanserver": "cross-env NODE_ENV=test nodemon --experimental-specifier-resolution=node --config nodemon.json src --drop-all",
+    "cleanserver": "cross-env NODE_ENV=test nodemon --experimental-specifier-resolution=node --config nodemon.json src/server --drop-all",
     "nodemon": "nodemon --experimental-specifier-resolution=node --watch .",
     "setup": "npm run setup:keygen",
     "setup:keygen": "node script/keygen.js",
