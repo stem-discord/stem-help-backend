@@ -3,7 +3,7 @@ import validator from "validator";
 
 import { paginate, toJSON } from "./plugins";
 
-import { Role } from "../types";
+import { Role, Group } from "../types";
 import Session from "./session.js";
 
 const userSchema = mongoose.Schema({
@@ -49,7 +49,10 @@ const userSchema = mongoose.Schema({
   roles: [{
     type: String,
     enum: Object.values(Role),
-    default: `user`,
+  }],
+  groups: [{
+    type: String,
+    enum: Object.values(Group),
   }],
   isEmailVerified: {
     type: Boolean,
