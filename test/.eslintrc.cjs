@@ -2,7 +2,11 @@ module.exports = {
   env: {
     mocha: true,
   },
-  globals: {},
+  globals: {
+    expect: true,
+    should: true,
+    assert: true,
+  },
   rules: {
     'no-unused-expressions': `off`,
     'no-unused-vars': `off`,
