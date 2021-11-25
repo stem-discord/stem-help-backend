@@ -46,7 +46,7 @@ const userSchema = mongoose.Schema({
     required: false,
     private: true, // used by the toJSON plugin
   },
-  roles: [{
+  ranks: [{
     type: String,
     enum: Object.values(Role),
   }],
