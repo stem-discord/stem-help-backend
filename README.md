@@ -5,7 +5,17 @@
 [![Coverage Status](https://coveralls.io/repos/github/stem-discord/stem-help-backend/badge.svg?branch=main)](https://coveralls.io/github/stem-discord/stem-help-backend?branch=main)
 ![Dev badge](https://img.shields.io/badge/Developing%20stage-Almost%20Stable-ff69b4)
 
-Enviroment file looks like this
+Enviroment file, do
+
+`npm run env:help`
+
+```
+test
+  env - used for options when testing. Is not loaded to process.env
+.env - used for development and production
+.env.test - used for testing. Loaded by the test
+
+```
 
 If you have any questions on running this ask me in discord.gg/stem
 
