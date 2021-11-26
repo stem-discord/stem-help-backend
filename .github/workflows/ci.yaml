@@ -37,6 +37,8 @@ jobs:
       
       - name: initialize with default configs
         run: npm run setup
+        env:
+          PORT: 4000
 
       - name: run locov
         run: npm run locov
