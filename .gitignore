@@ -3,14 +3,14 @@
 *.temp.*
 
 # IDE
-.vscode
-.idea
+/.vscode
+/.idea
 
 # Dependencies
-node_modules
+/node_modules
 
 # Database
-database
+/database
 
 # yarn error logs
 yarn-error.log
@@ -22,7 +22,7 @@ yarn-error.log
 env/
 
 # Code coverage
-coverage
-.nyc_output
+/coverage
+/.nyc_output
 
 *.copy
