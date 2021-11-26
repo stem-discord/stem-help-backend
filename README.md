@@ -188,3 +188,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 ```
+
+```sh
+npm run dev -- --db-uri mongodb://127.0.0.1:27017/stem-backend-db-test 
+```
