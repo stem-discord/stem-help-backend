@@ -36,7 +36,7 @@ jobs:
           mongodb-version: 4.4.2
       
       - name: Load mongo
-        run: mongorestore --drop --gzip --archive=test/mongodump.gz
+        run: mongorestore --drop --gzip --db=database --archive=test/mongodump.gz
 
       - name: initialize with default configs
         run: npm run setup
