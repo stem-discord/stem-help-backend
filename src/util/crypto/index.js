@@ -13,7 +13,7 @@ const ROUNDS = 10000;
  */
 function validatePassword(password, hash, salt) {
   var hashVerify = crypto.pbkdf2Sync(password, salt, ROUNDS, 64, `sha512`).toString(`hex`);
-  return crypto.timingSafeEqual(hash === hashVerify);
+  return crypto.timingSafeEqual(hash, hashVerify);
 }
 
 /**
