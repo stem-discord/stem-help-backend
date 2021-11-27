@@ -16,6 +16,7 @@ const stem = new RequireProxy(() => connection.discord.connection.isOperational(
 });
 
 const discord = new RequireProxy(connection.discord.isOperational, {
+  get client() { return connection.discord.client; },
   get stem() { return stem; },
 });
 
