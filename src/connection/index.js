@@ -43,4 +43,5 @@ async function closeConnections() {
   return await Promise.all(connections.map(c => c.close()));
 }
 
+// TODO rename open connections as it reads like a function not a promise
 export { mongo, discord, openConnections, closeConnections };
