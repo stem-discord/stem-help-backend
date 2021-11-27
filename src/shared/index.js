@@ -12,7 +12,8 @@ const mongo = new RequireProxy(() => connection.mongo.connection.isOperational()
 });
 
 const stem = new RequireProxy(() => connection.discord.connection.isOperational(), {
-  get generalChannel() { return connection.discord.client.chanels.fetch(`839399426643591188`); },
+  get guild() { return connection.discord.client.guilds.cache.get(`493173110799859713`); },
+  get generalChannel() { return connection.discord.client.chanels.cache.get(`839399426643591188`); },
 });
 
 const discord = new RequireProxy(() => connection.discord.connection.isOperational(), {
