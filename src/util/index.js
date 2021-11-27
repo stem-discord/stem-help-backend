@@ -8,6 +8,7 @@ export * as timeUtil from "./time";
 
 export { default as ApiError } from "./ApiError";
 export { default as NotImplementedError } from "./NotImplementedError";
+export { default as normalize } from "./normalize";
 export { default as time } from "./time";
 export { default as pick } from "./pick";
 export { default as catchAsync } from "./catchAsync";
