@@ -73,7 +73,7 @@ class Connection extends EventEmitter {
     if (this.initialized) {
       return Promise.resolve();
     }
-    return this._init
+    return (async () => this._init())()
       .then(() => {
         this.state = ConnectionState.CONNECTED;
       }).finally(() => {

@@ -31,11 +31,15 @@ if (config.discord.botToken) {
     clientReady();
   });
 
-  client.login(config.discord.botToken);
+  let calledLogin = false;
 
   connection = new Connection({
     ...ns,
-    init: open,
+    init: () => {
+      if (!calledLogin) client.login(config.discord.botToken);
+      calledLogin = true;
+      return open;
+    },
     heartbeat: client.isReady,
     close: () => {
       client.destroy();

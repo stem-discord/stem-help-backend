@@ -20,13 +20,15 @@ for (const name of Object.keys(modules)) {
   moduleNames.push(name);
 }
 
-logger.info(`Loaded modules: ${moduleNames.join(`, `)}`);
+logger.info(`Registered modules: ${moduleNames.join(`, `)}`);
 
-logger.info(`Awaiting for module initialization...`);
-
-const initializations = connections.map(c => c.init());
-
-const openConnections = (async () => {
+const openConnections = (async (selection) => {
+  selection ??= Object.keys(modules);
+  if (!Array.isArray(selection)) {
+    throw new Error(`Expected array, got ${typeof selection}`, selection);
+  }
+  logger.info(`Awaiting for module initialization...` + (selection ? ` [${selection.join(`, `)}]` : ``));
+  const initializations = Object.entries(modules).filter(v => selection.includes(v[0])).map(v => v[1]).map(c => c.connection.init());
   await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
   const WIDTH = 20;
@@ -34,14 +36,13 @@ const openConnections = (async () => {
     reports.push(`➣ [${connection.name}]`.padEnd(WIDTH) + (!connection.isNull() ? `: ${connection.isOperational() ? `✔️ ` : `❌ `} ${connection.state}` : `⚠️  ${connection.rejectReason}`));
   }
   logger.info(
-    `== Initialization Report ==\n` +
+    `== Open Connection Report ==\n` +
     `Module name`.padEnd(WIDTH) + `  Status\n` +
     reports.join(`\n`));
-})();
+});
 
 async function closeConnections() {
   return await Promise.all(connections.map(c => c.close()));
 }
 
-// TODO rename open connections as it reads like a function not a promise
 export { mongo, discord, openConnections, closeConnections };
