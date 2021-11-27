@@ -15,7 +15,7 @@ const stem = new RequireProxy(() => connection.discord.connection.isOperational(
   get generalChannel() { return connection.discord.client.chanels.fetch(`839399426643591188`); },
 });
 
-const discord = new RequireProxy(connection.discord.isOperational, {
+const discord = new RequireProxy(() => connection.discord.connection.isOperational(), {
   get client() { return connection.discord.client; },
   get stem() { return stem; },
 });
