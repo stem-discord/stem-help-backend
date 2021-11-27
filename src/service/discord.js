@@ -17,10 +17,10 @@ export async function userResolveAnything(anything, { limit = 10 }) {
     const stemMember = shared.discord.stem.members.resolve(user);
     if (stemMember) {
       res.push(stemMember, [
-        "username",
-        "tag",
-        "discriminator",
-        "createdTimestamp",
+        `username`,
+        `tag`,
+        `discriminator`,
+        `createdTimestamp`,
       ]);
     }
   }
