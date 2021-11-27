@@ -34,7 +34,6 @@
     "test:html": "c8 --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
     "test:docs": "npm run test test/minreq.spec.js ",
     "locov": "c8 --reporter=lcov npm run test",
-
     "mongodump": "mongodump --gzip --archive=\"test/mongodump.gz\" --uri"
   },
   "keywords": [
@@ -60,6 +59,7 @@
     "prettier"
   ],
   "dependencies": {
+    "@discordjs/collection": "^0.2.4",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
