@@ -1,32 +1,28 @@
-
 import shared from "../shared";
-import { pick, normalize } from "../util";
-import Discord from "discordjs";
-
-// TODO fix this jsdoc
 
 /**
- * @returns {Promise<Discord.User[]>}
+ * @return {Promise<import("discord.js").User[]>}
  */
-async function userResolveAnything(anything, { limit = 10 }) {
+export async function userResolveAnything(anything, { limit = 10 }) {
   await shared.discord.client.users.fetch();
   // let count = 0;
-  // const res = [];
+  const res = [];
 
-  // for (let [key, val] of shared.discord.client.users.cache) {
-  //   if ((() => {
-  //     const stemMember = shared.discord.stem.members.resolve(val);
-  //     if (stemMember) {
-  //       val = stemMember;
-  //       if (true) {}
-  //     }
+  for (let user of shared.discord.client.users.cache.values()) {
+    // If we have the maximum number of users, stop.
+    if (res.length === limit) {
+      break;
+    }
 
-  //   })()) {
-  //     res.push(val, [`username`, `tag`, `discriminator`, `createdTimestamp` ]);
-  //   }
-  //   if (count === 10) break;
-  // }
-  // return res;
+    const stemMember = shared.discord.stem.members.resolve(user);
+    if (stemMember) {
+      res.push(stemMember, [
+        `username`,
+        `tag`,
+        `discriminator`,
+        `createdTimestamp`,
+      ]);
+    }
+  }
+  return res;
 }
-
-export { userResolveAnything };
