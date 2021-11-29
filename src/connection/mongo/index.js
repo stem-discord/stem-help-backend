@@ -16,17 +16,20 @@ let model;
 if (config.mongoose.url) {
   let dbOpen;
 
+  let mongooseConnection;
+
   connection = new Connection({
     ...ns,
     init: () => {
       const conn = mongoose.createConnection(config.mongoose.url, config.mongoose.options);
+
+      mongooseConnection = conn;
 
       conn.then(() => {
         logger.info(`Connected to MongoDB ${config.mongoose.url}`);
       }).catch(e => {
         logger.error(`Error connecting to MongoDB ${config.mongoose.url}`, e);
       });
-
 
       const open = new Promise(resolve => {
         dbOpen = resolve;
@@ -59,7 +62,7 @@ if (config.mongoose.url) {
     },
     heartbeat: () => true,
     close: () => {
-      conn.close();
+      mongooseConnection?.close();
     },
   });
 } else {
