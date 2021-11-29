@@ -38,14 +38,17 @@ logger.info(`Finished importing modules`);
   logger.info(`Node version: ${process.version}${process.arch}-${process.platform} mode: ${config.env}`);
 })();
 
+let listeningCb;
+
 const apiServer = app.listen(config.port, () => {
   logger.info(`App is on '${config.env}' mode`);
   logger.info(`Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`);
+  listeningCb(true);
 });
 
 apiServer.ready = (async () => {
-  await new Promise(rr => { apiServer.on(`connect`, rr); });
-  await connection.openConnections;
+  await new Promise(r => { listeningCb = r; });
+  await connection.openConnections();
   return true;
 })();
 

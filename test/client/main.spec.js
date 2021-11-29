@@ -19,7 +19,9 @@ describe(`client run`, function() {
 
       this.timeout(20 * 1000);
       const server = await import(`../../src/server.js`);
-      await server.ready;
+      // eslint-disable-next-line no-console
+      console.log(`Imported server. Awaiting ready signal...`);
+      await server.apiServer.ready;
       // eslint-disable-next-line require-atomic-updates
       url = new URL(url);
       url.port = server.apiServer.address().port;
