@@ -23,10 +23,12 @@ const envPath = path.join(__dirname, argv.f);
 
 const env = dotenv.parse(fs.readFileSync(envPath));
 
-const schema = Joi.object().keys({
+const schemaObj = {
   API_URL: Joi.string()
     .description(`API URL to connect to (client)`).pattern(/^http/),
-});
+};
+
+const schema = Joi.object().keys(schemaObj);
 
 const { value: vars, error } = schema
   .prefs({ errors: { label: `key` } })
@@ -39,4 +41,8 @@ if(error) {
   throw error;
 }
 
-export default env;
+for (const k of Object.keys(schemaObj)) {
+  process.env[k] = vars[k];
+}
+
+export default vars;
