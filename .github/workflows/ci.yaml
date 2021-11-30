@@ -36,13 +36,7 @@ jobs:
           mongodb-version: 4.4.2
       
       - name: Load mongo
-        run: >
-          mongorestore --drop --gzip --archive=test/mongodump.gz &&
-          DATABASE=$(cat ./script/mongo/getFirstDb.js | mongo --quiet) &&
-          echo "Renaming $DATABASE -> database" && 
-          mongodump -d $DATABASE -o .mongodump && 
-          mongorestore -d database .mongodump/$DATABASE && 
-          rm -rf .mongodump
+        run: npm run mongoreset -- mongodb://127.0.0.1:27017/database
 
       - name: initialize with default configs
         run: npm run setup
