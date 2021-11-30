@@ -38,7 +38,7 @@ function nockFunction(args) {
   }
 
   // only enable those that were not persisted
-  args = args.filter(v => v._persist === false);
+  args = args.filter(v => v.enabled === false);
 
   before(`Nocking [${args.join(`,`)}]`, function () {
     for (const name of args) {
