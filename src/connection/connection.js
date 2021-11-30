@@ -25,6 +25,7 @@ class Connection extends EventEmitter {
     this._init = init;
     this.initialized = false;
     this.close = close;
+    this.null = false;
 
     for (const [event, state] of [
       [ConnectionEvent.connected, ConnectionState.CONNECTED],
@@ -101,10 +102,6 @@ class Connection extends EventEmitter {
   isOperational() {
     return this.state === ConnectionState.CONNECTED;
   }
-
-  isNull() {
-    return false;
-  }
 }
 
 
@@ -119,7 +116,9 @@ class NullConnection extends Connection {
       description,
       init: () => {},
       heartbeat: () => {},
+      close: () => {},
     });
+    this.null = true;
     this.rejectReason = rejectReason;
   }
 
@@ -136,10 +135,6 @@ class NullConnection extends Connection {
 
   set state(_) {
     throw new Error(`cannot set state of ${this.name} because it is uninitialized`);
-  }
-
-  isNull() {
-    return true;
   }
 }
 

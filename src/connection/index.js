@@ -33,7 +33,7 @@ const openConnections = (async (selection) => {
   const reports = [];
   const WIDTH = 20;
   for (const connection of connections) {
-    reports.push(`➣ [${connection.name}]`.padEnd(WIDTH) + (!connection.isNull() ? `: ${connection.isOperational() ? `✔️ ` : `❌ `} ${connection.state}` : `⚠️  ${connection.rejectReason}`));
+    reports.push(`➣ [${connection.name}]`.padEnd(WIDTH) + (!connection.null ? `: ${connection.isOperational() ? `✔️ ` : `❌ `} ${connection.state}` : `⚠️  ${connection.rejectReason}`));
   }
   logger.info(
     `== Open Connection Report ==\n` +
