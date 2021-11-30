@@ -1,10 +1,11 @@
-import { openConnections } from "../../src/connection";
+import { discord as discordConnection, openConnections } from "../../src/connection";
 import { discord } from "../../src/service";
 import Discord, { Collection } from "discord.js";
 import { mock } from "../shared";
 
 describe(`Service tests`, function() {
   before(async function () {
+    if (discordConnection.connection.null) this.skip(`discord connection is required. reject reason: ${discordConnection.rejectReason}`);
     this.timeout(10000);
     await openConnections([`discord`]);
   });
