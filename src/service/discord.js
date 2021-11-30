@@ -2,7 +2,7 @@ import SortedArray from "sorted-array";
 import stringSimilarity from "string-similarity";
 // import Discord from "discord.js";
 
-import * as shared from "../shared";
+import shared from "../shared";
 import { DSA, normalize } from "../util";
 
 const similarityScore = Symbol(`similarityScore. The lower the score, the greater the similarity`);
@@ -20,9 +20,8 @@ const EMPTY_USER = {
  * @return {import("discord.js").User[]} Adds an additional property `nickname` if the user is in stem.
  */
 function userResolveAnything(anything, { limit = 10 } = {}) {
-  const _shared = Object.getPrototypeOf(this) === null ? shared : this;
-  const client = _shared.discord.client;
-  const guild = _shared.discord.stem.guild;
+  const client = shared.discord.client;
+  const guild = shared.discord.stem.guild;
   // ID match
   if (anything.match(/^\d{16,19}$/)) {
     let user = client.user.cache.get(anything);

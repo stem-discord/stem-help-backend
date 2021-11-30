@@ -2,13 +2,13 @@ import hellgate from "hellgate";
 
 const { Hellgate, Ring, IHotel } = hellgate;
 
-import { mongo } from "../../shared";
+import shared from "../../shared";
 
 class MongoHotel extends IHotel {
   async user(userId) {
     let user;
     if (typeof userId === `string`) {
-      user = await mongo.User.findById(userId);
+      user = await shared.mongo.User.findById(userId);
     } else {
       user = userId;
     }

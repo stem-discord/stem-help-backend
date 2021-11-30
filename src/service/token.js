@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { mongo } from "../shared";
+import shared from "../shared";
 import config from "../config";
 import { Token as TokenType } from "../types";
 
@@ -70,8 +70,8 @@ async function generateAccessToken(user, refreshToken) {
   // FIXME: add duration checks
   // eslint-disable-next-line
   if (true) {
-    mongo.Token.deleteOne({ _id: refreshToken._id });
-    const rt = await mongo.Token.create();
+    shared.mongo.Token.deleteOne({ _id: refreshToken._id });
+    const rt = await shared.mongo.Token.create();
     refreshToken = new RefreshToken(user, user.session, rt._id).toString();
   }
 
@@ -86,10 +86,10 @@ async function generateAccessToken(user, refreshToken) {
  */
 async function createSession(user, sessionName) {
   sessionName = sessionName ?? `default session`;
-  const session = await mongo.Session.create({
+  const session = await shared.mongo.Session.create({
     name: sessionName,
   });
-  const rt = await mongo.Token.create({});
+  const rt = await shared.mongo.Token.create({});
   const refreshToken = new RefreshToken(user, session._id, rt._id).toString();
   const accessToken = new AccessToken(user).toString();
   return {
@@ -99,11 +99,11 @@ async function createSession(user, sessionName) {
 }
 
 async function deleteSession(sessionId) {
-  return await mongo.Session.deleteOne({ _id: sessionId });
+  return await shared.mongo.Session.deleteOne({ _id: sessionId });
 }
 
 async function deleteCurrentSession(user) {
-  return await Promise.all(deleteSession(user.session), mongo.Token.deleteOne({ _id: user.jti }));
+  return await Promise.all(deleteSession(user.session), shared.mongo.Token.deleteOne({ _id: user.jti }));
 }
 
 export { createSession, generateAccessToken, deleteSession, deleteCurrentSession };

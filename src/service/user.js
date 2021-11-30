@@ -1,9 +1,9 @@
-import { mongo } from "../shared";
+import shared from "../shared";
 import { ApiError, crypto, UsernameGenerator } from "../util";
 import { jwt } from "../auth";
 import { logger } from "../tool";
 
-const create = (...arg) => mongo.User.create(...arg);
+const create = (...arg) => shared.mongo.User.create(...arg);
 
 function ProxyFactory(path) {
   const obj = {};
@@ -12,7 +12,7 @@ function ProxyFactory(path) {
     pathStr = `_id`;
   }
   return new Proxy(async function (id) {
-    return mongo.User.findOne({ [pathStr]: id });
+    return shared.mongo.User.findOne({ [pathStr]: id });
   }, {
     get(target, key) {
       if (!obj[key]) obj[key] = new ProxyFactory([...path, key]);

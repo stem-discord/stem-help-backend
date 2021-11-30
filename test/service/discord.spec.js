@@ -1,6 +1,7 @@
 import { openConnections } from "../../src/connection";
 import { discord } from "../../src/service";
 import Discord, { Collection } from "discord.js";
+import { mock } from "../shared";
 
 describe(`Service tests`, function() {
   before(async function () {
@@ -14,36 +15,9 @@ describe(`Service tests`, function() {
     expect(res[0]).to.have.property(`id`);
   });
   describe(`Mock tests`, function() {
-    // TODO expose this to service folder context
-    const mockShared = {
-      discord: {
-        stem: {
-          guild: {
-            members: {
-              // This is stupid
-              resolve(m) { return { nickname: `Satan`, ...m }; },
-            },
-          },
-        },
-        client: {
-          users: {
-            cache: new Collection(
-              [
-                [
-                  `220327217312432129`,
-                  {
-                    id: `220327217312432129`,
-                    username: `nope`,
-                    discriminator: `6924`,
-                  },
-                ],
-              ]),
-          },
-        },
-      },
-    };
+    mock([`discord`]);
     it(`Should work with no users`, function() {
-      const res = Reflect.apply(discord.userResolveAnything, mockShared, [`nope#6924`]);
+      const res = discord.userResolveAnything(`nope#6924`);
       expect(res).to.be.an(`array`);
       expect(res).to.have.lengthOf(1);
     });

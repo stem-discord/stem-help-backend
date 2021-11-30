@@ -21,4 +21,4 @@ const discord = new RequireProxy(() => connection.discord.connection.isOperation
   get stem() { return stem; },
 });
 
-export { mongo, discord };
+export default { mongo, discord };
