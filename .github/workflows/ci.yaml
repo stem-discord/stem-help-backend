@@ -39,7 +39,7 @@ jobs:
           mongodb-version: 4.4.2
       
       - name: Load mongo
-        run: npm run mongoreset -- mongodb://127.0.0.1:27017/database
+        run: npm run mongoreset -- mongodb://127.0.0.1:27017/database-test
 
       - name: initialize with default configs
         run: npm run setup
@@ -52,7 +52,7 @@ jobs:
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
-          MONGODB_URL: mongodb://127.0.0.1:27017/database
+          MONGODB_URL: mongodb://127.0.0.1:27017/database-test
           PORT: 4000
           LOGGING_ABSOLUTE: "true"
 
