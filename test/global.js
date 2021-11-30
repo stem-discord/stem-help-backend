@@ -31,16 +31,31 @@ function needs(it, ...ops) {
     }
   }
 
+  let t;
+
   if (reason) {
-    let t = it.test.title;
+    t = it.test.title;
     if (t) {
       t += ` - reason: ${reason}`;
     } else {
       t = reason;
     }
-    it.test.title = `[⚠️ SKIPPED] ${t}`;
-    it.skip(reason);
   }
+
+  function edit(it) {
+    it.title = `[⚠️ SKIPPED] ${t}`;
+  }
+
+  // It is a suite
+  if (it.currentTest) {
+    for (const test of it.currentTest.parent.tests) {
+      edit(test);
+    }
+  } else {
+    edit(it.test);
+  }
+
+  it.skip(reason);
 }
 
 global.needs = needs;
