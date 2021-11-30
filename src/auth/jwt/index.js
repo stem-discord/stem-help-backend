@@ -63,7 +63,6 @@ const jwtAccessWithDB = async (payload, done) => {
  * Does not return the full user information. Only information in the jwt
  */
 const jwtAccessWithoutDB = async (payload, done) => {
-  console.log(`payload`);
   try {
     if (payload.type !== Token.ACCESS) {
       throw new Error(`Expected type '${Token.ACCESS}' got '${payload.type}'`);
