@@ -15,7 +15,7 @@ describe(`Service tests`, function() {
     expect(res[0]).to.have.property(`id`);
   });
   describe(`Mock tests`, function() {
-    mock([`discord`]);
+    mock(`discord`);
     it(`Should work with no users`, function() {
       const res = discord.userResolveAnything(`nope#6924`);
       expect(res).to.be.an(`array`);
