@@ -20,7 +20,7 @@ for (const module of Object.values(interceptors)) {
 function nockFunction(args) {
   // eslint-disable-next-line no-console
   return console.warn(`Until nock accepts my pr, this feature is disabled`);
-  // eslint-disable-next-line no-unreachable
+  /* eslint-disable no-unreachable */
   if (typeof beforeEach !== `function`) {
     throw new Error(`Mocha was not loaded`);
   }
