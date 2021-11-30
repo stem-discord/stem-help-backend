@@ -32,48 +32,51 @@ describe(`client run`, function() {
     const res = await fetch(`${url}/test`).then(r => r.json());
     expect(res).to.be.an(`object`).with.property(`message`);
   });
-  describe(`mongo related methods`, function() {
-    before(function() {
-      if (mongo.connection.null) this.skip(`Mongo db is required. The connection is not online because: ${mongo.rejectReason}`);
-    });
-    it(`should register user`, async function() {
-      const res = await fetch(`${url}/auth/register`, {
-        method: `POST`,
-        headers: {
-          "Content-Type": `application/json`,
-        },
-        body: JSON.stringify({
-          username: `the_monk`,
-          password: `testa09gakj3f!`,
-        }),
-      }).then(r => r.json());
-      expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
-    });
-    it(`should let monk log in`, async function() {
-      const res = await fetch(`${url}/auth/login`, {
-        method: `POST`,
-        headers: {
-          "Content-Type": `application/json`,
-        },
-        body: JSON.stringify({
-          username: `the_monk`,
-          password: `testa09gakj3f!`,
-        }),
-      }).then(r => r.json());
-      expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
-    });
-    it(`should let john the admin log in`, async function() {
-      const res = await fetch(`${url}/auth/login`, {
-        method: `POST`,
-        headers: {
-          "Content-Type": `application/json`,
-        },
-        body: JSON.stringify({
-          username: `johndoe`,
-          password: `password1`,
-        }),
-      }).then(r => r.json());
-      expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
-    });
+  const mongoOnline = () => {
+    if (mongo.connection.null) {
+      throw new Error(`Mongo connection is offline. ${mongo.connection.rejectReason}`);
+    }
+  };
+  it(`should register user`, async function() {
+    needs(this, mongoOnline);
+    const res = await fetch(`${url}/auth/register`, {
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`,
+      },
+      body: JSON.stringify({
+        username: `the_monk`,
+        password: `testa09gakj3f!`,
+      }),
+    }).then(r => r.json());
+    expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
+  });
+  it(`should let monk log in`, async function() {
+    needs(this, mongoOnline);
+    const res = await fetch(`${url}/auth/login`, {
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`,
+      },
+      body: JSON.stringify({
+        username: `the_monk`,
+        password: `testa09gakj3f!`,
+      }),
+    }).then(r => r.json());
+    expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
+  });
+  it(`should let john the admin log in`, async function() {
+    needs(this, mongoOnline);
+    const res = await fetch(`${url}/auth/login`, {
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`,
+      },
+      body: JSON.stringify({
+        username: `johndoe`,
+        password: `password1`,
+      }),
+    }).then(r => r.json());
+    expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
   });
 });
