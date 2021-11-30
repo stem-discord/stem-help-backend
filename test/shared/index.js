@@ -39,13 +39,18 @@ const mock = (args) => {
     throw new Error(`Mocha was not loaded`);
   }
 
-  if (!Array.isArray(args)) throw new Error(`Expected array, got ${typeof args}`, args);
-
-  args ??= Object.keys(shared);
+  if (args === undefined) {
+    args = Object.keys(mocks);
+  } else {
+    if (!Array.isArray(args)) args = [args];
+  }
 
   const temp = Object.create(null);
 
   for (const name of args) {
+    if (!shared[name]) {
+      throw new Error(`Unknown shared object: ${name}`);
+    }
     temp[name] = shared[name];
   }
 
