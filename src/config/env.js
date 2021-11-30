@@ -14,7 +14,6 @@ function generateConfig(env) {
     throw new Error(`Config validation error: ${error.message}`);
   }
 
-  // TODO: deepMerge
   return {
     env: envVars.NODE_ENV,
     port: envVars.PORT,

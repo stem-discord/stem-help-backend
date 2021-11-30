@@ -7,7 +7,7 @@ const port = [`port`, `PORT`],
   staticRoute = [`static-route`, `STATIC_ROUTE`],
   dbURI = [`db-uri`, `MONGODB_URL`];
 
-// TODO: finish this
+// TODO refactor this
 const argv = yargs
 // accept port number as argument
   .option(port[0], {
