@@ -6,6 +6,7 @@ module.exports = {
     expect: true,
     should: true,
     assert: true,
+    needs: true,
   },
   rules: {
     'no-unused-expressions': `off`,
