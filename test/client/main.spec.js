@@ -7,6 +7,8 @@ let url = env.API_URL;
 
 const sleep = t => new Promise(r => { setTimeout(r, t); });
 
+let local = false;
+
 describe(`client run`, function() {
   if (url.match(/^https?:\/\/localhost/))
     before(async function() {
@@ -17,6 +19,8 @@ describe(`client run`, function() {
       } else {
         return;
       }
+
+      local = true;
 
       this.timeout(20 * 1000);
       const server = await import(`../../src/server.js`);
@@ -33,6 +37,7 @@ describe(`client run`, function() {
     expect(res).to.be.an(`object`).with.property(`message`);
   });
   const mongoOnline = () => {
+    if (!local) return;
     if (mongo.connection.null) {
       throw new Error(`Mongo connection is offline. ${mongo.connection.rejectReason}`);
     }
@@ -65,18 +70,26 @@ describe(`client run`, function() {
     }).then(r => r.json());
     expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
   });
-  it(`should let john the admin log in`, async function() {
-    needs(this, mongoOnline);
-    const res = await fetch(`${url}/auth/login`, {
-      method: `POST`,
-      headers: {
-        "Content-Type": `application/json`,
-      },
-      body: JSON.stringify({
-        username: `johndoe`,
-        password: `password1`,
-      }),
-    }).then(r => r.json());
-    expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
+  describe(`Admin John`, function() {
+    before(`Login`, async function() {
+      needs(this, mongoOnline);
+      const res = await fetch(`${url}/auth/login`, {
+        method: `POST`,
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        body: JSON.stringify({
+          username: `johndoe`,
+          password: `password1`,
+        }),
+      }).then(r => r.json());
+      expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
+
+      this.accessToken = res.access_token;
+      this.refreshToken = res.refresh_token;
+    });
+    it(`Should allow him to refresh his tokens`, function() {
+
+    });
   });
 });
