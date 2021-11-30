@@ -46,6 +46,9 @@ jobs:
         env:
           PORT: 4000
 
+      - name: run 0 config
+        run: npm test
+
       - name: run locov
         run: npm run locov
         env:
