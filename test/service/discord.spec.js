@@ -1,5 +1,5 @@
 import { discord as discordConnection, openConnections } from "../../src/connection";
-import { discord } from "../../src/service";
+import { discord, stembot } from "../../src/service";
 import Discord, { Collection } from "discord.js";
 import { mock } from "../shared";
 
@@ -24,5 +24,20 @@ describe(`Service tests`, function() {
       expect(res).to.be.an(`array`);
       expect(res).to.have.lengthOf(1);
     });
+  });
+});
+
+describe(`Bot test`, function() {
+  it(`Should reply with hi when stemtest is said`, async function() {
+    mock(`discord`);
+    const msg = {
+      author: {
+        id: `341446613056880641`,
+      },
+      content: `stemtest`,
+      reply: chai.spy(() => {}),
+    };
+    stembot.client.emit(`message`, msg);
+    await expect(msg.reply).to.have.been.called.once.with(`hi`);
   });
 });
