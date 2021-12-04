@@ -66,6 +66,10 @@ const unexpectedErrorHandler = (error) => {
 process.on(`uncaughtException`, unexpectedErrorHandler);
 process.on(`unhandledRejection`, unexpectedErrorHandler);
 
+process.on(`warning`, (warning) => {
+  logger.warn(warning.stack);
+});
+
 process.on(`SIGTERM`, async (code = 0) => {
   try {
     logger.info(`SIGTERM signal received`);
