@@ -43,7 +43,7 @@ class CustomClient extends Discord.Client {
 
     return new Promise((r, re) => {
       super.emit(event, ...args);
-      process.setImmediate(() => {
+      setImmediate(() => {
         const waiting = [];
         for (const [k, v] of Object.entries(this._taskQueue)) {
           if (ignore.includes(k)) continue;
