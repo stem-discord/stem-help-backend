@@ -7,6 +7,39 @@ import { async } from "../../util";
 const ns = new Namespace(`DiscordBot`, `Discord bot client`);
 const logger = ns.logger;
 
+class CustomClient extends Discord.Client {
+  constructor(options) {
+    super(options);
+    this._taskQueue = {};
+    this._taskCounter = 0;
+  }
+
+  on(event, callback) {
+    super.on(event, async (...args) => {
+      const i = this._taskCounter;
+      let resolve;
+      let reject;
+      this._taskQueue[i] = new Promise((r, re) => { resolve = r; reject = re; });
+      this._taskCounter++;
+      try {
+        resolve(await callback(...args));
+      } catch (e) {
+        logger.error(e);
+        reject(e);
+      }
+      delete this._taskQueue[i];
+    });
+  }
+
+  get tasks() {
+    return Object.values(this._taskQueue);
+  }
+
+  get tasksAsPromise() {
+    return Promise.all(this.tasks);
+  }
+}
+
 let connection;
 let client;
 
@@ -17,7 +50,7 @@ if (config.discord.botToken) {
     clientReady = r;
   });
 
-  client = new Discord.Client({
+  client = new CustomClient({
     partials: [`MESSAGE`, `CHANNEL`, `REACTION`],
     intents: Discord.Intents.ALL,
     disableMentions: `all`,
