@@ -3,6 +3,7 @@ module.exports = {
     mocha: true,
   },
   globals: {
+    chai: true,
     expect: true,
     should: true,
     assert: true,
