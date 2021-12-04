@@ -31,6 +31,27 @@ class CustomClient extends Discord.Client {
     });
   }
 
+  /**
+   * Returns a promise
+   */
+  emit(event, ...args) {
+    args ??= [];
+
+    const ignore = Object.keys(this._taskQueue);
+
+    return new Promise((r, re) => {
+      super.emit(event, ...args);
+      process.setImmediate(() => {
+        const waiting = [];
+        for (const [k, v] of Object.entries(this._taskQueue)) {
+          if (ignore.includes(k)) continue;
+          waiting.push(v);
+        }
+        Promise.all(waiting).then(r).catch(re);
+      });
+    });
+  }
+
   get tasks() {
     return Object.values(this._taskQueue);
   }
