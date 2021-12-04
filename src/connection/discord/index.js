@@ -4,6 +4,8 @@ import config from "../../config";
 import { Connection, NullConnection, Namespace } from "../connection";
 import { async } from "../../util";
 
+Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0);
+
 const ns = new Namespace(`DiscordBot`, `Discord bot client`);
 const logger = ns.logger;
 
