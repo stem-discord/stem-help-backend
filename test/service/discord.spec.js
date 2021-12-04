@@ -38,7 +38,7 @@ describe(`Bot test mock`, function() {
       content: `stemtest`,
       reply: chai.spy(() => {}),
     };
-    stembot.client.emit(`message`, msg);
+    stembot.client.emit(`messageCreate`, msg);
     await expect(msg.reply).to.have.been.called.once.with(`hi`);
   });
   it(`Should give zen role when give me role is said`, async function() {
@@ -56,7 +56,7 @@ describe(`Bot test mock`, function() {
         },
       },
     };
-    await stembot.client.emit(`message`, msg);
+    await stembot.client.emit(`messageCreate`, msg);
     await expect(msg.member.roles.add).to.have.been.called.once.with(`882261053793239061`);
   });
 });

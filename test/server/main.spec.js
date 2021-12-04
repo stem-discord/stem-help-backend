@@ -18,3 +18,7 @@ describe(`discord api`, function () {
     expect(res).to.not.have.property(`custom`);
   });
 });
+
+describe(`JWT Authflow`, function () {
+  it(`Should insert a token in the database`);
+});
