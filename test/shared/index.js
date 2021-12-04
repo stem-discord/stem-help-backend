@@ -9,6 +9,7 @@ const mocks = {
   discord: {
     stem: {
       guild: {
+        id: `493173110799859713`,
         members: {
           // This is stupid
           resolve(m) { return { nickname: `Satan`, ...m }; },
