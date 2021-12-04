@@ -27,9 +27,10 @@ describe(`Service tests`, function() {
   });
 });
 
-describe(`Bot test`, function() {
+// TODO have proper mocks
+describe(`Bot test mock`, function() {
+  mock(`discord`);
   it(`Should reply with hi when stemtest is said`, async function() {
-    mock(`discord`);
     const msg = {
       author: {
         id: `341446613056880641`,
@@ -39,5 +40,23 @@ describe(`Bot test`, function() {
     };
     stembot.client.emit(`message`, msg);
     await expect(msg.reply).to.have.been.called.once.with(`hi`);
+  });
+  it(`Should give zen role when give me role is said`, async function() {
+    const msg = {
+      author: {
+        id: `341446613056880641`,
+      },
+      content: `give me zen`,
+      guild: {
+        id: `493173110799859713`,
+      },
+      member: {
+        roles: {
+          add: chai.spy(() => {}),
+        },
+      },
+    };
+    await stembot.client.emit(`message`, msg);
+    await expect(msg.member.roles.add).to.have.been.called.once.with(`882261053793239061`);
   });
 });
