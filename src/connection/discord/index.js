@@ -62,19 +62,17 @@ class CustomClient extends Discord.Client {
 }
 
 let connection;
-let client;
+const client = new CustomClient({
+  partials: [`MESSAGE`, `CHANNEL`, `REACTION`],
+  intents: Discord.Intents.ALL,
+  disableMentions: `all`,
+});
 
 if (config.discord.botToken) {
   Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0);
   let clientReady;
   const open = new Promise(r => {
     clientReady = r;
-  });
-
-  client = new CustomClient({
-    partials: [`MESSAGE`, `CHANNEL`, `REACTION`],
-    intents: Discord.Intents.ALL,
-    disableMentions: `all`,
   });
 
   client.on(`error`, e => {
