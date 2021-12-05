@@ -36,7 +36,7 @@ class CustomClient extends Discord.Client {
   /**
    * Returns a promise
    */
-  emit(event, ...args) {
+  emitPromise(event, ...args) {
     args ??= [];
 
     const ignore = Object.keys(this._taskQueue);
