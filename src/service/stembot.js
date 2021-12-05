@@ -1,5 +1,6 @@
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
+import { isMain } from "../util";
 import shared from "../shared";
 import { client as discordClient } from "../connection/discord";
 
@@ -32,10 +33,22 @@ client.on(`messageCreate`, async message => {
       await message.reply(`hi`);
     }
     if (message.content === `stemdisable`) {
+      // There is no way to enable this again though
+      // Just a proof of concept for now
       client.handler[`messageCreate`] = () => true;
     }
   }
 });
 
+
+if (isMain(import.meta)) {
+  /* eslint-disable no-console */
+  (async () => {
+    const { connection } = await import(`../connection/discord`);
+    await connection.init().then(() => {
+      console.log(`ready`);
+    });
+  })();
+}
 
 export { client };
