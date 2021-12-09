@@ -8,9 +8,12 @@ const data = mongoose.Schema({
   // storing only entries
   namespace: {
     type: String,
-    required: false,
+    required: true,
     unique: true,
     index: true,
+  },
+  data: {
+    type: mongoose.Schema.Types.Mixed,
   },
 }, {
   timestamps: true,
