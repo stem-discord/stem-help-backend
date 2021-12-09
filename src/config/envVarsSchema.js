@@ -6,6 +6,7 @@ const envVarsSchema = Joi.object()
       .valid(`production`, `development`, `test`)
       .default(`development`),
     PORT: Joi.number().default(3000).description(`The port for the API server`),
+    SUPER_SECRET_ADMIN_KEY: Joi.string().default(`admin`).description(`The super secret admin key used to bypass anything for testing a feature in production`),
     LOGGING_ABSOLUTE: Joi.string().valid(`true`, `false`).description(`Logging absolute time`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
