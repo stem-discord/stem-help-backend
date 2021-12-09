@@ -8,6 +8,7 @@ module.exports = {
     ecmaVersion: 2022,
     sourceType: `module`,
   },
+  plugins: [`import-quotes`],
   extends: [`eslint:recommended`],
   rules: {
     "no-console": `warn`,
@@ -17,6 +18,7 @@ module.exports = {
     "jest/expect-expect": `off`,
     "security/detect-object-injection": `off`,
     "no-unused-vars": `warn`,
+    "import-quotes/import-quotes": [`error`, `double`],
 
     "array-callback-return": [`error`, { allowImplicit: true, checkForEach: true }],
     "no-duplicate-imports": [`error`, { includeExports: true }],
