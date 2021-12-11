@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 
 import * as lib from "../../lib/index.js";
 
-const { ApiError, catchAsync } = lib.util;
+const { ApiError, catchAsync, pick } = lib.util;
 const config = lib.config;
 
 const router = lib.Router();
@@ -11,6 +11,7 @@ const router = lib.Router();
 router.get(`/:query`, (req, res) => {
   const query = req.params.query;
   const users = lib.service.discord.userResolveAnything(query);
+  users.map(v => pick(v, [`id`, `username`, `discriminator`, `avatar`]));
   res.json(users);
 });
 

@@ -3,6 +3,7 @@ import docs from "./docs/index.js";
 import auth from "./auth/index.js";
 import oauth from "./oauth/index.js";
 import data from "./data/index.js";
+import service from "./service/index.js";
 
 import * as lib from "../lib/index.js";
 
@@ -22,5 +23,7 @@ router.use(`/auth`, auth);
 router.use(`/oauth`, oauth);
 
 router.use(`/data`, data);
+
+router.use(`/service`, service);
 
 export default router;
