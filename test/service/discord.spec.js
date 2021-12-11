@@ -37,6 +37,7 @@ describe(`Bot test mock`, function() {
       },
       content: `stemtest`,
       reply: chai.spy(() => {}),
+      guild: { id:`493173110799859713` },
     };
     stembot.client.emit(`messageCreate`, msg);
     await expect(msg.reply).to.have.been.called.once.with(`hi`);
