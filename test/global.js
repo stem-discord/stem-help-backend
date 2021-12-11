@@ -21,15 +21,20 @@ function needs(it, ...ops) {
 
   let reason;
 
-  for (const op of ops) {
-    if (op === false) {
-      reason = `Unknown reason`;
-      break;
+  for (let op of ops) {
+    if (op instanceof Function) {
+      try {
+        op = op();
+        if (op?.then) {
+          throw new Error(`'needs' should be sync, recieved promise`, op);
+        }
+      } catch (e) {
+        reason = e.message;
+        break;
+      }
     }
-    try {
-      reason = op();
-    } catch (e) {
-      reason = e.message;
+    if (op) {
+      reason = `Unknown reason`;
       break;
     }
   }
@@ -44,7 +49,7 @@ function needs(it, ...ops) {
       t = reason;
     }
   } else {
-    t = `${it.test.title} - Unknown reason`;
+    return;
   }
 
   function edit(it) {
