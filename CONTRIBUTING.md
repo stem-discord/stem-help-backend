@@ -5,8 +5,8 @@ import always into two groups
 // module imports such as "express"
 import express from "express";
 
-// relative imports such as "./config"
-import config from "./config";
+// relative imports such as "./config/index.js"
+import config from "./config/index.js";
 
 // Object deconstruction "imports" go after imports but before main code body
 const { mod } = config;
