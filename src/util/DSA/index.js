@@ -1,1 +1,1 @@
-export * as lcs from "./lcs";
+export * as lcs from "./lcs.js";

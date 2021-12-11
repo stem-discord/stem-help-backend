@@ -4,6 +4,6 @@
  *
  */
 
-import "./unit";
-import "./server";
-import "./client";
+import "./unit/index.js";
+import "./server/index.js";
+import "./client/index.js";

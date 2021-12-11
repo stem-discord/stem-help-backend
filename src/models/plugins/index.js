@@ -1,2 +1,2 @@
-export { default as toJSON } from "./toJSON";
-export { default as paginate } from "./paginate";
+export { default as toJSON } from "./toJSON.js";
+export { default as paginate } from "./paginate.js";

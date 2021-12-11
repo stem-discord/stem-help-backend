@@ -1,8 +1,7 @@
 import Discord from "discord.js";
 
-import config from "../../config";
-import { Connection, NullConnection, Namespace } from "../connection";
-import { async } from "../../util";
+import config from "../../config/index.js";
+import { Connection, NullConnection, Namespace } from "../connection.js";
 
 Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0);
 

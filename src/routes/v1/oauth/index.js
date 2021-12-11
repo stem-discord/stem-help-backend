@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import fetch from "node-fetch";
 
-import * as lib from "../../lib";
+import * as lib from "../../lib/index.js";
 
 const config = lib.config;
 

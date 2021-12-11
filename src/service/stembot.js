@@ -1,8 +1,8 @@
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
-import { isMain } from "../util";
-import shared from "../shared";
-import { client as discordClient } from "../connection/discord";
+import { isMain } from "../util/index.js";
+import shared from "../shared/index.js";
+import { client as discordClient } from "../connection/discord/index.js";
 
 let client = new EventEmitter2();
 

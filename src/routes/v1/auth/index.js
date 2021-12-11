@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 
-import * as lib from "../../lib";
+import * as lib from "../../lib/index.js";
 
 const config = lib.config;
 const { discord } = lib.util;

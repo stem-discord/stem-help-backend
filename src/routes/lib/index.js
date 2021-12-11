@@ -1,15 +1,15 @@
 import express from "express";
 
-export { default as config } from "../../config";
-export * as util from "../../util";
-export * as validations from "../../validations";
-export * as middlewares from "../../middlewares";
-export * as auth from "../../auth";
-export * as shared from "../../shared";
-export * as service from "../../service";
-export * as pages from "../../pages";
+export { default as config } from "../../config/index.js";
+export * as util from "../../util/index.js";
+export * as validations from "../../validations/index.js";
+export * as middlewares from "../../middlewares/index.js";
+export * as auth from "../../auth/index.js";
+export * as shared from "../../shared/index.js";
+export * as service from "../../service/index.js";
+export * as pages from "../../pages/index.js";
 
-import * as tool from "../../tool";
+import * as tool from "../../tool/index.js";
 
 export const Router = express.Router;
 export const logger = tool.logger;

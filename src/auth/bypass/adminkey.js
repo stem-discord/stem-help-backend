@@ -1,7 +1,7 @@
 import passportCustom from "passport-custom";
 import passport from "passport";
 
-import config from "../../config";
+import config from "../../config/index.js";
 
 const CustomStrategy = passportCustom.Strategy;
 

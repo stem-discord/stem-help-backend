@@ -1,10 +1,10 @@
-import test from "./test";
-import docs from "./docs";
-import auth from "./auth";
-import oauth from "./oauth";
-import data from "./data";
+import test from "./test/index.js";
+import docs from "./docs/index.js";
+import auth from "./auth/index.js";
+import oauth from "./oauth/index.js";
+import data from "./data/index.js";
 
-import * as lib from "../lib ";
+import * as lib from "../lib/index.js";
 
 const router = new lib.Router();
 const git = lib.util.git;

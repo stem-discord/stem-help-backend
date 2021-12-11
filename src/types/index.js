@@ -1,5 +1,5 @@
-export { default as Token } from "./Token";
-export { default as Role } from "./Role";
-export { default as Group } from "./Group";
-export { default as ConnectionEvent } from "./ConnectionEvent";
-export { default as ConnectionState } from "./ConnectionState";
+export { default as Token } from "./Token/index.js";
+export { default as Role } from "./Role/index.js";
+export { default as Group } from "./Group/index.js";
+export { default as ConnectionEvent } from "./ConnectionEvent/index.js";
+export { default as ConnectionState } from "./ConnectionState/index.js";

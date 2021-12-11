@@ -1,6 +1,6 @@
 import { default as mongoose } from "mongoose";
 
-import Token from "./token";
+import Token from "./token.js";
 
 const sessionSchema = mongoose.Schema({
   name: {

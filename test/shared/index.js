@@ -3,7 +3,7 @@
 
 import Discord, { Collection } from "discord.js";
 
-import shared from "../../src/shared";
+import shared from "../../src/shared/index.js";
 
 const mocks = {
   discord: {

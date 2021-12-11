@@ -1,1 +1,1 @@
-export * as oauth from "./oauth";
+export * as oauth from "./oauth.js";

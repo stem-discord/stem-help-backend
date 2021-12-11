@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import httpStatus from "http-status";
-import config from "../config";
-import { logger } from "../tool";
-import { ApiError } from "../util";
+import config from "../config/index.js";
+import { logger } from "../tool/index.js";
+import { ApiError } from "../util/index.js";
 
 // eslint-disable-next-line no-unused-vars
 const errorConverter = (err, req, res, next) => {

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import validator from "validator";
 
-import { paginate, toJSON } from "./plugins";
+import { paginate, toJSON } from "./plugins/index.js";
 
-import { Role, Group } from "../types";
+import { Role, Group } from "../types/index.js";
 import Session from "./session.js";
 
 const userSchema = mongoose.Schema({

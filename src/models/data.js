@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 
-import { toJSON } from "./plugins";
+import { toJSON } from "./plugins/index.js";
 
 const data = mongoose.Schema({
   // storing only entries

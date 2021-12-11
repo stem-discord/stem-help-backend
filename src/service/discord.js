@@ -2,8 +2,8 @@ import SortedArray from "sorted-array";
 import stringSimilarity from "string-similarity";
 // import Discord from "discord.js";
 
-import shared from "../shared";
-import { DSA, normalize } from "../util";
+import shared from "../shared/index.js";
+import { DSA, normalize } from "../util/index.js";
 
 const similarityScore = Symbol(`similarityScore. The lower the score, the greater the similarity`);
 

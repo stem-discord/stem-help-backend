@@ -1,7 +1,7 @@
-import * as models from "../models";
+import * as models from "../models/index.js";
 
-import * as connection from "../connection";
-import { RequireProxy } from "./RequireProxy";
+import * as connection from "../connection/index.js";
+import { RequireProxy } from "./RequireProxy.js";
 
 const mongo = new RequireProxy(() => connection.mongo.connection.isOperational(), {
   get User() { return connection.mongo.model(`User`, models.User); },

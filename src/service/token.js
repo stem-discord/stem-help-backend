@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import shared from "../shared";
-import config from "../config";
-import { Token as TokenType } from "../types";
+import shared from "../shared/index.js";
+import config from "../config/index.js";
+import { Token as TokenType } from "../types/index.js";
 
 class Token {
   constructor(type, payload, expire) {

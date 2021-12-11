@@ -22,5 +22,3 @@ function localeTime(time) {
 }
 
 export { startTime, localeTime };
-
-export default localeTime;

@@ -1,10 +1,10 @@
 import app from "./app.js";
-import config from "./config";
+import config from "./config/index.js";
 
-import * as connection from "./connection";
+import * as connection from "./connection/index.js";
 
-import { git } from "./util";
-import { Logger } from "./tool";
+import { git } from "./util/index.js";
+import { Logger } from "./tool/index.js";
 
 const { status } = git;
 const logger = new Logger(`Server`);

@@ -2,7 +2,7 @@
 // import path from "path";
 // import { renderFile } from "ejs";
 
-// import config from "../config";
+// import config from "../config/index.js";
 
 // const { config, logger } = config;
 // const { info } = logger;

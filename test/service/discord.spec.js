@@ -1,7 +1,7 @@
-import { discord as discordConnection, openConnections } from "../../src/connection";
-import { discord, stembot } from "../../src/service";
+import { discord as discordConnection, openConnections } from "../../src/connection/index.js";
+import { discord, stembot } from "../../src/service/index.js";
 import Discord, { Collection } from "discord.js";
-import { mock } from "../shared";
+import { mock } from "../shared/index.js";
 
 describe(`Service tests`, function() {
 

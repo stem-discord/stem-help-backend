@@ -2,7 +2,7 @@ import hellgate from "hellgate";
 
 const { Hellgate, Ring, IHotel } = hellgate;
 
-import shared from "../../shared";
+import shared from "../../shared/index.js";
 
 class MongoHotel extends IHotel {
   async user(userId) {

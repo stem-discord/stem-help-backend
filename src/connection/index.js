@@ -1,9 +1,9 @@
-import * as google from "./google";
-import * as mongo from "./mongo";
-import * as discord from "./discord";
+import * as google from "./google/index.js";
+import * as mongo from "./mongo/index.js";
+import * as discord from "./discord/index.js";
 
-import { Logger } from "../tool";
-import { async } from "../util";
+import { Logger } from "../tool/index.js";
+import { async } from "../util/index.js";
 const { sleep } = async;
 
 const logger = new Logger(`ConnectionManager`);

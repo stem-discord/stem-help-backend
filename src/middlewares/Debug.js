@@ -1,5 +1,5 @@
-import { logger } from "../tool";
-import { randomIdentifier } from "../util";
+import { logger } from "../tool/index.js";
+import { randomIdentifier } from "../util/index.js";
 
 // TODO: disable in production, add call line
 // eslint-disable-next-line no-unused-vars

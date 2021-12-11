@@ -1,4 +1,4 @@
-import { mongo } from "../shared";
+import { mongo } from "../shared/index.js";
 
 const getCount = () => {
   return mongo.User.countDocuments({});

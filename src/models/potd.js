@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { toJSON } from "./plugins";
+import { toJSON } from "./plugins/index.js";
 import userUploadable from "./base/userUploadable.js";
 
 const potdSchema = mongoose.Schema({

@@ -1,8 +1,7 @@
 import httpStatus from "http-status";
 import mongoose from "mongoose";
-import passport from "passport";
 
-import * as lib from "../../lib";
+import * as lib from "../../lib/index.js";
 
 const { mongo } = lib.shared;
 const { catchAsync } = lib.util;
@@ -28,9 +27,7 @@ router.route(`/:id`)
 
 router.route(`/`)
   .post(
-    (req, res, next) => {
-      passport.authenticate(lib.auth.jwt.jwtAccessWithDBStrategy)(req, res, next);
-    },
+    // lib.auth.jwt.jwtAccess,
     catchAsync(async (req, res, next) => {
       const user = req.user;
       const can = await lib.auth.hellgate.rings.data.can(user, `create`);

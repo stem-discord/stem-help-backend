@@ -1,13 +1,11 @@
 import path from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
-import config from "../config";
+import config from "../config/index.js";
 import { default as winston } from "winston";
-import { getCallerDir, time as timeDefault, timeUtil } from "../util";
+import { getCallerDir, time as t } from "../util/index.js";
 
-const { startTime } = timeUtil;
-
-const time = config.logging.absolute ? startTime : timeDefault;
+const time = config.logging.absolute ? t.startTime : t.localeTime;
 
 const { dirname } = path;
 const __dirname = dirname(fileURLToPath(import.meta.url));

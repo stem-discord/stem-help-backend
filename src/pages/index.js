@@ -1,2 +1,2 @@
-export * as error from "./error";
-export * as status from "./status";
+export * as error from "./error/index.js";
+export * as status from "./status/index.js";

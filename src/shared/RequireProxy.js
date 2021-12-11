@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 
-import { ApiError  } from "../util";
+import { ApiError  } from "../util/index.js";
 
 function RequireProxy(validator, obj) {
   const cache = {};

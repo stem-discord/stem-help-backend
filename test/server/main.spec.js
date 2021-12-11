@@ -1,5 +1,5 @@
-import fetch from 'node-fetch';
-import { nock } from "../mock";
+import fetch from "node-fetch";
+import { nock } from "../mock/index.js";
 
 describe(`discord api`, function () {
   it(`should return 404 (mock)`, async function() {

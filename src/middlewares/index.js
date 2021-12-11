@@ -1,8 +1,8 @@
-export { default as Debug } from "./Debug";
-export { default as Validate } from "./Validate";
-export { default as ServePage } from "./ServePage";
+export { default as Debug } from "./Debug.js";
+export { default as Validate } from "./Validate.js";
+export { default as ServePage } from "./ServePage.js";
 
-export { default as redirect } from "./redirect";
+export { default as redirect } from "./redirect.js";
 
-export * as error from "./error";
-export * as rateLimiter from "./rateLimiter";
+export * as error from "./error.js";
+export * as rateLimiter from "./rateLimiter.js";

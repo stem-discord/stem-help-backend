@@ -1,4 +1,4 @@
-import * as lib from "../../lib";
+import * as lib from "../../lib/index.js";
 
 const { Validate } = lib.middlewares;
 const { query } = lib.validations.query;

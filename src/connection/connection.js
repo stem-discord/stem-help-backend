@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 // import { http, NotImplementedError } from '../util';
-import { Logger } from "../tool";
-import { ConnectionState, ConnectionEvent } from "../types";
+import { Logger } from "../tool/index.js";
+import { ConnectionState, ConnectionEvent } from "../types/index.js";
 
 /**
  * use ConnectionEvent to emit events

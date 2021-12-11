@@ -1,6 +1,6 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import swaggerDefinition from "../docs";
+import swaggerDefinition from "../docs/index.js";
 
 const specs = swaggerJsdoc({
   swaggerDefinition,

@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 import env from "../config.js";
-import { mongo } from "../../src/connection";
+import { mongo } from "../../src/connection/index.js";
 
 let url = env.API_URL;
 

@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-import config from "../../config";
-import { Connection, NullConnection, Namespace } from "../connection";
-import { async } from "../../util";
+import config from "../../config/index.js";
+import { Connection, NullConnection, Namespace } from "../connection.js";
+import { async } from "../../util/index.js";
 
 const { sleep } = async;
 

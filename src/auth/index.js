@@ -1,2 +1,2 @@
-export * as jwt from "./jwt";
-export * as hellgate from "./hellgate";
+export * as jwt from "./jwt/index.js";
+export * as hellgate from "./hellgate/index.js";

@@ -2,10 +2,10 @@ import express from "express";
 import path from "path";
 import expressCspHeader from "express-csp-header";
 import { renderFile } from "ejs";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
-import config from "../config";
-import { Logger } from "../tool";
+import config from "../config/index.js";
+import { Logger } from "../tool/index.js";
 
 const { dirname } = path;
 const __dirname = dirname(fileURLToPath(import.meta.url));

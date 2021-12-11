@@ -1,5 +1,12 @@
-import pack from "../../package.json";
-import config from "../config";
+import fs from "fs";
+import config from "../config/index.js";
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const pack = JSON.parse(fs.readFileSync(path.join(__dirname, "../../package.json")));
 
 const { version } = pack;
 

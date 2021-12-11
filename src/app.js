@@ -9,14 +9,14 @@ import xss from "xss-clean";
 import passport from "passport";
 import httpStatus from "http-status";
 import bodyParser from "body-parser";
-import multer from 'multer';
+import multer from "multer";
 
-import config from "./config";
-import routes from "./routes/v1";
-import staticRoute from "./static";
-import * as middlewares from "./middlewares";
-import { ApiError, git } from "./util";
-import { Logger, morgan } from "./tool";
+import config from "./config/index.js";
+import routes from "./routes/v1/index.js";
+import staticRoute from "./static/index.js";
+import * as middlewares from "./middlewares/index.js";
+import { ApiError, git } from "./util/index.js";
+import { Logger, morgan } from "./tool/index.js";
 
 const upload = multer();
 
@@ -109,4 +109,4 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 export default app;
-export * as connection from "./connection";
+export * as connection from "./connection/index.js";

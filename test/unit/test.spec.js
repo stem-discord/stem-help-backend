@@ -1,4 +1,4 @@
-import * as util from "../../src/util";
+import * as util from "../../src/util/index.js";
 
 import { expect, assert } from "chai";
 
