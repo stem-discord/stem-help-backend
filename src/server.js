@@ -74,10 +74,14 @@ process.on(`SIGTERM`, async (code = 0) => {
   try {
     logger.info(`SIGTERM signal received`);
 
+
+    const sc = staticServer?.close;
+
     const funcs = [
-      apiServer.close,
-      staticServer?.close,
+      () => apiServer.close(),
+      sc ? () => sc() : null,
     ];
+
     const promises = [];
     for (const f of funcs) {
       if (f) {
