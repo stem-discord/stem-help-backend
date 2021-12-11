@@ -72,7 +72,8 @@ app.get(`/`, async (req, res) => {
 
 // limit repeated failed requests to auth endpoints
 if (config.env === `production`) {
-  app.use(`/v1/auth`, authLimiter);
+  // TODO write auth limiter
+  // app.use(`/v1/auth`, authLimiter);
 }
 
 passport.serializeUser(function(user, done) {
