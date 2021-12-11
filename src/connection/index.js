@@ -45,4 +45,4 @@ async function closeConnections() {
   return await Promise.all(connections.map(c => c.close()));
 }
 
-export { mongo, discord, openConnections, closeConnections };
+export { mongo, discord, connections, openConnections, closeConnections };
