@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 
 import env from "../config.js";
 import { mongo } from "../../src/connection/index.js";
+import { mock } from "../shared/index.js";
 
 let url = env.API_URL;
 
@@ -90,6 +91,15 @@ describe(`client run`, function() {
     });
     it(`Should allow him to refresh his tokens`, function() {
 
+    });
+  });
+  describe(`service discord`, function() {
+    describe(`discord`, function () {
+      mock(`discord`);
+      it(`Should be able to fetch a user`, async function() {
+        const res = await fetch(`${url}/service/discordlookup/nope`).then(r => r.json());
+        expect(res).to.be.an(`array`);
+      });
     });
   });
 });
