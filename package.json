@@ -13,6 +13,7 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "static": "node src/server.js",
+    "update": "git pull && npm ci && pm2 restart app",
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json src/server",
     "cleanserver": "npm run mongoreset && cross-env NODE_ENV=test nodemon --config nodemon.json src/server --drop-all",
     "nodemon": "nodemon --watch .",
