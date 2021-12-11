@@ -125,48 +125,31 @@ index.js - #(app.js, db.js) registers top level process hooks and exits.
 
 ## User
 
-Has multiple sessions
+A `User` has multiple refresh tokens. Usually one for each client.
 
-```js
-{
-    sessions: [Sessions]
-}
-```
+However, the property `sessions` does not exist on the `User` model
 
-## Session (user can delete)
+This is because sessions automatically 
 
-```js
-{
-    tokens: [Tokens],
-    active: "active token ref"
-}
-```
 
-## Token (expires after year)
-
-```js
-{
-    invalid: Boolean
-}
-```
 
 # JWT
 
 ## Refresh token
+
 ```json
 {
-    "sub": "db index for token",
-    "type": "refresh",
-    "sid": "session id"
+    "sub": "user id",
+    "type": "REFRESH",
 }
 ```
 
-Returns new
+## Access token
+
 ```json
 {
-    "sub": "db index for token",
-    "type": "refresh",
-    "sid": "session id"
+    "sub": "user id",
+    "type": "ACCESS"
 }
 ```
 
