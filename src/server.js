@@ -67,6 +67,7 @@ process.on(`uncaughtException`, unexpectedErrorHandler);
 process.on(`unhandledRejection`, unexpectedErrorHandler);
 
 process.on(`warning`, (warning) => {
+  if (warning.message.includes(`stream/web`)) return;
   logger.warn(warning.stack);
 });
 
