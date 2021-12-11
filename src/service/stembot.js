@@ -1,23 +1,29 @@
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
 import { isMain } from "../util/index.js";
+import config from "../config/index.js";
 import shared from "../shared/index.js";
 import { client as discordClient } from "../connection/discord/index.js";
 
 let client = new EventEmitter2();
 
 /**
- * [eventname]: function
- * if return true, does not propagate. You can also return a string to indicate a reason for not propagating.
- * this should only be used in testing situations or an emergency stop in production
+ * [eventname]: function. if true, pass through emit
+ * event name "*" is the catch all
  */
 client.handler = {};
+
+if (config.env !== `production`) {
+  client.handler[`*`] = function() { };
+}
 
 // Passthrough
 for (const event of Object.values(Discord.Constants.Events)) {
   discordClient.on(event, (...args) => {
-    const func = client.handler?.[event];
-    if (func && func(...args)) return;
+    for (const n of [event, `*`]) {
+      const func = client.handler?.[n];
+      if (func && func(...args)) return;
+    }
     client.emit(event, ...args);
   });
 }
