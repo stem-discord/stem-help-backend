@@ -46,6 +46,8 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
   if (lastIndexOfPound > 0) {
     targetUsername = anything.substring(0, lastIndexOfPound);
     targetDiscriminator = anything.substring(lastIndexOfPound + 1);
+  } else {
+    targetUsername = anything;
   }
 
   for (const user of values) {
@@ -62,7 +64,7 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
       const ss = stringSimilarity.compareTwoStrings(targetUsername, username);
       score = ss > score ? ss : score;
     }
-    if (discriminator) {
+    if (discriminator && targetDiscriminator) {
       score += 0.2 * DSA.lcs.LCSFromStart(targetDiscriminator, discriminator);
     }
     user[similarityScore] = -1 * score;
