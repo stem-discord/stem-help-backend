@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 module.exports = {
   env: {
     es6: true,
@@ -8,7 +7,7 @@ module.exports = {
     ecmaVersion: 2022,
     sourceType: `module`,
   },
-  plugins: [`import-quotes`],
+  plugins: [`import-quotes`, `import`],
   extends: [`eslint:recommended`],
   rules: {
     "no-console": `warn`,
@@ -19,6 +18,10 @@ module.exports = {
     "security/detect-object-injection": `off`,
     "no-unused-vars": `warn`,
     "import-quotes/import-quotes": [`error`, `double`],
+
+    "import/extensions": [`error`, `ignorePackages`, {
+      js: `always`,
+    }],
 
     "array-callback-return": [`error`, { allowImplicit: true, checkForEach: true }],
     "no-duplicate-imports": [`error`, { includeExports: true }],
