@@ -11,8 +11,7 @@ const router = lib.Router();
 router.get(`/:query`, (req, res) => {
   const query = req.params.query;
   const users = lib.service.discord.userResolveAnything(query);
-  users.map(v => pick(v, [`id`, `username`, `discriminator`, `avatar`]));
-  res.json(users);
+  res.json(users.map(v => pick(v, [`id`, `username`, `discriminator`, `avatar`])));
 });
 
 export default router;
