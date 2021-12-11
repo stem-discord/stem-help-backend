@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 import { nock } from "../mock";
 
 describe(`discord api`, function () {

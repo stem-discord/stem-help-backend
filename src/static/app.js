@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import expressCspHeader from "express-csp-header";
 import { renderFile } from "ejs";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 import config from "../config";
 import { Logger } from "../tool";

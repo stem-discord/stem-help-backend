@@ -1,5 +1,5 @@
 
-import nock from 'nock';
+import nock from "nock";
 import discordInterceptor from "./discord.com";
 
 const interceptors = {

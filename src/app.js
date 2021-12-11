@@ -9,7 +9,7 @@ import xss from "xss-clean";
 import passport from "passport";
 import httpStatus from "http-status";
 import bodyParser from "body-parser";
-import multer from 'multer';
+import multer from "multer";
 
 import config from "./config";
 import routes from "./routes/v1";
