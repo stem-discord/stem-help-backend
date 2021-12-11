@@ -13,7 +13,7 @@ import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
 
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 import database from "./index.js";
 
@@ -36,7 +36,10 @@ if (!uri) throw new Error(`URI is required (either from arguments or .test.env)`
 
 if (!uri.match(/test/)) throw new Error(`cannot drop non-test database ${uri}`);
 
-mongoose.connect(uri);
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 mongoose.connection.on(`connected`, function() {
   console.log(`connected to MongoDB`);

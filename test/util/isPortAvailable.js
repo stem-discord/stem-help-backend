@@ -1,4 +1,4 @@
-import net from 'net';
+import net from "net";
 
 const server = net.createServer();
 

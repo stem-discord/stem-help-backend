@@ -2,7 +2,7 @@
 
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 import yargs from "yargs";
 import dotenv from "dotenv";
