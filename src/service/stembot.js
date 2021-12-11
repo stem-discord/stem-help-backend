@@ -14,7 +14,7 @@ let client = new EventEmitter2();
 client.handler = {};
 
 if (config.env !== `production`) {
-  client.handler[`*`] = function() { };
+  client.handler[`*`] = function() { return true; };
 }
 
 // Passthrough
