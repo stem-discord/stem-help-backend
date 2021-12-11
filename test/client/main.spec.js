@@ -93,6 +93,12 @@ describe(`client run`, function() {
 
     });
   });
+  describe(`Status`, function() {
+    it(`should return the status`, async function() {
+      const res = await fetch(`${url}/status`).then(r => r.json());
+      expect(res).to.be.an(`object`).with.keys(`connections`, `status`);
+    });
+  });
   describe(`service discord`, function() {
     describe(`discord`, function () {
       mock(`discord`);
