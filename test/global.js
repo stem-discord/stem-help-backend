@@ -43,6 +43,8 @@ function needs(it, ...ops) {
     } else {
       t = reason;
     }
+  } else {
+    t = `${it.test.title} - Unknown reason`;
   }
 
   function edit(it) {
