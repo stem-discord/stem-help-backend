@@ -1,7 +1,7 @@
 export * as tool from "./tool/index.js";
 export * as util from "./util/index.js";
 export * as config from "./config/index.js";
-export * as auth from './auth.js';
+export * as auth from './auth/index.js';
 export * as connection from "./connection/index.js";
 export * as docs from "./docs/index.js";
 export * as middlewares from "./middlewares/index.js";
@@ -13,4 +13,4 @@ export * as shared from "./shared/index.js";
 export * as static from "./static/index.js";
 export * as types from "./types/index.js";
 export * as validations from "./validations/index.js";
-export * as app from "./app/index.js";
+export * as app from "./app.js";
