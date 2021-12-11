@@ -61,10 +61,10 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
       score = ss > score ? ss : score;
     }
     if (username) {
-      const ss = stringSimilarity.compareTwoStrings(targetUsername, username);
+      const ss = stringSimilarity.compareTwoStrings(targetUsername, username + discriminator);
       score = ss > score ? ss : score;
     }
-    if (discriminator && targetDiscriminator) {
+    if (targetDiscriminator) {
       score += 0.2 * DSA.lcs.LCSFromStart(targetDiscriminator, discriminator);
     }
     user[similarityScore] = -1 * score;
