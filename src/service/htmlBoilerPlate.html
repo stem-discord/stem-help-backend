@@ -11,11 +11,29 @@
   </head>
 
   <body>
-    <h1> [[TEXT]] </h1>
+    <div>
+      <h1> [[TEXT]] </h1>
+    </div>
   </body>
   <style>
-    body {
-      width: min-content;
+    /* TODO i have no idea but this breaks in puppeteer
+    :root {
+      --color-brand--gradient-teal: #65cfe5;
+      --color-brand--gradient-green: #c9e261;
+      --color-gradient--tg: linear-gradient(45deg, var(--color-brand--gradient-green) 0%, var(--color-brand--gradient-teal) 100%);
+    } */
+    div {
+      width: 800px;
+      padding: 5px;
+      background-image: linear-gradient(45deg, #e04cd9 0%, #58059c 100%);
+    }
+
+    h1 {
+      padding: 10px;
+      background-color: white;
+      font-size: 50px;
+      text-align: center;
+      font-weight: 900;
     }
 
     * {

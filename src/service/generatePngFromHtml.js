@@ -20,14 +20,14 @@ async function generate(text) {
 
   const body = await page.$(`body`);
 
-  let { width, height } = await body.boundingBox();
+  let { x, y, width, height } = await body.boundingBox();
 
+  x = Math.ceil(x);
+  y = Math.ceil(y);
   width = Math.ceil(width);
   height = Math.ceil(height);
 
-  await page.setViewport({ width, height });
-
-  return page.screenshot({});
+  return page.screenshot({ clip: { width, height, x, y }});
 }
 
 export { generate };
