@@ -4,8 +4,23 @@ import { isMain, nullWrapper } from "../util/index.js";
 import config from "../config/index.js";
 import shared from "../shared/index.js";
 import { client as discordClient } from "../connection/discord/index.js";
+import { Logger } from "../tool/index.js";
 
-let client = new EventEmitter2();
+const logger = new Logger(`STEM Bot`);
+
+const client = new EventEmitter2();
+
+const on = client._on;
+
+client.on = function(event, listener) {
+  Reflect.apply(on, client, [event, (...args) => {
+    try {
+      Reflect.apply(listener, client, args);
+    } catch (e) {
+      logger.error(e);
+    }
+  }]);
+};
 
 /**
  * [eventname]: function. if true, pass through emit
@@ -16,7 +31,7 @@ client.handler = {};
 if (config.env !== `production`) {
   client.handler[`*`] = function() { return true; };
 } else {
-  client.handler[`*`] = function() { return nullWrapper(() => shared.discord.stem) !== null; };
+  client.handler[`*`] = function() { return nullWrapper(() => shared.discord.stem) === null; };
 }
 
 // Passthrough
