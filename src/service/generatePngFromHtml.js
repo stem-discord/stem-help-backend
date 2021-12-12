@@ -14,6 +14,8 @@ async function generate(text) {
 
   await page.goto(`data:text/html,${boilerplate.replace(`[[TEXT]]`, text)}`);
 
+  page.setJavaScriptEnabled(false);
+
   const body = await page.$(`body`);
 
   let { width, height } = await body.boundingBox();
