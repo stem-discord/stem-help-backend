@@ -14,7 +14,14 @@ async function generate(text) {
   });
   const page = await browser.newPage();
 
-  await page.goto(`data:text/html,${boilerplate.replace(`[[TEXT]]`, text)}`);
+  await page.goto(`file:${path.join(__dirname, `htmlBoilerPlate.html`)}`);
+
+  const t = text;
+
+  await page.evaluate((t) => {
+    // eslint-disable-next-line no-undef
+    document.getElementById(`text`).innerHTML = t;
+  }, t);
 
   page.setJavaScriptEnabled(false);
 
