@@ -12,6 +12,11 @@ router.get(`/*`, catchAsync(async (req, res) => {
 
   const buf = await generate(text);
 
+  res.writeHead(200, {
+    'Content-Type': `image/png`,
+    'Content-Length': buf.length,
+  });
+
   res.end(buf);
 }));
 
