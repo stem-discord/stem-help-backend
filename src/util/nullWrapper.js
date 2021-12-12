@@ -1,5 +1,5 @@
 /**
- * Executes a function and returns null if it does not exist
+ * Executes a function and returns null if it throws an exception.
  */
 export default function (func) {
   try {
