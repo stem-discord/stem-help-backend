@@ -99,7 +99,13 @@ describe(`client run`, function() {
       expect(res).to.be.an(`object`).with.keys(`connections`, `status`);
     });
   });
-  describe(`service discord`, function() {
+  describe(`service`, function() {
+    describe(`banner`, function() {
+      it(`should return the banner`, async function() {
+        // Should not error
+        const res = await fetch(`${url}/service/banner/hello`);
+      });
+    });
     describe(`discord`, function () {
       mock(`discord`);
       it(`Should be able to fetch a user`, async function() {
