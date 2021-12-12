@@ -65,6 +65,7 @@
     "@discordjs/collection": "^0.2.4",
     "bcryptjs": "^2.4.3",
     "chai-spies": "^1.0.0",
+    "chrome-aws-lambda": "^10.1.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
