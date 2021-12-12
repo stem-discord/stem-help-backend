@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
-import { isMain } from "../util/index.js";
+import { isMain, nullWrapper } from "../util/index.js";
 import config from "../config/index.js";
 import shared from "../shared/index.js";
 import { client as discordClient } from "../connection/discord/index.js";
@@ -15,6 +15,8 @@ client.handler = {};
 
 if (config.env !== `production`) {
   client.handler[`*`] = function() { return true; };
+} else {
+  client.handler[`*`] = function() { return nullWrapper(() => shared.discord.stem) !== null; };
 }
 
 // Passthrough
