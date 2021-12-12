@@ -12,7 +12,6 @@ export { default as NotImplementedError } from "./NotImplementedError.js";
 export { default as normalize } from "./normalize.js";
 export { default as pick } from "./pick.js";
 export { default as catchAsync } from "./catchAsync.js";
-export { default as objMerge } from "./objMerge.js";
 export { default as randomIdentifier } from "./randomIdentifier.js";
 export { default as getCallerDir } from "./getCallerDir.js";
 export { default as UsernameGenerator } from "./UsernameGenerator.js";
