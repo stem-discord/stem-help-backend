@@ -18,3 +18,4 @@ export { default as getCallerDir } from "./getCallerDir.js";
 export { default as UsernameGenerator } from "./UsernameGenerator.js";
 export { default as extractReference } from "./extractReference.js";
 export { default as isMain } from "./isMain.js";
+export { default as streamToBuffer } from "./streamToBuffer.js";
