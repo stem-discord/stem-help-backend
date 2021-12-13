@@ -93,6 +93,7 @@
     "passport": "^0.4.0",
     "passport-custom": "^1.1.1",
     "passport-jwt": "^4.0.0",
+    "piston-client": "^1.0.2",
     "pm2": "^5.1.0",
     "puppeteer": "^13.0.0",
     "secure-compare": "^3.0.1",
