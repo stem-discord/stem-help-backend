@@ -1,4 +1,4 @@
-# Backend for stem.help
+![banner](https://api.stem.help/v1/service/banner/html/STEM_Help_Backend)
 
 
 ![ci badge](https://github.com/stem-discord/stem-help-backend/actions/workflows/ci.yaml/badge.svg)
