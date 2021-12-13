@@ -64,6 +64,7 @@
   "dependencies": {
     "@discordjs/collection": "^0.2.4",
     "bcryptjs": "^2.4.3",
+    "canvas": "^2.8.0",
     "chai-spies": "^1.0.0",
     "chrome-aws-lambda": "^10.1.0",
     "compression": "^1.7.4",
