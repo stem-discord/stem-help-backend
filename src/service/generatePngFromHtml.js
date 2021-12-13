@@ -1,20 +1,30 @@
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 import puppeteer from "puppeteer";
 
+import Sequential from "../util/async/Sequential.js";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const boilerplate = fs.readFileSync(path.join(__dirname, `./htmlBoilerPlate.html`)).toString();
+const init = puppeteer.launch({
+  args: [`--no-sandbox`, `--disable-setuid-sandbox`],
+});
 
-async function generate(text) {
-  const browser = await puppeteer.launch({
-    args: [`--no-sandbox`, `--disable-setuid-sandbox`],
-  });
-  const page = await browser.newPage();
+let browser;
+let page;
+
+init.then(async v => {
+  browser = v;
+  page = await browser.newPage();
 
   await page.goto(`file:${path.join(__dirname, `htmlBoilerPlate.html`)}`);
+  page.setJavaScriptEnabled(false);
+});
+
+async function generateInner(text) {
+  await init;
+
 
   const t = text;
 
@@ -23,7 +33,6 @@ async function generate(text) {
     document.getElementById(`text`).innerHTML = t;
   }, t);
 
-  page.setJavaScriptEnabled(false);
 
   const body = await page.$(`body`);
 
@@ -36,5 +45,7 @@ async function generate(text) {
 
   return page.screenshot({ clip: { width, height, x, y }});
 }
+
+const generate = new Sequential(generateInner);
 
 export { generate };
