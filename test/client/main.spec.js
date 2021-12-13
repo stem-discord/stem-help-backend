@@ -101,9 +101,15 @@ describe(`client run`, function() {
   });
   describe(`service`, function() {
     describe(`banner`, function() {
-      it(`should return the banner`, async function() {
+      it(`should return the banner (html)`, async function() {
         // Should not error
-        const res = await fetch(`${url}/service/banner/hello`);
+        const res = await fetch(`${url}/service/banner/html/hello`);
+      });
+    });
+    describe(`banner`, function() {
+      it(`should return the banner (canvas)`, async function() {
+        // Should not error
+        const res = await fetch(`${url}/service/banner/canvas/hello`);
       });
     });
     describe(`discord`, function () {
