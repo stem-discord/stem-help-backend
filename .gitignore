@@ -26,3 +26,6 @@ env/
 /.nyc_output
 
 *.copy
+
+# User generated files
+.data
