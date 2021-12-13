@@ -19,7 +19,7 @@ init.then(async v => {
   page = await browser.newPage();
 
   await page.goto(`file:${path.join(__dirname, `htmlBoilerPlate.html`)}`);
-  page.setJavaScriptEnabled(false);
+  await page.setJavaScriptEnabled(false);
 });
 
 async function generateInner(text) {
