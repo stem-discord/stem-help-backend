@@ -43,7 +43,7 @@ async function generateInner(text) {
   width = Math.ceil(width);
   height = Math.ceil(height);
 
-  return page.screenshot({ clip: { width, height, x, y }});
+  return await page.screenshot({ clip: { width, height, x, y }});
 }
 
 const generate = new Sequential(generateInner);
