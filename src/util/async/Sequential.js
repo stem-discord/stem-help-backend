@@ -1,7 +1,9 @@
+const isProd = process.env.NODE_ENV === `production`;
+
 function Sequential(func) {
   let current = null;
   return async function(...args) {
-    const stack = new Error().stack;
+    const stack = isProd ? `No stack available in production` : new Error().stack;
     let thisCurrent = current;
     let resolve, reject;
     const p = new Promise((r, re) => { resolve = r; reject = re; }).catch(e => {
