@@ -101,15 +101,28 @@ describe(`client run`, function() {
   });
   describe(`service`, function() {
     describe(`banner`, function() {
+      it(`prime the headless browser`, async function() {
+        this.slow(5000);
+        const a = () => fetch(`${url}/service/banner/html/hello`);
+        const res = await a().then(v => v.arrayBuffer());
+        expect(res).to.be.an.instanceof(ArrayBuffer);
+        expect(res.byteLength).to.be.above(100);
+      });
       it(`should return the banner (html)`, async function() {
         // Should not error
-        const res = await fetch(`${url}/service/banner/html/hello`);
+        const a = () => fetch(`${url}/service/banner/html/hello`);
+        const res = await a().then(v => v.arrayBuffer());
+        expect(res).to.be.an.instanceof(ArrayBuffer);
+        expect(res.byteLength).to.be.above(100);
       });
     });
     describe(`banner`, function() {
       it(`should return the banner (canvas)`, async function() {
         // Should not error
-        const res = await fetch(`${url}/service/banner/canvas/hello`);
+        const a = () => fetch(`${url}/service/banner/canvas/hello`);
+        const res = await a().then(v => v.arrayBuffer());
+        expect(res).to.be.an.instanceof(ArrayBuffer);
+        expect(res.byteLength).to.be.above(100);
       });
     });
     describe(`discord`, function () {
