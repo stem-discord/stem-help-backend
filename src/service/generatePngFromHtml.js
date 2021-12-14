@@ -4,27 +4,38 @@ import { fileURLToPath } from "url";
 import puppeteer from "puppeteer";
 
 import Sequential from "../util/async/Sequential.js";
+import config from "../config/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const init = puppeteer.launch({
-  args: [`--no-sandbox`, `--disable-setuid-sandbox`],
-});
 
 let browser;
 let page;
 
-init.then(async v => {
-  browser = v;
-  page = await browser.newPage();
+let browserInit;
 
-  await page.goto(`file:${path.join(__dirname, `htmlBoilerPlate.html`)}`);
-  await page.setJavaScriptEnabled(false);
-});
+let isRunning = false;
+
+const init = () => {
+  if (isRunning) return null;
+  isRunning = true;
+  browserInit = puppeteer.launch({
+    args: [`--no-sandbox`, `--disable-setuid-sandbox`],
+  }).then(async v => {
+    browser = v;
+    page = await browser.newPage();
+
+    await page.goto(`file:${path.join(__dirname, `htmlBoilerPlate.html`)}`);
+    await page.setJavaScriptEnabled(false);
+  });
+  return browserInit;
+};
+
+if (config.env === `production`) {
+  init();
+}
 
 async function generateInner(text) {
-  await init;
-
+  await init();
 
   const t = text;
 
