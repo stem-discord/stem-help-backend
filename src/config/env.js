@@ -19,6 +19,7 @@ function generateConfig(env) {
     port: envVars.PORT,
     apiURL: envVars.API_URL,
     adminKey: envVars.SUPER_SECRET_ADMIN_KEY,
+    connections: envVars.CONNECTIONS?.split(`,`),
     logging: {
       absolute: bool(envVars.LOGGING_ABSOLUTE),
     },

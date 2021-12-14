@@ -5,7 +5,8 @@ const port = [`port`, `PORT`],
   staticServerPort = [`static-server-port`, `STATIC_SERVER_PORT`],
   staticServerApiURL = [`static-server-api-url`, `STATIC_SERVER_API_URL`],
   staticRoute = [`static-route`, `STATIC_ROUTE`],
-  dbURI = [`db-uri`, `MONGODB_URL`];
+  dbURI = [`db-uri`, `MONGODB_URL`],
+  connections = [`connections`, `CONNECTIONS`];
 
 // TODO refactor this
 const argv = yargs
@@ -36,6 +37,10 @@ const argv = yargs
     type: `string`,
   })
   .option(dbURI[0], {
+    describe: `Route used by the static-server (means you can use external api server with the mini server)`,
+    type: `string`,
+  })
+  .option(connections[0], {
     describe: `Route used by the static-server (means you can use external api server with the mini server)`,
     type: `string`,
   })

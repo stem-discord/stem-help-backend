@@ -48,7 +48,10 @@ const apiServer = app.listen(config.port, () => {
 
 apiServer.ready = (async () => {
   await new Promise(r => { listeningCb = r; });
-  await connection.openConnections();
+  if (config.connections) {
+    logger.info(`connections option was set to [${config.connections.join(`, `)}], initializing these`);
+  }
+  await connection.openConnections(config.connections);
   return true;
 })();
 

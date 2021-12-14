@@ -9,6 +9,7 @@ const envVarsSchema = Joi.object()
     SUPER_SECRET_ADMIN_KEY: Joi.string().default(`admin`).description(`The super secret admin key used to bypass anything for testing a feature in production`),
     LOGGING_ABSOLUTE: Joi.string().valid(`true`, `false`).description(`Logging absolute time`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
+    CONNECTIONS: Joi.string().description(`Connections to open when the server starts. Leave it empty to enable all connections`),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
     JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
