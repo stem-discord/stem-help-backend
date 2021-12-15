@@ -103,6 +103,7 @@ describe(`client run`, function() {
     describe(`banner`, function() {
       it(`prime the headless browser`, async function() {
         this.slow(5000);
+        this.timeout(10 * 1000);
         const a = () => fetch(`${url}/service/banner/html/hello`);
         const res = await a().then(v => v.arrayBuffer());
         expect(res).to.be.an.instanceof(ArrayBuffer);
