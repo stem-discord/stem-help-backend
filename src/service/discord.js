@@ -5,7 +5,7 @@ import { promisify } from "util";
 // import Discord from "discord.js";
 
 import shared from "../shared/index.js";
-import { DSA, normalize, streamToBuffer } from "../util/index.js";
+import { DSA, normalize } from "../util/index.js";
 import config from "../config/index.js";
 
 const similarityScore = Symbol(`similarityScore. The lower the score, the greater the similarity`);
