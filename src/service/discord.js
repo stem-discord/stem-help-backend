@@ -1,9 +1,12 @@
 import SortedArray from "sorted-array";
 import stringSimilarity from "string-similarity";
+import FormData from "form-data";
+import { promisify } from "util";
 // import Discord from "discord.js";
 
 import shared from "../shared/index.js";
-import { DSA, normalize } from "../util/index.js";
+import { DSA, normalize, streamToBuffer } from "../util/index.js";
+import config from "../config/index.js";
 
 const similarityScore = Symbol(`similarityScore. The lower the score, the greater the similarity`);
 
@@ -83,4 +86,15 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
   return arr;
 }
 
-export { userResolveAnything };
+async function uploadFile(buffer, options) {
+  if (!config.discord.uploadWebhook) return Promise.reject(new Error(`No uploadWebhook set`));
+
+  const form = new FormData();
+
+  form.append(`file`, buffer, {
+    filename: options.filename,
+  });
+  return promisify(form.submit.bind(form))(config.discord.uploadWebhook);
+}
+
+export { userResolveAnything, uploadFile };
