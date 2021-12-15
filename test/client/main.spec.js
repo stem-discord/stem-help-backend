@@ -16,7 +16,7 @@ describe(`client run`, function() {
       const isOnline = await fetch(`${url}`).catch(() => false);
       if (!isOnline) {
       // eslint-disable-next-line no-console
-        console.log(`Server is not running (), and url was a local host. creating local server...`);
+        console.log(`Server is not running, and url was a local host. creating local server...`);
       } else {
         return;
       }
