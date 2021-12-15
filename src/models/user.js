@@ -58,15 +58,15 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  sessions: [
-    {
-      type: Session,
-    },
-  ],
-  // current session
-  session: {
-    type: Session,
-  },
+  // sessions: [
+  //   {
+  //     type: Session,
+  //   },
+  // ],
+  // // current session
+  // session: {
+  //   type: Session,
+  // },
   // discord module
   discord: {},
   // id: {

@@ -12,16 +12,16 @@ const { Validate } = lib.middlewares;
 
 const router = lib.Router();
 
-// == DISCORD ==
-// returns the OAuth URI
-router.route(`/discord`)
-  .get((req, res) => {
-    const uri = config.discord.OAuthUri;
-    if (uri) {
-      return res.redirect(uri);
-    }
-    throw new ApiError(httpStatus.NOT_FOUND, `DISCORD_OAUTH_URI is not set`, true);
-  });
+// // == DISCORD ==
+// // returns the OAuth URI
+// router.route(`/discord`)
+//   .get((req, res) => {
+//     const uri = config.discord.OAuthUri;
+//     if (uri) {
+//       return res.redirect(uri);
+//     }
+//     throw new ApiError(httpStatus.NOT_FOUND, `DISCORD_OAUTH_URI is not set`, true);
+//   });
 
 router.route(`/refresh`)
   .get((req, res) => {
