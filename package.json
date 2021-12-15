@@ -17,7 +17,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json src/server",
     "cleanserver": "npm run mongoreset && cross-env NODE_ENV=test nodemon --config nodemon.json src/server --drop-all",
     "nodemon": "nodemon --watch .",
-    "setup": "npm run setup:keygen; npm run setup:testenv",
+    "setup": "npm run setup:keygen && npm run setup:testenv",
     "setup:keygen": "node script/keygen.js",
     "setup:testenv": "node script/testenv.js",
     "env:help": "node script/envHelp.js",
