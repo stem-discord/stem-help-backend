@@ -44,7 +44,7 @@ describe(`client run`, function() {
     }
   };
   it(`should register user`, async function() {
-    needs(this, mongoOnline);
+    this.needs(mongoOnline);
     const res = await fetch(`${url}/auth/register`, {
       method: `POST`,
       headers: {
@@ -58,7 +58,7 @@ describe(`client run`, function() {
     expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
   });
   it(`should let monk log in`, async function() {
-    needs(this, mongoOnline);
+    this.needs(mongoOnline);
     const res = await fetch(`${url}/auth/login`, {
       method: `POST`,
       headers: {
@@ -73,7 +73,7 @@ describe(`client run`, function() {
   });
   describe(`Admin John`, function() {
     before(`Login`, async function() {
-      needs(this, mongoOnline);
+      this.needs(mongoOnline);
       const res = await fetch(`${url}/auth/login`, {
         method: `POST`,
         headers: {
