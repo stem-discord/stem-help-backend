@@ -11,7 +11,7 @@ describe(`Service tests`, function() {
     await openConnections([`discord`]);
   });
   it(`Should be able to fetch discord users (Real test)`, function() {
-    needs(this, () => discordConnection.connection.null ? `discord connection is required. ${discordConnection.connection.rejectReason}` : null);
+    this.needs(() => discordConnection.connection.null ? `discord connection is required. ${discordConnection.connection.rejectReason}` : null);
     const res = discord.userResolveAnything(`nope#6924`);
     expect(res).to.be.an(`array`);
     expect(res).to.have.lengthOf.above(0);

@@ -16,7 +16,7 @@ describe(`client run`, function() {
       const isOnline = await fetch(`${url}`).catch(() => false);
       if (!isOnline) {
       // eslint-disable-next-line no-console
-        console.log(`Server is not running (), and url was a local host. creating local server...`);
+        console.log(`Server is not running, and url was a local host. creating local server...`);
       } else {
         return;
       }
@@ -44,7 +44,7 @@ describe(`client run`, function() {
     }
   };
   it(`should register user`, async function() {
-    needs(this, mongoOnline);
+    this.needs(mongoOnline);
     const res = await fetch(`${url}/auth/register`, {
       method: `POST`,
       headers: {
@@ -58,7 +58,7 @@ describe(`client run`, function() {
     expect(res).to.be.an(`object`).include.all.keys(`access_token`, `refresh_token`);
   });
   it(`should let monk log in`, async function() {
-    needs(this, mongoOnline);
+    this.needs(mongoOnline);
     const res = await fetch(`${url}/auth/login`, {
       method: `POST`,
       headers: {
@@ -73,7 +73,7 @@ describe(`client run`, function() {
   });
   describe(`Admin John`, function() {
     before(`Login`, async function() {
-      needs(this, mongoOnline);
+      this.needs(mongoOnline);
       const res = await fetch(`${url}/auth/login`, {
         method: `POST`,
         headers: {
@@ -103,6 +103,7 @@ describe(`client run`, function() {
     describe(`banner`, function() {
       it(`prime the headless browser`, async function() {
         this.slow(5000);
+        this.timeout(10 * 1000);
         const a = () => fetch(`${url}/service/banner/html/hello`);
         const res = await a().then(v => v.arrayBuffer());
         expect(res).to.be.an.instanceof(ArrayBuffer);

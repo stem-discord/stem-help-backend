@@ -1,5 +1,6 @@
 import chai from "chai";
 import spies from "chai-spies";
+import { Context } from "mocha";
 
 chai.use(spies);
 
@@ -13,10 +14,10 @@ global.assert = chai.assert;
 /**
  * return falsy value for no error. throw or return anything else for error
  */
-function needs(it, ...ops) {
-  if (typeof it.skip !== `function`) {
+function needs(...ops) {
+  if (typeof this.skip !== `function`) {
     // Assume we are in a describe
-    throw new Error(`The test must have method skip (is it in an 'it' scope?)`);
+    throw new Error(`No this context (is it in an 'it' scope?)`);
   }
 
   let reason;
@@ -33,8 +34,9 @@ function needs(it, ...ops) {
         break;
       }
     }
+
     if (op) {
-      reason = `Unknown reason`;
+      reason = op.toString();
       break;
     }
   }
@@ -42,7 +44,7 @@ function needs(it, ...ops) {
   let t;
 
   if (reason) {
-    t = it.test.title;
+    t = this.test.title;
     if (t) {
       t += ` - reason: ${reason}`;
     } else {
@@ -57,15 +59,15 @@ function needs(it, ...ops) {
   }
 
   // It is a suite
-  if (it.currentTest) {
-    for (const test of it.currentTest.parent.tests) {
+  if (this.currentTest) {
+    for (const test of this.currentTest.parent.tests) {
       edit(test);
     }
   } else {
-    edit(it.test);
+    edit(this.test);
   }
 
-  it.skip(reason);
+  this.skip(reason);
 }
 
-global.needs = needs;
+Context.prototype.needs = needs;
