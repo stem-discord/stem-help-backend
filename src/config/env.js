@@ -60,6 +60,7 @@ function generateConfig(env) {
       OAuthUri: envVars.DISCORD_OAUTH_URI,
       clientID: envVars.DISCORD_CLIENT_ID,
       clientSecret: envVars.DISCORD_CLIENT_SECRET,
+      uploadWebhook: envVars.DISCORD_UPLOAD_WEBHOOK,
     },
     staticServer: bool(envVars.STATIC_SERVER),
     staticServerPort: envVars.STATIC_SERVER_PORT,
