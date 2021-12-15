@@ -127,7 +127,6 @@
     "nock": "^13.1.4",
     "node-mocks-http": "^1.8.0",
     "nodemon": "^2.0.0",
-    "prettier": "^2.0.5",
     "supertest": "^6.0.1"
   }
 }
