@@ -65,11 +65,10 @@ client.on(`messageCreate`, async message => {
 
 
 if (isMain(import.meta)) {
-  /* eslint-disable no-console */
   (async () => {
     const { connection } = await import(`../connection/discord`);
     await connection.init().then(() => {
-      console.log(`ready`);
+      logger.log(`ready`);
     });
   })();
 }
