@@ -1,4 +1,3 @@
-import test from "./test/index.js";
 import docs from "./docs/index.js";
 import auth from "./auth/index.js";
 import oauth from "./oauth/index.js";
@@ -14,8 +13,6 @@ const git = lib.util.git;
 router.get(`/`, async (req, res) => {
   res.status(200).json({ message: `OK`, version: await git.status.getLastCommit() });
 });
-
-router.use(`/test`, test);
 
 router.use(`/docs`, docs);
 
