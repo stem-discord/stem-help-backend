@@ -56,6 +56,8 @@ if (config.mongoose.url) {
         })().catch(logger.error);
         return m;
       };
+
+      return open;
     },
     heartbeat: () => true,
     close: () => {
