@@ -4,7 +4,6 @@ import validator from "validator";
 import { paginate, toJSON } from "./plugins/index.js";
 
 import { Role, Group } from "../types/index.js";
-import Session from "./session.js";
 
 const userSchema = mongoose.Schema({
   name: {
