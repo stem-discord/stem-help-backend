@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 
 import config from "../../config/index.js";
 import { Connection, NullConnection, Namespace } from "../connection.js";
-import { async } from "../../util/index.js";
-
-const { sleep } = async;
 
 const ns = new Namespace(`MongoDB`, `Database connection with mongodb`);
 const logger = ns.logger;
