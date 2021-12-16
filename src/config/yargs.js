@@ -46,7 +46,7 @@ const argv = yargs
   })
   .argv;
 
-const arr = [port, staticServer, staticServerPort, staticServerApiURL, staticRoute, dbURI];
+const arr = [port, staticServer, staticServerPort, staticServerApiURL, staticRoute, dbURI, connections];
 
 const opt = {};
 
