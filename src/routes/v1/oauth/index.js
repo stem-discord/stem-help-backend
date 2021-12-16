@@ -89,7 +89,7 @@ router.post(`/discord`, async (req, res) => {
     return void res.json({ error: `user does not exist` });
     // userService.createUser({
     //   name: discordUser.tag,
-    //   user_id: {}
+    //   username: {}
     // })
   }
   // create a session

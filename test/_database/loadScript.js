@@ -60,7 +60,7 @@ mongoose.connection.on(`connected`, function() {
       for (const [db, ctx] of Object.entries(database)) {
         const Collection = mongoose.model(`${i++}`, {
           name: String,
-          user_id: String,
+          username: String,
           hash: String,
           salt: String,
           roles: [],

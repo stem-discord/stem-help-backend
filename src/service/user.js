@@ -28,7 +28,7 @@ function validatePassword(user, password) {
 const getBy = new ProxyFactory([]);
 
 async function getValidUsername(username) {
-  // TODO: implement this with dp lookup getby.user_id
+  // TODO: implement this with dp lookup getby.username
   const gen = UsernameGenerator(username);
   return gen.next().value;
 }

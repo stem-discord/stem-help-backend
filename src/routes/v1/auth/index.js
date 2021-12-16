@@ -34,7 +34,7 @@ router.route(`/login`)
     catchAsync(async (req, res) => {
       const { username, password } = req.body;
 
-      const user = await services.user.getBy.user_id(username);
+      const user = await services.user.getBy.username(username);
       if (!user) {
         throw new ApiError(httpStatus.NOT_FOUND, `user not found`);
       }
@@ -58,13 +58,13 @@ router.route(`/register`)
     catchAsync(async (req, res) => {
       const { username, password } = req.body;
 
-      let user = await services.user.getBy.user_id(username);
+      let user = await services.user.getBy.username(username);
       if (user) {
         throw new ApiError(httpStatus.CONFLICT, `username already exists`);
       }
 
       const { salt, hash } = lib.util.crypto.generatePassword(password);
-      const newUser = await services.user.create({ name: username, salt, hash, user_id: username });
+      const newUser = await services.user.create({ name: username, salt, hash, username: username });
 
       const ip = req.headers[`x-forwarded-for`] || req.socket.remoteAddress;
 
