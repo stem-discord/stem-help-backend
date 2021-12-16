@@ -4,6 +4,14 @@ import User from "./user.js";
 // stores the id of refresh tokens
 const tokenSchema = mongoose.Schema({
   user: User,
+  valid: {
+    type: Boolean,
+    default: true,
+  },
+  breeched: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true,
 });
