@@ -45,4 +45,7 @@ for (const k of Object.keys(schemaObj)) {
   process.env[k] = vars[k];
 }
 
+/**
+ * .local is determined at runtime
+ */
 export default vars;
