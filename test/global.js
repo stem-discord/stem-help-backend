@@ -47,6 +47,8 @@ function needs(...ops) {
       } else if (op?.connection instanceof NullConnection) {
         reason = `${op.connection.name} - ${op.connection.rejectReason}`;
         break;
+      } else {
+        throw new Error(`recieved argument that I can't understand`, op);
       }
     }
 
