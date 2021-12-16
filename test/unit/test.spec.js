@@ -2,6 +2,8 @@ import * as util from "../../src/util/index.js";
 
 import { expect, assert } from "chai";
 
+import Joi from "joi";
+
 const {
   pick,
   DSA,
@@ -13,6 +15,8 @@ const {
   randomIdentifier,
 } = util;
 
+import * as validations from "../../src/validations/index.js";
+const { fields } = validations;
 describe(`pick.js`, function () {
   it(`should work`, function () {
     expect(pick({ a: 1, b: 2, c: 3 }, [`a`, `b`])).to.deep.equal({ a: 1, b: 2 });
@@ -87,5 +91,27 @@ describe(`randomIdentifier.js`, function () {
     const arr = Array.from({ length: 4 }, randomIdentifier);
     // length should be the same, or it is not unique
     expect(arr.length).to.equal(new Set(arr).size);
+
+describe(`validations`, function () {
+  describe(`field`, function () {
+    validationFactory(`username`, [
+      `abcdsaif`,
+      `the_best_cookie`,
+      `the_arda_candy`,
+    ], [
+      `thonk me`,
+      `interest-name`,
+      `0best0`,
+      `adoifajvaejfiajdsfjiaesjfioaewjfojasilfjaeioswfj`,
+    ], fields.username);
+    validationFactory(`password`, [
+      `akfjioefklsdfjio123`,
+      `thebestp@ssw0rd`,
+    ], [
+      `correcthorsebatterystaple`,
+      `tooshort`,
+      `12345678`,
+      `!()*()#$)(#)@#)$`,
+    ], fields.password);
   });
 });
