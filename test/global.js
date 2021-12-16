@@ -2,6 +2,8 @@ import chai from "chai";
 import spies from "chai-spies";
 import { Context } from "mocha";
 
+import { Connection, NullConnection } from "../src/connection/connection.js";
+
 chai.use(spies);
 
 chai.config.truncateThreshold = 0;
@@ -31,6 +33,19 @@ function needs(...ops) {
         }
       } catch (e) {
         reason = e.message;
+        break;
+      }
+    } else {
+      // Assume it is a connection
+      if (op?.connection instanceof Connection) {
+        if (op.connection.isOperational()) {
+          continue;
+        } else {
+          reason = `${op.connection.name} is not operational`;
+          break;
+        }
+      } else if (op?.connection instanceof NullConnection) {
+        reason = `${op.connection.name} - ${op.connection.rejectReason}`;
         break;
       }
     }
