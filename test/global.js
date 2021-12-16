@@ -4,6 +4,8 @@ import { Context } from "mocha";
 
 import { Connection, NullConnection } from "../src/connection/connection.js";
 
+import env from "./config.js";
+
 chai.use(spies);
 
 chai.config.truncateThreshold = 0;
@@ -38,6 +40,7 @@ function needs(...ops) {
     } else {
       // Assume it is a connection
       if (op?.connection instanceof Connection) {
+        if (!env.local) continue;
         if (op.connection.isOperational()) {
           continue;
         } else {
@@ -45,6 +48,7 @@ function needs(...ops) {
           break;
         }
       } else if (op?.connection instanceof NullConnection) {
+        if (!env.local) continue;
         reason = `${op.connection.name} - ${op.connection.rejectReason}`;
         break;
       } else {
