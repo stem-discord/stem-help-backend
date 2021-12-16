@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
-import validator from "validator";
+import Joi from "joi";
+
+import * as field from "../validations/fields.js";
 
 import { paginate, toJSON } from "./plugins/index.js";
 
 import { Role, Group } from "../types/index.js";
+
+import { pick } from "../util/index.js";
 
 const userSchema = mongoose.Schema({
   name: {
@@ -18,7 +22,7 @@ const userSchema = mongoose.Schema({
     unique: true,
     validate(s) {
       // 1~32
-      return !!s.match(/^[a-z_][a-z0-9_-]{0,31}/);
+      Joi.assert(s, Joi.string().custom(field.username));
     },
   },
   info: {
@@ -29,10 +33,8 @@ const userSchema = mongoose.Schema({
     required: false,
     unique: false,
     trim: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error(`Invalid email`);
-      }
+    validate(s) {
+      Joi.assert(s, Joi.string().custom(field.username));
     },
   },
   hash: {
@@ -48,10 +50,12 @@ const userSchema = mongoose.Schema({
   ranks: [{
     type: String,
     enum: Object.values(Role),
+    access_token: true,
   }],
   groups: [{
     type: String,
     enum: Object.values(Group),
+    access_token: true,
   }],
   isEmailVerified: {
     type: Boolean,
@@ -106,6 +110,14 @@ const userSchema = mongoose.Schema({
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
+
+// TODO tbh i don't know how to write this method
+// if you can write it in a cleaner way by using `access_token` please do
+userSchema.methods.toAccessToken = function () {
+  return {
+    ...pick(this.toJSON(), [`ranks`, `groups`, `name`, `username`]),
+  };
+};
 
 userSchema.methods.hasRole = function (role) {
   return this.roles.includes(role);
