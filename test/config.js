@@ -9,15 +9,21 @@ import dotenv from "dotenv";
 import Joi from "joi";
 
 import print from "../script/util/printJoiSchema.js";
+import { openConnections } from "../src/connection/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const argv = yargs.option(`file`, {
-  alias: `f`,
-  describe: `config file to read`,
-  type: `string`,
-  default: `.env`,
-}).argv;
+const argv = yargs
+  .option(`file`, {
+    alias: `f`,
+    describe: `config file to read`,
+    type: `string`,
+    default: `.env`,
+  })
+  .option(`connections`, {
+    describe: `connections to load`,
+    type: `string`,
+  }).argv;
 
 const envPath = path.join(__dirname, argv.f);
 
@@ -27,6 +33,7 @@ const schemaObj = {
   API_URL: Joi.string()
     .description(`API URL to connect to (client)`)
     .pattern(/^http/),
+  CONNECTIONS: Joi.string().description(`connections to load`),
 };
 
 const schema = Joi.object().keys(schemaObj);
@@ -46,6 +53,13 @@ if (error) {
 
 for (const k of Object.keys(schemaObj)) {
   process.env[k] = vars[k];
+}
+
+if (vars.CONNECTIONS) {
+  const connections = vars.CONNECTIONS.split(`,`);
+  before(`initialize connections`, async function () {
+    await openConnections(connections);
+  });
 }
 
 /**
