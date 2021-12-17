@@ -30,8 +30,8 @@ module.exports = {
     "require-atomic-updates": `error`,
     camelcase: [`warn`, {
       properties: `never`,
-      ignoreDestructuring: false,
-      ignoreImports: false,
+      ignoreDestructuring: true,
+      ignoreImports: true,
       ignoreGlobals: false,
       allow: [
         `access_token`,
