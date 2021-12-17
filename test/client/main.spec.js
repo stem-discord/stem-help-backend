@@ -60,7 +60,7 @@ describe(`client run`, function() {
 
   describe(`auth cycle`, function() {
     describe(`monk (normal user)`, function() {
-      beforeEach(function() {
+      before(function() {
         this.needs(mongo);
       });
 
@@ -107,7 +107,7 @@ describe(`client run`, function() {
       it(`should allow logout`);
     });
     describe(`john (admin user)`, function() {
-      beforeEach(function() {
+      before(function() {
         this.needs(mongo);
       });
 

@@ -4,18 +4,16 @@ import Discord, { Collection } from "discord.js";
 import { mock } from "../shared/index.js";
 
 describe(`Service tests`, function() {
-
-  before(async function () {
-    if (discordConnection.connection.null) return;
-    this.timeout(10000);
-    await openConnections([`discord`]);
-  });
-  it(`Should be able to fetch discord users (Real test)`, function() {
-    this.needs(() => discordConnection.connection.null ? `discord connection is required. ${discordConnection.connection.rejectReason}` : null);
-    const res = discord.userResolveAnything(`nope#6924`);
-    expect(res).to.be.an(`array`);
-    expect(res).to.have.lengthOf.above(0);
-    expect(res[0]).to.have.property(`id`);
+  describe(`real`, function () {
+    before(function () {
+      this.needs(discordConnection);
+    });
+    it(`Should be able to fetch discord users (Real test)`, function() {
+      const res = discord.userResolveAnything(`nope#6924`);
+      expect(res).to.be.an(`array`);
+      expect(res).to.have.lengthOf.above(0);
+      expect(res[0]).to.have.property(`id`);
+    });
   });
   describe(`Mock tests`, function() {
     mock(`discord`);

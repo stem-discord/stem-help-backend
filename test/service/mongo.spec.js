@@ -6,11 +6,7 @@ import { user } from "../../src/service/index.js";
 
 describe(`mongo`, function() {
   describe(`real test`, function() {
-    before(async function () {
-      this.timeout(1000);
-      await openConnections([`mongo`]);
-    });
-    beforeEach(function () {
+    before(function () {
       this.needs(mongo);
     });
     it(`should find one user`, async function() {
