@@ -6,7 +6,6 @@ export * as connection from "./connection/index.js";
 export * as docs from "./docs/index.js";
 export * as middlewares from "./middlewares/index.js";
 export * as models from "./models/index.js";
-export * as pages from "./pages/index.js";
 export * as routes from "./routes/index.js";
 export * as service from "./service/index.js";
 export * as shared from "./shared/index.js";
