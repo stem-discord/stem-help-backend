@@ -12,14 +12,17 @@ const client = new EventEmitter2();
 
 const on = client._on;
 
-client.on = function(event, listener) {
-  Reflect.apply(on, client, [event, (...args) => {
-    try {
-      Reflect.apply(listener, client, args);
-    } catch (e) {
-      logger.error(e);
-    }
-  }]);
+client.on = function (event, listener) {
+  Reflect.apply(on, client, [
+    event,
+    (...args) => {
+      try {
+        Reflect.apply(listener, client, args);
+      } catch (e) {
+        logger.error(e);
+      }
+    },
+  ]);
 };
 
 /**
@@ -29,9 +32,13 @@ client.on = function(event, listener) {
 client.handler = {};
 
 if (config.env !== `production`) {
-  client.handler[`*`] = function() { return true; };
+  client.handler[`*`] = function () {
+    return true;
+  };
 } else {
-  client.handler[`*`] = function() { return nullWrapper(() => shared.discord.stem) === null; };
+  client.handler[`*`] = function () {
+    return nullWrapper(() => shared.discord.stem) === null;
+  };
 }
 
 // Passthrough
@@ -44,7 +51,6 @@ for (const event of Object.values(Discord.Constants.Events)) {
     client.emit(event, ...args);
   });
 }
-
 
 client.on(`messageCreate`, async message => {
   if (message.guild?.id !== shared.discord.stem.guild.id) return;
@@ -62,7 +68,6 @@ client.on(`messageCreate`, async message => {
     }
   }
 });
-
 
 if (isMain(import.meta)) {
   (async () => {

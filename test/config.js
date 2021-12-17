@@ -25,7 +25,8 @@ const env = dotenv.parse(fs.readFileSync(envPath));
 
 const schemaObj = {
   API_URL: Joi.string()
-    .description(`API URL to connect to (client)`).pattern(/^http/),
+    .description(`API URL to connect to (client)`)
+    .pattern(/^http/),
 };
 
 const schema = Joi.object().keys(schemaObj);
@@ -34,9 +35,11 @@ const { value: vars, error } = schema
   .prefs({ errors: { label: `key` } })
   .validate(env);
 
-if(error) {
+if (error) {
   /* eslint-disable no-console */
-  console.log(`Invalid schema! Please refer to the table above. File: ${envPath}`);
+  console.log(
+    `Invalid schema! Please refer to the table above. File: ${envPath}`
+  );
   print(schema);
   throw error;
 }

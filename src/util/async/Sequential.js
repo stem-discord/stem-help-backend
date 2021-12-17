@@ -2,30 +2,34 @@ const isProd = process.env.NODE_ENV === `production`;
 
 function Sequential(func) {
   let current = null;
-  return async function(...args) {
-    const stack = isProd ? `No stack available in production` : new Error().stack;
+  return async function (...args) {
+    const stack = isProd
+      ? `No stack available in production`
+      : new Error().stack;
     let thisCurrent = current;
     let resolve, reject;
-    const p = new Promise((r, re) => { resolve = r; reject = re; }).catch(e => {
+    const p = new Promise((r, re) => {
+      resolve = r;
+      reject = re;
+    }).catch(e => {
       e.stack += stack;
       throw e;
     });
     current = p;
     await thisCurrent?.catch(() => null);
 
-    ((async () => {
+    (async () => {
       try {
         const a = await Reflect.apply(func, this, args);
         resolve(a);
       } catch (e) {
         reject(e);
       }
-    }))();
+    })();
 
     return p;
   };
 }
-
 
 // (async function() {
 //   async function someAsyncInner(a) {

@@ -1,4 +1,4 @@
-export default function(obj) {
+export default function (obj) {
   const joiKey = obj.describe().keys;
   for (const v of Object.values(joiKey)) {
     const flags = v.flags;

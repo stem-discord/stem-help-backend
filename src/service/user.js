@@ -11,14 +11,17 @@ function ProxyFactory(path) {
   if (pathStr === `id`) {
     pathStr = `_id`;
   }
-  return new Proxy(async function (id) {
-    return shared.mongo.User.findOne({ [pathStr]: id });
-  }, {
-    get(target, key) {
-      if (!obj[key]) obj[key] = new ProxyFactory([...path, key]);
-      return obj[key];
+  return new Proxy(
+    async function (id) {
+      return shared.mongo.User.findOne({ [pathStr]: id });
     },
-  });
+    {
+      get(target, key) {
+        if (!obj[key]) obj[key] = new ProxyFactory([...path, key]);
+        return obj[key];
+      },
+    }
+  );
 }
 
 function validatePassword(user, password) {

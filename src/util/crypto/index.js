@@ -12,7 +12,9 @@ const ROUNDS = 10000;
  * the decrypted hash/salt with the password that the user provided at login
  */
 function validatePassword(password, hash, salt) {
-  var hashVerify = crypto.pbkdf2Sync(password, salt, ROUNDS, 64, `sha512`).toString(`hex`);
+  var hashVerify = crypto
+    .pbkdf2Sync(password, salt, ROUNDS, 64, `sha512`)
+    .toString(`hex`);
   return compare(hash, hashVerify);
 }
 
@@ -27,9 +29,10 @@ function validatePassword(password, hash, salt) {
  * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
 function generatePassword(password) {
-
   const salt = crypto.randomBytes(32).toString(`hex`);
-  const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, `sha512`).toString(`hex`);
+  const hash = crypto
+    .pbkdf2Sync(password, salt, 10000, 64, `sha512`)
+    .toString(`hex`);
 
   return { salt, hash };
 }

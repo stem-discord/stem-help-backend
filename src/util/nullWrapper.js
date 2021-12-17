@@ -4,7 +4,7 @@
 export default function (func) {
   try {
     return func();
-  } catch(e) {
+  } catch (e) {
     return null;
   }
 }

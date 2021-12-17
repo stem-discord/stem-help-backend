@@ -3,7 +3,10 @@ import Discord from "discord.js";
 import config from "../../config/index.js";
 import { Connection, NullConnection, Namespace } from "../connection.js";
 
-Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0);
+Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce(
+  (acc, p) => acc | p,
+  0
+);
 
 const ns = new Namespace(`DiscordBot`, `Discord bot client`);
 const logger = ns.logger;
@@ -20,7 +23,10 @@ class CustomClient extends Discord.Client {
       const i = this._taskCounter;
       let resolve;
       let reject;
-      this._taskQueue[i] = new Promise((r, re) => { resolve = r; reject = re; });
+      this._taskQueue[i] = new Promise((r, re) => {
+        resolve = r;
+        reject = re;
+      });
       this._taskCounter++;
       try {
         resolve(await callback(...args));
@@ -70,7 +76,10 @@ const client = new CustomClient({
 });
 
 if (config.discord.botToken) {
-  Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0);
+  Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce(
+    (acc, p) => acc | p,
+    0
+  );
   let clientReady;
   const open = new Promise(r => {
     clientReady = r;

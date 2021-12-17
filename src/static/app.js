@@ -11,7 +11,11 @@ const { dirname } = path;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const logger = new Logger(`static`);
 const { info } = logger;
-const { INLINE, SELF, expressCspHeader: expressCspHeaderMiddleware } = expressCspHeader;
+const {
+  INLINE,
+  SELF,
+  expressCspHeader: expressCspHeaderMiddleware,
+} = expressCspHeader;
 const app = express();
 const base = {
   env: {
@@ -22,34 +26,39 @@ const base = {
   },
 };
 
-app.use(expressCspHeaderMiddleware({
-  directives: {
-    'script-src': [SELF, INLINE],
-  },
-}));
+app.use(
+  expressCspHeaderMiddleware({
+    directives: {
+      "script-src": [SELF, INLINE],
+    },
+  })
+);
 
 app.set(`views`, path.join(__dirname, `views`));
 app.set(`view engine`, `ejs`);
 
 // app.engine(`html`, require(`ejs`).renderFile);
 app.engine(`.ejs`, renderFile);
-app
-  .get(`/test`, (req, res) => {
-    info(`test page has been viewed`);
-    res.render(`test`, { ...base });
-  });
+app.get(`/test`, (req, res) => {
+  info(`test page has been viewed`);
+  res.render(`test`, { ...base });
+});
 
 // TODO: fix this sloppy hack
 app.get(`*`, (req, res) => {
   info(`Serving default directory`);
-  res.render(path.join(__dirname, `views`, req.path, `index.ejs`), { ...base }, (err, html) => {
-    if (err) {
-      info(err);
-      res.status(404).render(`404`);
-    } else {
-      res.send(html);
+  res.render(
+    path.join(__dirname, `views`, req.path, `index.ejs`),
+    { ...base },
+    (err, html) => {
+      if (err) {
+        info(err);
+        res.status(404).render(`404`);
+      } else {
+        res.send(html);
+      }
     }
-  });
+  );
 });
 
 // TODO: write as a contructor function so multiple base directories can be accepted

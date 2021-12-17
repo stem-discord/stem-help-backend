@@ -9,13 +9,16 @@ import proc from "./process.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const envPath = path.join(__dirname, process.env.NODE_ENV === `test` ? `../../.test.env` : `../../.env`);
+const envPath = path.join(
+  __dirname,
+  process.env.NODE_ENV === `test` ? `../../.test.env` : `../../.env`
+);
 
 console.log(`[src/config/index.js] Loading env ${envPath}`);
 
 dotenv.config({ path: envPath });
 
-let config = { ...process.env};
+let config = { ...process.env };
 
 for (const o of [envLoader(), argv]) {
   for (const [k, v] of Object.entries(o)) {

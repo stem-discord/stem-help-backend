@@ -1,4 +1,3 @@
-
 /**
  * Tests all three files
  *

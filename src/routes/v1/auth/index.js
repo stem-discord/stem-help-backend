@@ -15,78 +15,82 @@ const { ApiError, catchAsync } = lib.util;
 
 const router = lib.Router();
 
-router.route(`/register`)
-  .post(
-    catchAsync(async (req, res) => {
-      const { username, password } = req.body;
-      const name = req.body.name ?? username;
+router.route(`/register`).post(
+  catchAsync(async (req, res) => {
+    const { username, password } = req.body;
+    const name = req.body.name ?? username;
 
-      if (!username || !password) {
-        throw new ApiError(httpStatus.BAD_REQUEST, `username and password are required`);
-      }
+    if (!username || !password) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        `username and password are required`
+      );
+    }
 
-      let user = await services.user.getBy.username(username);
-      if (user) {
-        throw new ApiError(httpStatus.CONFLICT, `username already exists`);
-      }
+    let user = await services.user.getBy.username(username);
+    if (user) {
+      throw new ApiError(httpStatus.CONFLICT, `username already exists`);
+    }
 
-      const { salt, hash } = lib.util.crypto.generatePassword(password);
+    const { salt, hash } = lib.util.crypto.generatePassword(password);
 
-      const newUser = await services.user.create({ name, salt, hash, username });
+    const newUser = await services.user.create({ name, salt, hash, username });
 
-      // const ip = req.headers[`x-forwarded-for`] || req.socket.remoteAddress;
+    // const ip = req.headers[`x-forwarded-for`] || req.socket.remoteAddress;
 
-      const access_token = services.token.createAccessToken(newUser);
-      const refresh_token = await services.token.createRefreshToken(newUser);
+    const access_token = services.token.createAccessToken(newUser);
+    const refresh_token = await services.token.createRefreshToken(newUser);
 
-      res.json({
-        access_token,
-        refresh_token,
-        user: newUser.toJSON(),
-      });
-    }));
+    res.json({
+      access_token,
+      refresh_token,
+      user: newUser.toJSON(),
+    });
+  })
+);
 
 // standard password and
-router.route(`/login`)
-  .post(
-    catchAsync(async (req, res) => {
-      const { username, password } = req.body;
+router.route(`/login`).post(
+  catchAsync(async (req, res) => {
+    const { username, password } = req.body;
 
-      if (!username || !password) {
-        throw new ApiError(httpStatus.BAD_REQUEST, `username and password are required`);
-      }
+    if (!username || !password) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        `username and password are required`
+      );
+    }
 
-      const user = await services.user.getBy.username(username);
-      if (!user) {
-        throw new ApiError(httpStatus.NOT_FOUND, `user not found`);
-      }
+    const user = await services.user.getBy.username(username);
+    if (!user) {
+      throw new ApiError(httpStatus.NOT_FOUND, `user not found`);
+    }
 
-      const isValid = await services.user.validatePassword(user, password);
-      if (!isValid) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, `invalid password`);
-      }
+    const isValid = await services.user.validatePassword(user, password);
+    if (!isValid) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, `invalid password`);
+    }
 
-      const access_token = services.token.createAccessToken(user);
-      const refresh_token = await services.token.createRefreshToken(user);
+    const access_token = services.token.createAccessToken(user);
+    const refresh_token = await services.token.createRefreshToken(user);
 
-      res.json({
-        access_token,
-        refresh_token,
-        user: user.toJSON(),
-      });
-    }));
-
+    res.json({
+      access_token,
+      refresh_token,
+      user: user.toJSON(),
+    });
+  })
+);
 
 /**
  * Protected route
  */
-router.route(`/refresh`)
-  .post(
-    passport.authenticate(jwtRefreshStrategy),
-    (req, res) => {
-      res.json({
-        access_token: services.token.createAccessToken(req.user),
-      });
+router
+  .route(`/refresh`)
+  .post(passport.authenticate(jwtRefreshStrategy), (req, res) => {
+    res.json({
+      access_token: services.token.createAccessToken(req.user),
     });
+  });
 
 export default router;

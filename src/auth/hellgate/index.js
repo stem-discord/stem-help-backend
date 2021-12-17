@@ -18,14 +18,18 @@ class MongoHotel extends IHotel {
 
 const application = new Hellgate(new MongoHotel());
 
-const data = new Ring(application, {
-  create: false,
-  read: true,
-  update: false,
-  delete: false,
-}, {
-  create: [`data:manager`],
-});
+const data = new Ring(
+  application,
+  {
+    create: false,
+    read: true,
+    update: false,
+    delete: false,
+  },
+  {
+    create: [`data:manager`],
+  }
+);
 
 const rings = {
   data,

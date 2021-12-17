@@ -7,7 +7,8 @@ import { logger } from "../tool/index.js";
 import shared from "../shared/index.js";
 class Token {
   constructor(type, payload, expire) {
-    if (!type || !payload || !expire) throw new Error(`Insufficient parameters`);
+    if (!type || !payload || !expire)
+      throw new Error(`Insufficient parameters`);
     this.type = type;
     payload = {
       ...payload,

@@ -1,15 +1,11 @@
 import jwt from "jsonwebtoken";
 
-function createToken() {
-
-}
+function createToken() {}
 
 function createAccessToken() {
   // put something like admin idk
 }
 
-function createRefreshToken() {
-
-}
+function createRefreshToken() {}
 
 export { createAccessToken, createRefreshToken };

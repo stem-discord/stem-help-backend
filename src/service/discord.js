@@ -8,7 +8,9 @@ import shared from "../shared/index.js";
 import { DSA, normalize } from "../util/index.js";
 import config from "../config/index.js";
 
-const similarityScore = Symbol(`similarityScore. The lower the score, the greater the similarity`);
+const similarityScore = Symbol(
+  `similarityScore. The lower the score, the greater the similarity`
+);
 
 const EMPTY_USER = {
   [similarityScore]: Infinity,
@@ -33,7 +35,10 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
     }
   }
 
-  const userArray = new SortedArray.comparing(similarityScore, Array(limit).fill(EMPTY_USER));
+  const userArray = new SortedArray.comparing(
+    similarityScore,
+    Array(limit).fill(EMPTY_USER)
+  );
 
   const insert = obj => {
     userArray.insert(obj);
@@ -60,11 +65,15 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
     let nickname = guild.members.resolve(user)?.nickname;
     if (nickname) {
       user.nickname = nickname;
-      const ss = 2 * stringSimilarity.compareTwoStrings(targetUsername, nickname);
+      const ss =
+        2 * stringSimilarity.compareTwoStrings(targetUsername, nickname);
       score = ss > score ? ss : score;
     }
     if (username) {
-      const ss = stringSimilarity.compareTwoStrings(targetUsername, username + discriminator);
+      const ss = stringSimilarity.compareTwoStrings(
+        targetUsername,
+        username + discriminator
+      );
       score = ss > score ? ss : score;
     }
     if (targetDiscriminator) {
@@ -87,7 +96,8 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
 }
 
 async function uploadFile(buffer, options) {
-  if (!config.discord.uploadWebhook) return Promise.reject(new Error(`No uploadWebhook set`));
+  if (!config.discord.uploadWebhook)
+    return Promise.reject(new Error(`No uploadWebhook set`));
 
   const form = new FormData();
 

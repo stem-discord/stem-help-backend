@@ -12,30 +12,31 @@ const mocks = {
         id: `493173110799859713`,
         members: {
           // This is stupid
-          resolve(m) { return { nickname: `Satan`, ...m }; },
+          resolve(m) {
+            return { nickname: `Satan`, ...m };
+          },
         },
       },
     },
     client: {
       users: {
-        cache: new Collection(
+        cache: new Collection([
           [
-            [
-              `220327217312432129`,
-              {
-                id: `220327217312432129`,
-                username: `nope`,
-                discriminator: `6924`,
-              },
-            ],
-          ]),
+            `220327217312432129`,
+            {
+              id: `220327217312432129`,
+              username: `nope`,
+              discriminator: `6924`,
+            },
+          ],
+        ]),
       },
     },
   },
   mongo: {},
 };
 
-const mock = (args) => {
+const mock = args => {
   if (typeof beforeEach !== `function`) {
     throw new Error(`Mocha was not loaded`);
   }

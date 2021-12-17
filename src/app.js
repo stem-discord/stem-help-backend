@@ -67,7 +67,9 @@ if (config.env.cors) {
 }
 
 app.get(`/`, async (req, res) => {
-  res.status(200).json({ message: `OK`, version: await git.status.getLastCommit() });
+  res
+    .status(200)
+    .json({ message: `OK`, version: await git.status.getLastCommit() });
 });
 
 // limit repeated failed requests to auth endpoints
@@ -76,11 +78,11 @@ if (config.env === `production`) {
   // app.use(`/v1/auth`, authLimiter);
 }
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 

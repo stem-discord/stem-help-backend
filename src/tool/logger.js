@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const moduleRoot = __dirname;
 const srcRoot = path.join(__dirname, `../`);
 
-const enumerateErrorFormat = winston.format((info) => {
+const enumerateErrorFormat = winston.format(info => {
   if (info instanceof Error) {
     Object.assign(info, { message: info.stack });
   }
@@ -23,9 +23,14 @@ const enumerateErrorFormat = winston.format((info) => {
 function WinstonLogger(fmt) {
   return winston.createLogger({
     level: config.env === `development` ? `debug` : `info`,
-    format: winston.format.combine(enumerateErrorFormat(), config.env === `development`
-      ? winston.format.colorize()
-      : winston.format.uncolorize(), winston.format.splat(), winston.format.printf(fmt)),
+    format: winston.format.combine(
+      enumerateErrorFormat(),
+      config.env === `development`
+        ? winston.format.colorize()
+        : winston.format.uncolorize(),
+      winston.format.splat(),
+      winston.format.printf(fmt)
+    ),
     transports: [
       new winston.transports.Console({
         stderrLevels: [`error`],
@@ -34,7 +39,9 @@ function WinstonLogger(fmt) {
   });
 }
 
-const logger = WinstonLogger(({ level, message }) => `[⌚ ${time()}] ${level}: ${message}`);
+const logger = WinstonLogger(
+  ({ level, message }) => `[⌚ ${time()}] ${level}: ${message}`
+);
 
 function Logger(name, printPath = false) {
   let pp = ``;
@@ -45,7 +52,10 @@ function Logger(name, printPath = false) {
     pp = `▷ ${paths.join(`‣`)} `;
   }
   // I don't know if making a new winston logger every time is a good idea, but it works.
-  return WinstonLogger(({ level, message }) => `[⌚ ${time()}] ${level}: [${name}] ${pp}: ${message}`);
+  return WinstonLogger(
+    ({ level, message }) =>
+      `[⌚ ${time()}] ${level}: [${name}] ${pp}: ${message}`
+  );
 }
 
 export { logger, Logger };

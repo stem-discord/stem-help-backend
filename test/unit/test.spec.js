@@ -9,7 +9,10 @@ const { fields } = validations;
 
 describe(`util`, function () {
   it(`pick.js`, function () {
-    expect(util.pick({ a: 1, b: 2, c: 3 }, [`a`, `b`])).to.deep.equal({ a: 1, b: 2 });
+    expect(util.pick({ a: 1, b: 2, c: 3 }, [`a`, `b`])).to.deep.equal({
+      a: 1,
+      b: 2,
+    });
   });
 
   it(`getCallerDir.js`, function () {
@@ -19,13 +22,13 @@ describe(`util`, function () {
     expect(import.meta.url).to.startWith(util.getCallerDir({}, 1, false));
   });
 
-  describe(`time`, function() {
-    it(`startTime`, function() {
+  describe(`time`, function () {
+    it(`startTime`, function () {
       // This isn't a great test, only for coverage really
       expect(util.time.startTime()).to.match(/00:\d\d:\d\d/);
       expect(util.time.startTime(Date.now())).to.match(/00:\d\d:\d\d/);
     });
-    it(`localeTime`, function() {
+    it(`localeTime`, function () {
       expect(util.time.localeTime()).to.match(/\d\d:\d\d:\d\d/);
       expect(util.time.localeTime(Date.now())).to.match(/\d\d:\d\d:\d\d/);
     });
@@ -73,12 +76,16 @@ describe(`util`, function () {
 
   describe(`nullWrapper`, function () {
     it(`should work`, function () {
-      expect(util.nullWrapper(() => {
-        throw Error(`test`);
-      })).to.equal(null);
-      expect(util.nullWrapper(() => {
-        return 1;
-      })).to.equal(1);
+      expect(
+        util.nullWrapper(() => {
+          throw Error(`test`);
+        })
+      ).to.equal(null);
+      expect(
+        util.nullWrapper(() => {
+          return 1;
+        })
+      ).to.equal(1);
     });
   });
 
@@ -101,19 +108,24 @@ describe(`util`, function () {
       expect(arr.length).to.equal(new Set(arr).size);
     });
   });
-
 });
 
 function validationFactory(fieldname, passing, failing, validator) {
   describe(`validation for ${fieldname}`, function () {
     it(`Should pass passing usernames`, function () {
       for (const pass of passing) {
-        expect(Joi.string().custom(validator).validate(pass), `expected '${pass}' to be a valid ${fieldname}`).to.not.have.property(`error`);
+        expect(
+          Joi.string().custom(validator).validate(pass),
+          `expected '${pass}' to be a valid ${fieldname}`
+        ).to.not.have.property(`error`);
       }
     });
     it(`Should not pass invalid usernames`, function () {
       for (const fail of failing) {
-        expect(Joi.string().custom(validator).validate(fail), `expected '${fail}' to not be a valid ${fieldname}`).to.have.property(`error`);
+        expect(
+          Joi.string().custom(validator).validate(fail),
+          `expected '${fail}' to not be a valid ${fieldname}`
+        ).to.have.property(`error`);
       }
     });
   });
@@ -121,24 +133,22 @@ function validationFactory(fieldname, passing, failing, validator) {
 
 describe(`validations`, function () {
   describe(`field`, function () {
-    validationFactory(`username`, [
-      `abcdsaif`,
-      `the_best_cookie`,
-      `the_arda_candy`,
-    ], [
-      `thonk me`,
-      `interest-name`,
-      `0best0`,
-      `adoifajvaejfiajdsfjiaesjfioaewjfojasilfjaeioswfj`,
-    ], fields.username);
-    validationFactory(`password`, [
-      `akfjioefklsdfjio123`,
-      `thebestp@ssw0rd`,
-    ], [
-      `correcthorsebatterystaple`,
-      `tooshort`,
-      `12345678`,
-      `!()*()#$)(#)@#)$`,
-    ], fields.password);
+    validationFactory(
+      `username`,
+      [`abcdsaif`, `the_best_cookie`, `the_arda_candy`],
+      [
+        `thonk me`,
+        `interest-name`,
+        `0best0`,
+        `adoifajvaejfiajdsfjiaesjfioaewjfojasilfjaeioswfj`,
+      ],
+      fields.username
+    );
+    validationFactory(
+      `password`,
+      [`akfjioefklsdfjio123`, `thebestp@ssw0rd`],
+      [`correcthorsebatterystaple`, `tooshort`, `12345678`, `!()*()#$)(#)@#)$`],
+      fields.password
+    );
   });
 });

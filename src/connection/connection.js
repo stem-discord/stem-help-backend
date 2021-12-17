@@ -7,13 +7,7 @@ import { ConnectionState, ConnectionEvent } from "../types/index.js";
  * use ConnectionEvent to emit events
  */
 class Connection extends EventEmitter {
-  constructor({
-    init,
-    heartbeat,
-    name,
-    description,
-    close,
-  }) {
+  constructor({ init, heartbeat, name, description, close }) {
     super();
     if (!init) throw new Error(`init is required`);
     if (!heartbeat) throw new Error(`heartbeat is required`);
@@ -37,7 +31,6 @@ class Connection extends EventEmitter {
         this.state = state;
       });
     }
-
   }
 
   async close() {
@@ -48,14 +41,18 @@ class Connection extends EventEmitter {
    *
    * @param {String} eventMap { String: ConnectionEvent | Function => ConnectionEvent }
    */
-  mapEvents(eventEmitter, eventMap){
+  mapEvents(eventEmitter, eventMap) {
     eventMap.entries().forEach(([source, target]) => {
       let handler;
       if (target instanceof Function) {
         handler = arg => this.emit(target(arg));
       } else {
         if (!Object.values(ConnectionEvent).includes(target)) {
-          throw new Error(`event mapping ${target} is not a valid ConnectionEvent. valid values are ${Object.values(ConnectionEvent)}`);
+          throw new Error(
+            `event mapping ${target} is not a valid ConnectionEvent. valid values are ${Object.values(
+              ConnectionEvent
+            )}`
+          );
         }
         handler = () => this.emit(target);
       }
@@ -77,7 +74,8 @@ class Connection extends EventEmitter {
     return (async () => this._init())()
       .then(() => {
         this.state = ConnectionState.CONNECTED;
-      }).finally(() => {
+      })
+      .finally(() => {
         this.initialized = true;
       });
   }
@@ -104,12 +102,8 @@ class Connection extends EventEmitter {
   }
 }
 
-
 class NullConnection extends Connection {
-  constructor({
-    name,
-    description,
-  }, rejectReason) {
+  constructor({ name, description }, rejectReason) {
     if (!rejectReason) throw new Error(`rejectReason is required`);
     super({
       name,
@@ -126,7 +120,9 @@ class NullConnection extends Connection {
     return Promise.reject(new Error(`${this.name} is not initialized`));
   }
   heartbeat() {
-    return Promise.reject(new Error(`${this.name} cannot send heartbeat to uninitialized interface`));
+    return Promise.reject(
+      new Error(`${this.name} cannot send heartbeat to uninitialized interface`)
+    );
   }
 
   get state() {
@@ -134,7 +130,9 @@ class NullConnection extends Connection {
   }
 
   set state(_) {
-    throw new Error(`cannot set state of ${this.name} because it is uninitialized`);
+    throw new Error(
+      `cannot set state of ${this.name} because it is uninitialized`
+    );
   }
 }
 

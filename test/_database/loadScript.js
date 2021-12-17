@@ -24,7 +24,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Leave this filename as hard coded unless there is a really good reason
 const envPath = path.join(__dirname, `../../.test.env`);
 
-if (!fs.existsSync(envPath)) throw new Error(`Missing .test.env file ${envPath}`);
+if (!fs.existsSync(envPath))
+  throw new Error(`Missing .test.env file ${envPath}`);
 
 const env = dotenv.parse(fs.readFileSync(envPath));
 
@@ -32,7 +33,8 @@ const env = dotenv.parse(fs.readFileSync(envPath));
 // This variable MUST exist in the .test.env file
 const uri = argv._[0] || env.MONGODB_URL;
 
-if (!uri) throw new Error(`URI is required (either from arguments or .test.env)`);
+if (!uri)
+  throw new Error(`URI is required (either from arguments or .test.env)`);
 
 if (!uri.match(/test/)) throw new Error(`cannot drop non-test database ${uri}`);
 
@@ -41,30 +43,37 @@ mongoose.connect(uri, {
   useUnifiedTopology: true,
 });
 
-mongoose.connection.on(`connected`, function() {
+mongoose.connection.on(`connected`, function () {
   console.log(`connected to MongoDB`);
   mongoose.connection.db.listCollections().toArray((err, names) => {
     const drops = [];
-    names.forEach(function(e) {
-      const d = mongoose.connection.db.dropCollection(e.name).then(() => {
-        console.info(`dropped collection ${e.name}`);
-      }).catch(e => {
-        console.error(`Error dropping collection ${e.name}`);
-        console.error(e);
-      });
+    names.forEach(function (e) {
+      const d = mongoose.connection.db
+        .dropCollection(e.name)
+        .then(() => {
+          console.info(`dropped collection ${e.name}`);
+        })
+        .catch(e => {
+          console.error(`Error dropping collection ${e.name}`);
+          console.error(e);
+        });
       drops.push(d);
     });
     Promise.allSettled(drops).then(async () => {
       const creations = [];
       let i = 0;
       for (const [db, ctx] of Object.entries(database)) {
-        const Collection = mongoose.model(`${i++}`, {
-          name: String,
-          username: String,
-          hash: String,
-          salt: String,
-          roles: [],
-        }, db);
+        const Collection = mongoose.model(
+          `${i++}`,
+          {
+            name: String,
+            username: String,
+            hash: String,
+            salt: String,
+            roles: [],
+          },
+          db
+        );
         let counter = 0;
         for (const item of ctx) {
           counter++;
@@ -80,4 +89,3 @@ mongoose.connection.on(`connected`, function() {
     });
   });
 });
-

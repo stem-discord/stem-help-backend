@@ -19,11 +19,12 @@ const pubpath = path.join(__dirname, `../env/id_rsa_pub.pem`),
 
 // check if files already exist since it would be terrible to overwrite them
 if (fs.existsSync(pubpath) || fs.existsSync(privpath)) {
-  throw new Error(`Files already exist, please remove them before generating new keys`);
+  throw new Error(
+    `Files already exist, please remove them before generating new keys`
+  );
 }
 
 function genKeyPair() {
-
   // Generates an object where the keys are stored in properties `privateKey` and `publicKey`
   const keyPair = crypto.generateKeyPairSync(`rsa`, {
     modulusLength: 4096, // bits - standard for RSA keys

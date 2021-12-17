@@ -5,12 +5,14 @@ import env from "../config.js";
 import { mongo } from "../../src/connection/index.js";
 import { mock } from "../shared/index.js";
 
-
 import * as i from "./interface.js";
 
 let url = env.API_URL;
 
-const sleep = t => new Promise(r => { setTimeout(r, t); });
+const sleep = t =>
+  new Promise(r => {
+    setTimeout(r, t);
+  });
 
 function tokenPair(obj) {
   const { access_token, refresh_token } = obj;
@@ -25,12 +27,14 @@ function validateAccessToken(token) {
   expect(token.user).to.not.include.keys([`email`]);
 }
 
-describe(`client run`, function() {
-  before(`check if server is online`, async function() {
+describe(`client run`, function () {
+  before(`check if server is online`, async function () {
     const isOnline = await fetch(`${url}`).catch(() => false);
     if (!isOnline) {
-    // eslint-disable-next-line no-console
-      console.log(`Server is not running, and url was a local host. creating local server...`);
+      // eslint-disable-next-line no-console
+      console.log(
+        `Server is not running, and url was a local host. creating local server...`
+      );
     } else {
       return;
     }
@@ -48,8 +52,8 @@ describe(`client run`, function() {
     url = url.toString();
   });
 
-  describe(`status check`, function() {
-    it(`should return a message`, async function() {
+  describe(`status check`, function () {
+    it(`should return a message`, async function () {
       const res = await fetch(`${url}/status`).then(r => r.json());
       expect(res).to.be.an(`object`).to.include.keys(`status`, `connections`);
       for (const o of res.connections) {
@@ -58,23 +62,21 @@ describe(`client run`, function() {
     });
   });
 
-  describe(`auth cycle`, function() {
-    describe(`monk (normal user)`, function() {
-      before(function() {
+  describe(`auth cycle`, function () {
+    describe(`monk (normal user)`, function () {
+      before(function () {
         this.needs(mongo);
       });
 
       let access_token, refresh_token;
 
-      it(`should register a user`, async function() {
+      it(`should register a user`, async function () {
         const res = await i.register(`monk`, `monk1234`, {
           email: `monk@gmail.com`,
         });
-        expect(res).to.be.an(`object`).with.keys(
-          `access_token`,
-          `refresh_token`,
-          `user`,
-        );
+        expect(res)
+          .to.be.an(`object`)
+          .with.keys(`access_token`, `refresh_token`, `user`);
         const { access, refresh } = tokenPair(res);
         expect(access.user).to.include.keys([`ranks`, `groups`]);
         expect(access.user).to.not.include.keys([`email`]);
@@ -83,22 +85,18 @@ describe(`client run`, function() {
         refresh_token = res.refresh_token;
       });
 
-      it(`monk should be able to login again`, async function() {
+      it(`monk should be able to login again`, async function () {
         const res = await i.login(`monk`, `monk1234`);
-        expect(res).to.be.an(`object`).with.keys(
-          `access_token`,
-          `refresh_token`,
-          `user`,
-        );
+        expect(res)
+          .to.be.an(`object`)
+          .with.keys(`access_token`, `refresh_token`, `user`);
         const { access, refresh } = tokenPair(res);
         validateAccessToken(access);
       });
 
-      it(`monk should be able to refresh his tokens`, async function() {
+      it(`monk should be able to refresh his tokens`, async function () {
         const res = await i.refresh(refresh_token);
-        expect(res).to.be.an(`object`).with.keys(
-          `access_token`,
-        );
+        expect(res).to.be.an(`object`).with.keys(`access_token`);
         const { access } = tokenPair(res);
 
         validateAccessToken(access);
@@ -106,21 +104,18 @@ describe(`client run`, function() {
 
       it(`should allow logout`);
     });
-    describe(`john (admin user)`, function() {
-      before(function() {
+    describe(`john (admin user)`, function () {
+      before(function () {
         this.needs(mongo);
       });
 
       let access_token, refresh_token;
 
-      it(`should allow login`, async function() {
-
+      it(`should allow login`, async function () {
         const res = await i.login(`johndoe`, `password1`);
-        expect(res).to.be.an(`object`).with.keys(
-          `access_token`,
-          `refresh_token`,
-          `user`,
-        );
+        expect(res)
+          .to.be.an(`object`)
+          .with.keys(`access_token`, `refresh_token`, `user`);
         ({ access_token, refresh_token } = res);
         const { access, refresh } = tokenPair(res);
         validateAccessToken(access);
@@ -128,16 +123,16 @@ describe(`client run`, function() {
     });
   });
 
-  describe(`Status`, function() {
-    it(`should return the status`, async function() {
+  describe(`Status`, function () {
+    it(`should return the status`, async function () {
       const res = await fetch(`${url}/status`).then(r => r.json());
       expect(res).to.be.an(`object`).with.keys(`connections`, `status`);
     });
   });
 
-  describe(`service`, function() {
-    describe(`banner`, function() {
-      it(`prime the headless browser`, async function() {
+  describe(`service`, function () {
+    describe(`banner`, function () {
+      it(`prime the headless browser`, async function () {
         this.slow(5000);
         this.timeout(10 * 1000);
         const a = () => fetch(`${url}/service/banner/html/hello`);
@@ -145,7 +140,7 @@ describe(`client run`, function() {
         expect(res).to.be.an.instanceof(ArrayBuffer);
         expect(res.byteLength).to.be.above(100);
       });
-      it(`should return the banner (html)`, async function() {
+      it(`should return the banner (html)`, async function () {
         // Should not error
         const a = () => fetch(`${url}/service/banner/html/hello`);
         const res = await a().then(v => v.arrayBuffer());
@@ -154,8 +149,8 @@ describe(`client run`, function() {
       });
     });
 
-    describe(`banner`, function() {
-      it(`should return the banner (canvas)`, async function() {
+    describe(`banner`, function () {
+      it(`should return the banner (canvas)`, async function () {
         // Should not error
         const a = () => fetch(`${url}/service/banner/canvas/hello`);
         const res = await a().then(v => v.arrayBuffer());
@@ -166,8 +161,10 @@ describe(`client run`, function() {
 
     describe(`discord`, function () {
       mock(`discord`);
-      it(`Should be able to fetch a user`, async function() {
-        const res = await fetch(`${url}/service/discordlookup/nope`).then(r => r.json());
+      it(`Should be able to fetch a user`, async function () {
+        const res = await fetch(`${url}/service/discordlookup/nope`).then(r =>
+          r.json()
+        );
         expect(res).to.be.an(`array`);
       });
     });

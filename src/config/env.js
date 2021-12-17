@@ -5,7 +5,6 @@ function bool(s) {
 }
 
 function generateConfig(env) {
-
   const { value: envVars, error } = envVarsSchema
     .prefs({ errors: { label: `key` } })
     .validate(env);
@@ -40,7 +39,8 @@ function generateConfig(env) {
       privatekey: envVars.JWT_PRIVATE_KEY,
       accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
       refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
-      resetPasswordExpirationMinutes: envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
+      resetPasswordExpirationMinutes:
+        envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
       verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
     },
     email: {

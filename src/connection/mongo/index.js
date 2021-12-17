@@ -18,15 +18,20 @@ if (config.mongoose.url) {
   connection = new Connection({
     ...ns,
     init: () => {
-      const conn = mongoose.createConnection(config.mongoose.url, config.mongoose.options);
+      const conn = mongoose.createConnection(
+        config.mongoose.url,
+        config.mongoose.options
+      );
 
       mongooseConnection = conn;
 
-      conn.then(() => {
-        logger.info(`Connected to MongoDB ${config.mongoose.url}`);
-      }).catch(e => {
-        logger.error(`Error connecting to MongoDB ${config.mongoose.url}`, e);
-      });
+      conn
+        .then(() => {
+          logger.info(`Connected to MongoDB ${config.mongoose.url}`);
+        })
+        .catch(e => {
+          logger.error(`Error connecting to MongoDB ${config.mongoose.url}`, e);
+        });
 
       const open = new Promise(resolve => {
         dbOpen = resolve;

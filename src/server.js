@@ -35,21 +35,31 @@ logger.info(`Finished importing modules`);
   if (l.length <= 1) {
     logger.info(`working directory is in sync`);
   }
-  logger.info(`Node version: ${process.version}${process.arch}-${process.platform} mode: ${config.env}`);
+  logger.info(
+    `Node version: ${process.version}${process.arch}-${process.platform} mode: ${config.env}`
+  );
 })();
 
 let listeningCb;
 
 const apiServer = app.listen(config.port, () => {
   logger.info(`App is on '${config.env}' mode`);
-  logger.info(`Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`);
+  logger.info(
+    `Listening to port ${config.port} - http://localhost:${config.port}/v1/docs`
+  );
   listeningCb(true);
 });
 
 apiServer.ready = (async () => {
-  await new Promise(r => { listeningCb = r; });
+  await new Promise(r => {
+    listeningCb = r;
+  });
   if (config.connections) {
-    logger.info(`connections option was set to [${config.connections.join(`, `)}], initializing these`);
+    logger.info(
+      `connections option was set to [${config.connections.join(
+        `, `
+      )}], initializing these`
+    );
   }
   await connection.openConnections(config.connections);
   return true;
@@ -61,7 +71,7 @@ const exitHandler = () => {
   process.emit(`SIGTERM`, 1);
 };
 
-const unexpectedErrorHandler = (error) => {
+const unexpectedErrorHandler = error => {
   logger.error(error);
   exitHandler();
 };
@@ -69,7 +79,7 @@ const unexpectedErrorHandler = (error) => {
 process.on(`uncaughtException`, unexpectedErrorHandler);
 process.on(`unhandledRejection`, unexpectedErrorHandler);
 
-process.on(`warning`, (warning) => {
+process.on(`warning`, warning => {
   if (warning.message.includes(`stream/web`)) return;
   logger.warn(warning.stack);
 });
@@ -78,13 +88,9 @@ process.on(`SIGTERM`, async (code = 0) => {
   try {
     logger.info(`SIGTERM signal received`);
 
-
     const sc = staticServer?.close;
 
-    const funcs = [
-      () => apiServer.close(),
-      sc ? () => sc() : null,
-    ];
+    const funcs = [() => apiServer.close(), sc ? () => sc() : null];
 
     const promises = [];
     for (const f of funcs) {

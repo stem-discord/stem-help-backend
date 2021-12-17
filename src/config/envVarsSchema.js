@@ -6,10 +6,18 @@ const envVarsSchema = Joi.object()
       .valid(`production`, `development`, `test`)
       .default(`development`),
     PORT: Joi.number().default(3000).description(`The port for the API server`),
-    SUPER_SECRET_ADMIN_KEY: Joi.string().default(`admin`).description(`The super secret admin key used to bypass anything for testing a feature in production`),
-    LOGGING_ABSOLUTE: Joi.string().valid(`true`, `false`).description(`Logging absolute time`),
+    SUPER_SECRET_ADMIN_KEY: Joi.string()
+      .default(`admin`)
+      .description(
+        `The super secret admin key used to bypass anything for testing a feature in production`
+      ),
+    LOGGING_ABSOLUTE: Joi.string()
+      .valid(`true`, `false`)
+      .description(`Logging absolute time`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
-    CONNECTIONS: Joi.string().description(`Connections to open when the server starts. Leave it empty to enable all connections`),
+    CONNECTIONS: Joi.string().description(
+      `Connections to open when the server starts. Leave it empty to enable all connections`
+    ),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
     JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
@@ -28,22 +36,36 @@ const envVarsSchema = Joi.object()
     SMTP_PORT: Joi.number().description(`port to connect to the email server`),
     SMTP_USERNAME: Joi.string().description(`username for email server`),
     SMTP_PASSWORD: Joi.string().description(`password for email server`),
-    EMAIL_FROM: Joi.string().description(`the from field in the emails sent by the app`),
+    EMAIL_FROM: Joi.string().description(
+      `the from field in the emails sent by the app`
+    ),
     CORS: Joi.string().valid(`true`, `false`).description(`Enable CORS`),
-    API_URL: Joi.string().description(`url to make api calls to. used by src/static`),
+    API_URL: Joi.string().description(
+      `url to make api calls to. used by src/static`
+    ),
     DISCORD_BOT_TOKEN: Joi.string().description(`discord bot token`),
     DISCORD_UPLOAD_WEBHOOK: Joi.string().description(`discord upload webhook`),
     // temporary
     DISCORD_OAUTH_URI: Joi.string().description(`discord oauth uri`),
     DISCORD_CLIENT_ID: Joi.string().description(`discord app id`),
     DISCORD_CLIENT_SECRET: Joi.string().description(`discord app secret`),
-    STATIC_SERVER: Joi.string().valid(`true`, `false`).description(`Enable static server`),
-    STATIC_SERVER_PORT: Joi.number().description(`The port for another static server (if true, both api server and static server will be online)`),
-    STATIC_SERVER_API_URL: Joi.string().description(`The API url this static server should use`),
-    STATIC_ROUTE: Joi.string().valid(`true`, `false`).description(`Serve /static`),
+    STATIC_SERVER: Joi.string()
+      .valid(`true`, `false`)
+      .description(`Enable static server`),
+    STATIC_SERVER_PORT: Joi.number().description(
+      `The port for another static server (if true, both api server and static server will be online)`
+    ),
+    STATIC_SERVER_API_URL: Joi.string().description(
+      `The API url this static server should use`
+    ),
+    STATIC_ROUTE: Joi.string()
+      .valid(`true`, `false`)
+      .description(`Serve /static`),
 
     // Below are not exposed to config object, but only process.env
-    ONLY_CLIENT: Joi.string().valid(`true`, `false`).description(`[TEST] Does not launch a server when testing client`),
+    ONLY_CLIENT: Joi.string()
+      .valid(`true`, `false`)
+      .description(`[TEST] Does not launch a server when testing client`),
   })
   .unknown();
 

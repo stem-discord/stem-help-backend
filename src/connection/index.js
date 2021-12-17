@@ -34,25 +34,42 @@ function connDesc(connection) {
     // not operational, for two reasons
     else {
       // waiting for opening
-      if ([ConnectionState.UNINITIALIZED, ConnectionState.CONNECTING].includes(connection.state)) {
+      if (
+        [ConnectionState.UNINITIALIZED, ConnectionState.CONNECTING].includes(
+          connection.state
+        )
+      ) {
         return `⏳ ${connection.state}`;
-      } else if ([ConnectionState.DISCONNECTED, ConnectionState.DISCONNECTING].includes(connection.state)) {
+      } else if (
+        [ConnectionState.DISCONNECTED, ConnectionState.DISCONNECTING].includes(
+          connection.state
+        )
+      ) {
         return `⚠️ ${connection.state} ${connection.rejectReason}`;
       }
     }
   } else {
-    return `✖️  Not configured` + (connection.rejectReason ? ` → ${connection.rejectReason}` : ``);
+    return (
+      `✖️  Not configured` +
+      (connection.rejectReason ? ` → ${connection.rejectReason}` : ``)
+    );
   }
   return `❔ Unknown status ${connection.state}`;
 }
 
-const openConnections = (async (selection) => {
+const openConnections = async selection => {
   selection ??= Object.keys(modules);
   if (!Array.isArray(selection)) {
     throw new Error(`Expected array, got ${typeof selection}`, selection);
   }
-  logger.info(`Awaiting for module initialization...` + (selection ? ` [${selection.join(`, `)}]` : ``));
-  const initializations = Object.entries(modules).filter(v => selection.includes(v[0])).map(v => v[1]).map(c => c.connection.init());
+  logger.info(
+    `Awaiting for module initialization...` +
+      (selection ? ` [${selection.join(`, `)}]` : ``)
+  );
+  const initializations = Object.entries(modules)
+    .filter(v => selection.includes(v[0]))
+    .map(v => v[1])
+    .map(c => c.connection.init());
   await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
   const WIDTH = 20;
@@ -61,9 +78,11 @@ const openConnections = (async (selection) => {
   }
   logger.info(
     `== Open Connection Report ==\n` +
-    `Module name`.padEnd(WIDTH) + `  Status\n` +
-    reports.join(`\n`));
-});
+      `Module name`.padEnd(WIDTH) +
+      `  Status\n` +
+      reports.join(`\n`)
+  );
+};
 
 async function closeConnections() {
   return await Promise.all(connections.map(c => c.close()));

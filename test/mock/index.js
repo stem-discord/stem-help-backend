@@ -1,4 +1,3 @@
-
 import nock from "nock";
 import discordInterceptor from "./discord.com/index.js";
 

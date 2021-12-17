@@ -1,4 +1,3 @@
-
 if (process.argv.length < 3) {
   throw new Error(`Provide a password to hash/salt`);
 } else if (process.argv.length >= 4) {

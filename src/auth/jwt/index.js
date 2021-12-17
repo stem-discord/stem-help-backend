@@ -33,23 +33,26 @@ const jwtAccessStrategy = new JwtStrategy(jwtOptions, async (payload, done) => {
 /**
  * Extract from body refresh_token instead of header
  */
-const jwtRefreshStrategy = new JwtStrategy({
-  ...jwtOptions,
-  jwtFromRequest: ExtractJwt.fromBodyField(`refresh_token`),
-}, async (payload, done) => {
-  if (payload.type !== Token.REFRESH) {
-    return done(new Error(`Expected token type 'REFRESH'`), false);
-  }
-  try {
-    const user = await shared.mongo.User.findById(payload.sub);
-    if (user) {
-      return done(null, user);
+const jwtRefreshStrategy = new JwtStrategy(
+  {
+    ...jwtOptions,
+    jwtFromRequest: ExtractJwt.fromBodyField(`refresh_token`),
+  },
+  async (payload, done) => {
+    if (payload.type !== Token.REFRESH) {
+      return done(new Error(`Expected token type 'REFRESH'`), false);
     }
-    return done(null, false);
-  } catch (err) {
-    return done(err, false);
+    try {
+      const user = await shared.mongo.User.findById(payload.sub);
+      if (user) {
+        return done(null, user);
+      }
+      return done(null, false);
+    } catch (err) {
+      return done(err, false);
+    }
   }
-});
+);
 
 export { jwtAccessStrategy, jwtRefreshStrategy };
 

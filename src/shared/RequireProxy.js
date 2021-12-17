@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 
-import { ApiError  } from "../util/index.js";
+import { ApiError } from "../util/index.js";
 
 function RequireProxy(validator, obj) {
   const cache = {};
@@ -13,14 +13,19 @@ function RequireProxy(validator, obj) {
       // eslint-disable-next-line no-async-promise-executor
       try {
         if (!validator()) {
-          throw new ApiError(httpStatus.SERVICE_UNAVAILABLE, `Cannot access property ${name} because it is unavailable`);
+          throw new ApiError(
+            httpStatus.SERVICE_UNAVAILABLE,
+            `Cannot access property ${name} because it is unavailable`
+          );
         }
         if (!Object.prototype.hasOwnProperty.call(cache, name)) {
           cache[name] = target[name];
         }
         return cache[name];
       } catch (e) {
-        e.stack += `\n\nInitialization stack` + stack.substring(stack.indexOf(`\n`, stack.indexOf(`\n`) + 1));
+        e.stack +=
+          `\n\nInitialization stack` +
+          stack.substring(stack.indexOf(`\n`, stack.indexOf(`\n`) + 1));
         throw e;
       }
     },

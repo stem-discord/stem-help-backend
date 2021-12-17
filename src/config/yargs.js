@@ -10,7 +10,7 @@ const port = [`port`, `PORT`],
 
 // TODO refactor this
 const argv = yargs
-// accept port number as argument
+  // accept port number as argument
   .option(port[0], {
     alias: `p`,
     describe: `Port number`,
@@ -43,16 +43,23 @@ const argv = yargs
   .option(connections[0], {
     describe: `Route used by the static-server (means you can use external api server with the mini server)`,
     type: `string`,
-  })
-  .argv;
+  }).argv;
 
-const arr = [port, staticServer, staticServerPort, staticServerApiURL, staticRoute, dbURI, connections];
+const arr = [
+  port,
+  staticServer,
+  staticServerPort,
+  staticServerApiURL,
+  staticRoute,
+  dbURI,
+  connections,
+];
 
 const opt = {};
 
 const vk = arr.map(a => a[0]);
 
-for(const [key, value] of arr) {
+for (const [key, value] of arr) {
   if (vk.includes(key)) {
     opt[value] = argv[key]?.toString();
   }
