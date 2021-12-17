@@ -1,3 +1,7 @@
 {
-  "src": "src"
+  "src": "src",
+  "exclude": [
+	  "script/**/*",
+	  "test/**/*"
+  ]
 }
