@@ -1,6 +1,6 @@
 import path from "path";
 
-function getCallerDir(current, skip = 1, isFile = false) {
+function getCallerDir(current, skip = 1, isFile = true) {
   if (!current)
     throw new Error(`current file path not provided`);
   const originalFunc = Error.prepareStackTrace;
@@ -15,7 +15,7 @@ function getCallerDir(current, skip = 1, isFile = false) {
   }
 
   Error.prepareStackTrace = originalFunc;
-  return isFile ? path.dirname(file) : file;
+  return isFile ? file : path.dirname(file);
 }
 
 export default getCallerDir;
