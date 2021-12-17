@@ -5,8 +5,10 @@ import { Context } from "mocha";
 import { Connection, NullConnection } from "../src/connection/connection.js";
 
 import env from "./config.js";
+import chaiString from "chai-string";
 
 chai.use(spies);
+chai.use(chaiString);
 
 chai.config.truncateThreshold = 0;
 
