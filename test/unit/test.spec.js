@@ -13,6 +13,7 @@ const {
   nullWrapper,
   async,
   randomIdentifier,
+  time,
 } = util;
 
 import * as validations from "../../src/validations/index.js";
@@ -22,6 +23,18 @@ describe(`util`, function () {
   describe(`pick.js`, function () {
     it(`should work`, function () {
       expect(pick({ a: 1, b: 2, c: 3 }, [`a`, `b`])).to.deep.equal({ a: 1, b: 2 });
+    });
+  });
+
+  describe(`time`, function() {
+    it(`startTime`, function() {
+      // This isn't a great test, only for coverage really
+      expect(time.startTime()).to.match(/00:\d\d:\d\d/);
+      expect(time.startTime(Date.now())).to.match(/00:\d\d:\d\d/);
+    });
+    it(`localeTime`, function() {
+      expect(time.localeTime()).to.match(/\d\d:\d\d:\d\d/);
+      expect(time.localeTime(Date.now())).to.match(/\d\d:\d\d:\d\d/);
     });
   });
 
