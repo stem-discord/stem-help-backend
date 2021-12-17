@@ -14,4 +14,14 @@ export default (function (config) {
   if (config.staticServer || config.staticServerPort) {
     throw new Error(`staticServer, staticServerPort are in development`);
   }
+
+  console.log(config);
+
+  if (config.noConfig) {
+    if (process.env.NODE_ENV === `production`) {
+      throw new Error(`noConfig is not allowed in production`);
+    }
+    config.jwt.publicKey ??= `0`;
+    config.jwt.privateKey ??= `0`;
+  }
 });

@@ -2,6 +2,9 @@ import Joi from "joi";
 
 const envVarsSchema = Joi.object()
   .keys({
+    NO_CONFIG: Joi.string()
+      .valid(`true`, `false`)
+      .description(`Deletes all environment variables (ignores cli flags)`),
     NODE_ENV: Joi.string()
       .valid(`production`, `development`, `test`)
       .default(`development`),

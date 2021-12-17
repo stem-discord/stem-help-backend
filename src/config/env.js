@@ -5,7 +5,7 @@ function bool(s) {
 }
 
 function generateConfig(env) {
-  const { value: envVars, error } = envVarsSchema
+  let { value: envVars, error } = envVarsSchema
     .prefs({ errors: { label: `key` } })
     .validate(env);
 
@@ -13,7 +13,14 @@ function generateConfig(env) {
     throw new Error(`Config validation error: ${error.message}`);
   }
 
+  if (envVars.NO_CONFIG) {
+    envVars = {
+      NO_CONFIG: true,
+    };
+  }
+
   return {
+    noConfig: envVars.NO_CONFIG,
     env: envVars.NODE_ENV,
     port: envVars.PORT,
     apiURL: envVars.API_URL,
@@ -35,8 +42,8 @@ function generateConfig(env) {
       },
     },
     jwt: {
-      publickey: envVars.JWT_PUBLIC_KEY,
-      privatekey: envVars.JWT_PRIVATE_KEY,
+      publicKey: envVars.JWT_PUBLIC_KEY,
+      privateKey: envVars.JWT_PRIVATE_KEY,
       accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
       refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
       resetPasswordExpirationMinutes:
