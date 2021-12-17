@@ -61,10 +61,8 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // enable cors
-if (config.env.cors) {
-  app.use(cors());
-  app.options(`*`, cors());
-}
+app.use(cors());
+app.options(`*`, cors());
 
 app.get(`/`, async (req, res) => {
   res
