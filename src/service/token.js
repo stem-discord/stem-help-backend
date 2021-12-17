@@ -16,7 +16,7 @@ class Token {
     };
     this.payload = payload;
     // this.payload = payload;
-    this.signedToken = jwt.sign(payload, config.jwt.privatekey, {
+    this.signedToken = jwt.sign(payload, config.jwt.privateKey, {
       expiresIn: expire,
     });
   }

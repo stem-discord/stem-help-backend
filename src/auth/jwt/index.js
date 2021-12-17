@@ -7,7 +7,7 @@ import { Token } from "../../types/index.js";
 import shared from "../../shared/index.js";
 
 const jwtOptions = {
-  secretOrKey: config.jwt.privatekey,
+  secretOrKey: config.jwt.privateKey,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   algorithms: [`HS256`],
 };
