@@ -4,43 +4,36 @@ import { expect, assert } from "chai";
 
 import Joi from "joi";
 
-const {
-  pick,
-  DSA,
-  isMain,
-  normalize,
-  catchAsync,
-  nullWrapper,
-  async,
-  randomIdentifier,
-  time,
-} = util;
-
 import * as validations from "../../src/validations/index.js";
 const { fields } = validations;
 
 describe(`util`, function () {
-  describe(`pick.js`, function () {
-    it(`should work`, function () {
-      expect(pick({ a: 1, b: 2, c: 3 }, [`a`, `b`])).to.deep.equal({ a: 1, b: 2 });
-    });
+  it(`pick.js`, function () {
+    expect(util.pick({ a: 1, b: 2, c: 3 }, [`a`, `b`])).to.deep.equal({ a: 1, b: 2 });
+  });
+
+  it(`getCallerDir.js`, function () {
+    expect(() => util.getCallerDir()).to.throw(`not provided`);
+    // No filepath can't be equal to symbol. So, this file path should return the current file path
+    expect(util.getCallerDir({})).to.equal(import.meta.url);
+    expect(import.meta.url).to.startWith(util.getCallerDir({}, 1, false));
   });
 
   describe(`time`, function() {
     it(`startTime`, function() {
       // This isn't a great test, only for coverage really
-      expect(time.startTime()).to.match(/00:\d\d:\d\d/);
-      expect(time.startTime(Date.now())).to.match(/00:\d\d:\d\d/);
+      expect(util.time.startTime()).to.match(/00:\d\d:\d\d/);
+      expect(util.time.startTime(Date.now())).to.match(/00:\d\d:\d\d/);
     });
     it(`localeTime`, function() {
-      expect(time.localeTime()).to.match(/\d\d:\d\d:\d\d/);
-      expect(time.localeTime(Date.now())).to.match(/\d\d:\d\d:\d\d/);
+      expect(util.time.localeTime()).to.match(/\d\d:\d\d:\d\d/);
+      expect(util.time.localeTime(Date.now())).to.match(/\d\d:\d\d:\d\d/);
     });
   });
 
   describe(`DSA`, function () {
     describe(`lcs.js`, function () {
-      const lcs = DSA.lcs;
+      const lcs = util.DSA.lcs;
       it(`LCSFromStart`, function () {
         const L = lcs.LCSFromStart;
 
@@ -56,14 +49,14 @@ describe(`util`, function () {
 
   describe(`isMain`, function () {
     it(`should work`, function () {
-      expect(() => isMain()).to.throw(/required/i);
-      expect(isMain(import.meta)).to.be.false;
+      expect(() => util.isMain()).to.throw(/required/i);
+      expect(util.isMain(import.meta)).to.be.false;
     });
   });
 
   describe(`normalize`, function () {
     it(`should work`, function () {
-      expect(normalize(`Crème Brulée`)).to.equal(`creme brulee`);
+      expect(util.normalize(`Crème Brulée`)).to.equal(`creme brulee`);
     });
   });
 
@@ -73,17 +66,17 @@ describe(`util`, function () {
         throw new Error(`test`);
       };
       const func = chai.spy(() => {});
-      const err = await catchAsync(fn)(1, 1, func);
+      const err = await util.catchAsync(fn)(1, 1, func);
       await expect(func).to.have.been.called();
     });
   });
 
   describe(`nullWrapper`, function () {
     it(`should work`, function () {
-      expect(nullWrapper(() => {
+      expect(util.nullWrapper(() => {
         throw Error(`test`);
       })).to.equal(null);
-      expect(nullWrapper(() => {
+      expect(util.nullWrapper(() => {
         return 1;
       })).to.equal(1);
     });
@@ -93,7 +86,7 @@ describe(`util`, function () {
     describe(`sleep.js`, function () {
       it(`should work`, async function () {
         const start = Date.now();
-        await async.sleep(2);
+        await util.async.sleep(2);
         const end = Date.now();
         expect(end - start).to.be.least(1);
       });
@@ -102,8 +95,8 @@ describe(`util`, function () {
 
   describe(`randomIdentifier.js`, function () {
     it(`should work`, function () {
-      expect(randomIdentifier()).to.be.a(`string`);
-      const arr = Array.from({ length: 4 }, randomIdentifier);
+      expect(util.randomIdentifier()).to.be.a(`string`);
+      const arr = Array.from({ length: 4 }, util.randomIdentifier);
       // length should be the same, or it is not unique
       expect(arr.length).to.equal(new Set(arr).size);
     });
