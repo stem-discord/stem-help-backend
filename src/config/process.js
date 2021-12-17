@@ -15,8 +15,6 @@ export default (function (config) {
     throw new Error(`staticServer, staticServerPort are in development`);
   }
 
-  console.log(config);
-
   if (config.noConfig) {
     if (process.env.NODE_ENV === `production`) {
       throw new Error(`noConfig is not allowed in production`);
