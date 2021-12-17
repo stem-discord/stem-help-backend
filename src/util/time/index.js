@@ -1,7 +1,11 @@
 const now = Date.now();
 
+/**
+ * @param {Date} time
+ * keeps an internal "now"
+ */
 function startTime(time) {
-  time = time ?? new Date();
+  time = time === undefined ? new Date() : new Date(time);
   time -= now;
   time %= 24 * 60 * 60 * 1000;
   const hour = Math.floor(time / (60 * 60 * 1000));
@@ -14,8 +18,11 @@ function startTime(time) {
     .join(`:`);
 }
 
+/**
+ * @param {Date} time
+ */
 function localeTime(time) {
-  time = time ?? new Date();
+  time = time === undefined ? new Date() : new Date(time);
   return [time.getHours(), time.getMinutes(), time.getSeconds()]
     .map(v => `${v}`.padStart(2, `0`))
     .join(`:`);
