@@ -41,7 +41,7 @@ function connDesc(connection) {
       }
     }
   } else {
-    return `✖️  Not configured`;
+    return `✖️  Not configured` + (connection.rejectReason ? ` → ${connection.rejectReason}` : ``);
   }
   return `❔ Unknown status ${connection.state}`;
 }
