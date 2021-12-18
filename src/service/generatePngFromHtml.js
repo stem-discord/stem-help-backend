@@ -42,12 +42,16 @@ async function generateInner(text, options) {
   const t = text;
   const style = options.style;
 
-  await page.evaluate(t => {
-    /* eslint-disable no-undef */
-    document.getElementById(`text`).innerHTML = t;
-    document.getElementById(`text`).style = style;
-    /* eslint-enable no-undef */
-  }, t);
+  await page.evaluate(
+    (t, style) => {
+      /* eslint-disable no-undef */
+      document.getElementById(`text`).innerHTML = t;
+      document.getElementById(`text`).style = style;
+      /* eslint-enable no-undef */
+    },
+    t,
+    style
+  );
 
   const body = await page.$(`body`);
 
