@@ -90,6 +90,7 @@ if (config.discord.botToken) {
   });
 
   client.on(`ready`, () => {
+    logger.info(`logged in as ${client.user.tag}`);
     clientReady();
   });
 
