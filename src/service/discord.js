@@ -2,11 +2,14 @@ import SortedArray from "sorted-array";
 import stringSimilarity from "string-similarity";
 import FormData from "form-data";
 import { promisify } from "util";
+import crypto from "crypto";
 // import Discord from "discord.js";
 
 import shared from "../shared/index.js";
-import { DSA, normalize, ApiError } from "../util/index.js";
+import { DSA, normalize, ApiError, cache } from "../util/index.js";
 import config from "../config/index.js";
+
+const { NodeCache, ProxyCache } = cache;
 
 const similarityScore = Symbol(
   `similarityScore. The lower the score, the greater the similarity`
@@ -113,4 +116,15 @@ async function sendToUser(userId, message) {
   return user.send(message);
 }
 
-export { userResolveAnything, uploadFile, sendToUser };
+const tokens = new ProxyCache(new NodeCache());
+
+function createToken(userId) {
+  if (userId === undefined) {
+    throw new Error(`user id is undefined`);
+  }
+  const token = crypto.randomBytes(8).toString(`hex`);
+  tokens[userId] = token;
+  return `${userId}_${token}`;
+}
+
+export { userResolveAnything, uploadFile, sendToUser, createToken, tokens };

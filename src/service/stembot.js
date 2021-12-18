@@ -3,6 +3,7 @@ import EventEmitter2 from "eventemitter2";
 import { isMain, nullWrapper } from "../util/index.js";
 import config from "../config/index.js";
 import shared from "../shared/index.js";
+import * as discordService from "./discord.js";
 import { client as discordClient } from "../connection/discord/index.js";
 import { Logger } from "../tool/index.js";
 
@@ -31,7 +32,7 @@ client.on = function (event, listener) {
  */
 client.handler = {};
 
-if (config.env !== `production`) {
+if (config.env === `test`) {
   client.handler[`*`] = function () {
     return true;
   };
@@ -52,8 +53,28 @@ for (const event of Object.values(Discord.Constants.Events)) {
   });
 }
 
+function handleIssueToken(message) {
+  if (message.content === `!token`) {
+    if (message.channel?.type !== `DM`) {
+      message.reply(`You must issue this command in a DM channel`);
+      return true;
+    }
+
+    const token = discordService.createToken(message.author.id);
+
+    message.reply(`Your token is: ${token}`);
+    return true;
+  }
+  return false;
+}
+
 client.on(`messageCreate`, async message => {
-  if (message.guild?.id !== shared.discord.stem.guild.id) return;
+  if (handleIssueToken(message)) return;
+  if (
+    !shared.discord.stem.guild ||
+    message.guild?.id !== shared.discord.stem.guild.id
+  )
+    return;
   if (message.content.match(/^give me zen$/i)) {
     await message.member.roles.add(`882261053793239061`);
   }
