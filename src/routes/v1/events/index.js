@@ -52,8 +52,8 @@ router
       db.data.codes ??= {};
 
       const stdout =
-        (await lib.service.piston.client.execute(code_type, source_code)).run
-          .stdout || `Unrecognizable output`;
+        (await lib.service.piston.client.execute(code_type, source_code))?.run
+          ?.stdout || `Unrecognizable output`;
 
       if (stdout.length > 2000) {
         throw new ApiError(
@@ -74,6 +74,9 @@ router
         code_type,
         source_code,
       };
+
+      db.markModified(`data.trees.${id}`);
+      db.markModified(`data.codes.${id}`);
 
       await db.save();
 
