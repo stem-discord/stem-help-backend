@@ -36,7 +36,7 @@ if (config.env === `production`) {
   init();
 }
 
-async function generateInner(text, options) {
+async function generateInner(text, options = {}) {
   await init();
 
   const t = text;
