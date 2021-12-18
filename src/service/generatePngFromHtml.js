@@ -36,14 +36,17 @@ if (config.env === `production`) {
   init();
 }
 
-async function generateInner(text) {
+async function generateInner(text, options) {
   await init();
 
   const t = text;
+  const style = options.style;
 
   await page.evaluate(t => {
-    // eslint-disable-next-line no-undef
+    /* eslint-disable no-undef */
     document.getElementById(`text`).innerHTML = t;
+    document.getElementById(`text`).style = style;
+    /* eslint-enable no-undef */
   }, t);
 
   const body = await page.$(`body`);
