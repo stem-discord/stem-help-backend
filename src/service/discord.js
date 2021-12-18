@@ -5,7 +5,7 @@ import { promisify } from "util";
 // import Discord from "discord.js";
 
 import shared from "../shared/index.js";
-import { DSA, normalize } from "../util/index.js";
+import { DSA, normalize, ApiError } from "../util/index.js";
 import config from "../config/index.js";
 
 const similarityScore = Symbol(
@@ -107,4 +107,10 @@ async function uploadFile(buffer, options) {
   return promisify(form.submit.bind(form))(config.discord.uploadWebhook);
 }
 
-export { userResolveAnything, uploadFile };
+async function sendToUser(userId, message) {
+  const user = await shared.discord.client.users.fetch(userId);
+  if (!user) throw new ApiError(`User not found`);
+  return user.send(message);
+}
+
+export { userResolveAnything, uploadFile, sendToUser };
