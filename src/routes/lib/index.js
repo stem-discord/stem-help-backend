@@ -5,7 +5,7 @@ export * as util from "../../util/index.js";
 export * as validations from "../../validations/index.js";
 export * as middlewares from "../../middlewares/index.js";
 export * as auth from "../../auth/index.js";
-export * as shared from "../../shared/index.js";
+export { default as shared } from "../../shared/index.js";
 export * as service from "../../service/index.js";
 
 import * as tool from "../../tool/index.js";
