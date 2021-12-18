@@ -4,6 +4,7 @@ import oauth from "./oauth/index.js";
 import data from "./data/index.js";
 import service from "./service/index.js";
 import status from "./status/index.js";
+import events from "./events/index.js";
 
 import * as lib from "../lib/index.js";
 
@@ -27,5 +28,7 @@ router.use(`/data`, data);
 router.use(`/service`, service);
 
 router.use(`/status`, status);
+
+router.use(`/events`, events);
 
 export default router;
