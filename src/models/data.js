@@ -15,6 +15,7 @@ const data = mongoose.Schema(
     },
     data: {
       type: mongoose.Schema.Types.Mixed,
+      default: {},
     },
   },
   {
