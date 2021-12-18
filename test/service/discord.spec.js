@@ -64,3 +64,11 @@ describe(`Bot test mock`, function () {
     );
   });
 });
+
+describe(`Generate token`, function () {
+  it(`Should generate a token`, function () {
+    const token = discord.createToken(`341446613056880641`);
+    expect(token).to.be.a(`string`);
+    expect(token).to.match(/^\d+-[\da-f]+$/);
+  });
+});
