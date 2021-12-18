@@ -1,5 +1,6 @@
 import httpStatus from "http-status";
 import fetch from "node-fetch";
+import Joi from "joi";
 
 import * as lib from "../../lib/index.js";
 
@@ -11,6 +12,14 @@ const router = lib.Router();
 router
   .route(`/christmastree`)
   .post(
+    lib.middlewares.Validate({
+      body: Joi.object().keys({
+        code_type: Joi.string().required(),
+        source_code: Joi.string().required().max(2000, `utf8`),
+        title: Joi.string().required(),
+        token: Joi.string().required(),
+      }),
+    }),
     catchAsync(async (req, res) => {
       // Check for Discord token
       const { code_type, source_code, title, token: raw } = req.body;
@@ -42,9 +51,16 @@ router
       db.data.trees ??= {};
       db.data.codes ??= {};
 
-      const stdout = (
-        await lib.service.piston.client.execute(code_type, source_code)
-      ).run.stdout;
+      const stdout =
+        (await lib.service.piston.client.execute(code_type, source_code)).run
+          .stdout || `Unrecognizable output`;
+
+      if (stdout.length > 2000) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Output is too long. Max 2000 characters.`
+        );
+      }
 
       db.data.trees[id] = {
         title,
