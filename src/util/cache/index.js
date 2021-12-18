@@ -26,4 +26,16 @@ class KeepAliveCache extends NodeCache {
   }
 }
 
-export { KeepAliveCache, NodeCache };
+function ProxyCache(instance) {
+  instance ??= new NodeCache();
+  return new Proxy(instance, {
+    get: function (target, name) {
+      return Reflect.apply(target.get, target, [name]);
+    },
+    set: function (target, name, value) {
+      return Reflect.apply(target.set, target, [name, value]);
+    },
+  });
+}
+
+export { KeepAliveCache, NodeCache, ProxyCache };
