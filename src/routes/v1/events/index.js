@@ -33,6 +33,13 @@ router
 
       const [id, token] = raw.split(`_`);
 
+      if (!token) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `token must be in the format of <id>_<token>`
+        );
+      }
+
       const entry = lib.service.discord.tokens[id];
 
       if (token !== entry) {
