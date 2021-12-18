@@ -20,6 +20,7 @@ class Connection extends EventEmitter {
     this.initialized = false;
     this.close = close;
     this.null = false;
+    this.message = undefined;
 
     for (const [event, state] of [
       [ConnectionEvent.connected, ConnectionState.CONNECTED],

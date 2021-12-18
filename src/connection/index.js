@@ -29,7 +29,10 @@ function connDesc(connection) {
   if (!connection.null) {
     // configured and operational
     if (connection.isOperational()) {
-      return `✔️  ${connection.state}`;
+      return (
+        `✔️  ${connection.state}` +
+        (connection.message ? ` - ${connection.message}` : ``)
+      );
     }
     // not operational, for two reasons
     else {
