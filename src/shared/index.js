@@ -17,6 +17,7 @@ const mongo = new RequireProxy(
       return connection.mongo.model(`Potd`, models.Potd);
     },
     get Data() {
+      // TODO: write an api for data
       return connection.mongo.model(`Data`, models.Data, `data`);
     },
   }
