@@ -80,7 +80,7 @@ router
         throw new ApiError(httpStatus.BAD_REQUEST, `No stdout`);
       }
 
-      if (stdout.match(/\n/g)?.length ?? 0 > 100) {
+      if ((stdout.match(/\n/g)?.length ?? 0) > 100) {
         throw new ApiError(
           httpStatus.BAD_REQUEST,
           `stdout is too long. Please limit to 100 lines`
