@@ -4,8 +4,6 @@ import express from "express";
 import compression from "compression";
 import cors from "cors";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
-import xss from "xss-clean";
 import passport from "passport";
 import httpStatus from "http-status";
 import bodyParser from "body-parser";
@@ -52,10 +50,6 @@ app.use(upload.array());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
-
-// sanitize request data
-app.use(xss());
-app.use(mongoSanitize());
 
 // gzip compression
 app.use(compression());
