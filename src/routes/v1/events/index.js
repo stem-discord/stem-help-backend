@@ -58,14 +58,39 @@ router
       db.data.trees ??= {};
       db.data.codes ??= {};
 
-      const stdout =
-        (await lib.service.piston.client.execute(code_type, source_code))?.run
-          ?.stdout || `Unrecognizable output`;
+      const execution = await lib.service.piston.client.execute(
+        code_type,
+        source_code
+      );
 
-      if (stdout.length > 2000) {
+      if (!execution.run) {
+        throw new ApiError(httpStatus.BAD_REQUEST, JSON.stringify(execution));
+      }
+
+      if (execution.run.code !== 0) {
         throw new ApiError(
           httpStatus.BAD_REQUEST,
-          `Output is too long. Max 2000 characters.`
+          `Code exited with non-zero code. Error:\n` + execution.run.stderr
+        );
+      }
+
+      const stdout = execution?.run?.stdout;
+
+      if (!stdout) {
+        throw new ApiError(httpStatus.BAD_REQUEST, `No stdout`);
+      }
+
+      if (stdout.match(/\n/g)?.length ?? 0 > 100) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `stdout is too long. Please limit to 100 lines`
+        );
+      }
+
+      if (stdout.length > 4000) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Output is too long. Max 4000 characters.`
         );
       }
 
