@@ -22,4 +22,14 @@ export default (function (config) {
     config.jwt.publicKey ??= `0`;
     config.jwt.privateKey ??= `0`;
   }
+
+  const w = config.discord.uploadWebhook;
+  if (w) {
+    const o = new URL(w);
+    if (o.searchParams.get(`wait`) === null) {
+      // Add ?wait=true
+      o.searchParams.append(`wait`, `true`);
+    }
+    config.discord.uploadWebhook = o.toString();
+  }
 });
