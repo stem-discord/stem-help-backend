@@ -13,14 +13,7 @@ function generateConfig(env) {
     throw new Error(`Config validation error: ${error.message}`);
   }
 
-  if (envVars.NO_CONFIG) {
-    envVars = {
-      NO_CONFIG: true,
-    };
-  }
-
   return {
-    noConfig: envVars.NO_CONFIG,
     env: envVars.NODE_ENV,
     port: envVars.PORT,
     apiURL: envVars.API_URL,

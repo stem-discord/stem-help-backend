@@ -1,3 +1,4 @@
+import fs from "fs";
 import dotenv from "dotenv";
 import { dirname } from "../util/index.js";
 import envLoader from "./envLoader.js";
@@ -13,9 +14,9 @@ const envPath = dirname(
 
 console.log(`[src/config/index.js] Loading env ${envPath}`);
 
-dotenv.config({ path: envPath });
+const conf = dotenv.parse(fs.readFileSync(envPath));
 
-let config = { ...process.env };
+let config = (conf.NO_CONFIG ?? process.env.NO_CONFIG) === `true` ? {} : conf;
 
 for (const o of [envLoader(), argv]) {
   for (const [k, v] of Object.entries(o)) {
@@ -26,7 +27,7 @@ for (const o of [envLoader(), argv]) {
 config = env(config);
 
 // populate using yargs
-// Object.assign(config, argv);
+Object.assign(config, argv);
 
 // separate final validation logic
 proc(config);
