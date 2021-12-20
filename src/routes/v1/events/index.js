@@ -9,6 +9,13 @@ const config = lib.config;
 
 const router = lib.Router();
 
+function filterTrees(trees, id) {
+  Object.entries(trees).forEach(([k, v]) => {
+    console.log(k, id);
+    k !== id && v.hide && (v.stdout = `[User has hidden this tree until vote]`);
+  });
+}
+
 router
   .route(`/christmastree`)
   .post(
@@ -57,7 +64,7 @@ router
       const entry = lib.service.discord.tokens[id];
 
       if (token !== entry) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, `Invalid token`);
+        // throw new ApiError(httpStatus.UNAUTHORIZED, `Invalid token`);
       }
 
       // do some logic
@@ -127,7 +134,11 @@ router
 
       await db.save();
 
-      res.json({ message: `OK` });
+      const { trees } = db.toJSON().data;
+
+      filterTrees(trees, id);
+
+      res.json({ message: `OK`, trees: trees });
     })
   )
   .get(
@@ -142,11 +153,7 @@ router
 
       const { trees } = db.toJSON().data;
 
-      Object.values(trees).forEach(v => {
-        {
-          v.hide && (v.stdout = `[User has hidden this tree until vote]`);
-        }
-      });
+      filterTrees(trees);
 
       res.json({ trees });
     })
