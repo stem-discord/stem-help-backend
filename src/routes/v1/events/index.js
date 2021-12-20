@@ -18,11 +18,14 @@ router
         source_code: Joi.string().required(), // using .max() was causing issues
         title: Joi.string().required(),
         token: Joi.string().required(),
+        hide: Joi.string(),
       }),
     }),
     catchAsync(async (req, res) => {
       // Check for Discord token
-      const { code_type, title, token: raw } = req.body;
+      const { code_type, title, token: raw, hide } = req.body;
+
+      const shouldHide = hide === `on`;
 
       let { source_code } = req.body;
 
@@ -108,6 +111,7 @@ router
       db.data.trees[id] = {
         title,
         stdout,
+        hide: shouldHide,
         votes: {
           // [user_id]: <1|0|-1>
         },
@@ -136,7 +140,13 @@ router
         db = await lib.shared.mongo.Data.create({ namespace: `christmastree` });
       }
 
-      const { trees } = db.data;
+      const { trees } = db.toJSON().data;
+
+      Object.values(trees).forEach(v => {
+        {
+          v.hide && (v.stdout = `[User has hidden this tree until vote]`);
+        }
+      });
 
       res.json({ trees });
     })
