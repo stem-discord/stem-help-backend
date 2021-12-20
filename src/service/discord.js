@@ -98,7 +98,7 @@ function userResolveAnything(anything, { limit = 10 } = {}) {
   return arr;
 }
 
-async function uploadFile(buffer, options) {
+async function uploadFile(buffer, options = {}) {
   if (!config.discord.uploadWebhook) throw new Error(`No uploadWebhook set`);
 
   const form = new FormData();
