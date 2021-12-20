@@ -163,15 +163,6 @@ unit   - 0 latency tdd style testing. Unit testing functions.
 ```
 # copy pasta
 
-`__dirname`
-```js
-
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-```
-
 ```sh
 npm run dev -- --db-uri mongodb://127.0.0.1:27017/stem-backend-db-test 
 ```

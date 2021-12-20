@@ -1,15 +1,17 @@
 import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+
+import { dirname } from "../util/index.js";
 
 function exp() {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-  const envDir = path.join(__dirname, `../../env`);
-
   try {
-    const pub = fs.readFileSync(path.join(envDir, `id_rsa_pub.pem`), `utf8`);
-    const priv = fs.readFileSync(path.join(envDir, `id_rsa_priv.pem`), `utf8`);
+    const pub = fs.readFileSync(
+      dirname(import.meta, `../../env/id_rsa_pub.pem`),
+      `utf8`
+    );
+    const priv = fs.readFileSync(
+      dirname(import.meta, `../../env/id_rsa_priv.pem`),
+      `utf8`
+    );
     return {
       JWT_PRIVATE_KEY: priv,
       JWT_PUBLIC_KEY: pub,

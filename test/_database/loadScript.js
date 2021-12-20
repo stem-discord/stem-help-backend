@@ -9,20 +9,17 @@
 /* eslint-disable no-console */
 import mongoose from "mongoose";
 import yargs from "yargs";
-import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
 
-import { fileURLToPath } from "url";
+import { dirname } from "../../src/util/index.js";
 
 import database from "./index.js";
 
 const argv = yargs.argv;
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 // Leave this filename as hard coded unless there is a really good reason
-const envPath = path.join(__dirname, `../../.test.env`);
+const envPath = dirname(import.meta, `../../.test.env`);
 
 if (!fs.existsSync(envPath))
   throw new Error(`Missing .test.env file ${envPath}`);

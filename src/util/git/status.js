@@ -12,6 +12,17 @@ export async function getBranch() {
   });
 }
 
+export async function getFileCount() {
+  return new Promise((res, rej) => {
+    exec(`git ls-files`, (err, stdout, stderr) => {
+      if (err || stderr) {
+        rej(err || stderr);
+      }
+      res(stdout.match(/\n/g)?.length ?? 0);
+    });
+  });
+}
+
 export async function getLastCommit() {
   return new Promise((res, rej) => {
     exec(`git log --format=%H -n 1`, (err, stdout, stderr) => {

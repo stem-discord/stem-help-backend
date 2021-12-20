@@ -1,16 +1,13 @@
-import path from "path";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
+import { dirname } from "../util/index.js";
 import envLoader from "./envLoader.js";
 
 import env from "./env.js";
 import argv from "./yargs.js";
 import proc from "./process.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const envPath = path.join(
-  __dirname,
+const envPath = dirname(
+  import.meta,
   process.env.NODE_ENV === `test` ? `../../.test.env` : `../../.env`
 );
 

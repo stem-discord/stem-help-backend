@@ -1,10 +1,8 @@
-import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { dirname } from "../src/util/index.js";
 
-const folderPath = path.join(__dirname, `../env`);
+const folderPath = dirname(import.meta, `../env`);
 if (!fs.existsSync(folderPath)) {
   fs.mkdirSync(folderPath);
   console.log(`./env/ folder did not exist. generated one`);

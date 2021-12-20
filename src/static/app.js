@@ -1,14 +1,12 @@
 import express from "express";
-import path from "path";
 import expressCspHeader from "express-csp-header";
 import { renderFile } from "ejs";
-import { fileURLToPath } from "url";
+
+import { dirname } from "../util/index.js";
 
 import config from "../config/index.js";
 import { Logger } from "../tool/index.js";
 
-const { dirname } = path;
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const logger = new Logger(`static`);
 const { info } = logger;
 const {
@@ -34,7 +32,7 @@ app.use(
   })
 );
 
-app.set(`views`, path.join(__dirname, `views`));
+app.set(`views`, dirname(import.meta, `views`));
 app.set(`view engine`, `ejs`);
 
 // app.engine(`html`, require(`ejs`).renderFile);
@@ -48,7 +46,7 @@ app.get(`/test`, (req, res) => {
 app.get(`*`, (req, res) => {
   info(`Serving default directory`);
   res.render(
-    path.join(__dirname, `views`, req.path, `index.ejs`),
+    dirname(import.meta, `views`, req.path, `index.ejs`),
     { ...base },
     (err, html) => {
       if (err) {

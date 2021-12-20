@@ -11,7 +11,7 @@ import Joi from "joi";
 import print from "../script/util/printJoiSchema.js";
 import { openConnections } from "../src/connection/index.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { dirname } from "../src/util/index.js";
 
 const argv = yargs
   .option(`file`, {
@@ -25,7 +25,7 @@ const argv = yargs
     type: `string`,
   }).argv;
 
-const envPath = path.join(__dirname, argv.f);
+const envPath = dirname(import.meta, argv.f);
 
 const env = dotenv.parse(fs.readFileSync(envPath));
 

@@ -1,12 +1,10 @@
-import path from "path";
-import { fileURLToPath } from "url";
-
 import puppeteer from "puppeteer";
 
-import Sequential from "../util/async/Sequential.js";
+import { dirname, async } from "../util/index.js";
+
 import config from "../config/index.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const { Sequential } = async;
 
 let browser;
 let page;
@@ -26,7 +24,7 @@ const init = () => {
       browser = v;
       page = await browser.newPage();
 
-      await page.goto(`file:${path.join(__dirname, `htmlBoilerPlate.html`)}`);
+      await page.goto(`file:${dirname(import.meta, `htmlBoilerPlate.html`)}`);
       await page.setJavaScriptEnabled(false);
     });
   return browserInit;

@@ -9,13 +9,10 @@ import "./mkdirEnv.js";
 import crypto from "crypto";
 import fs from "fs";
 
-import path from "path";
-import { fileURLToPath } from "url";
+import { dirname } from "../src/util/index.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const pubpath = path.join(__dirname, `../env/id_rsa_pub.pem`),
-  privpath = path.join(__dirname, `../env/id_rsa_priv.pem`);
+const pubpath = dirname(import.meta, `../env/id_rsa_pub.pem`),
+  privpath = dirname(import.meta, `../env/id_rsa_priv.pem`);
 
 // check if files already exist since it would be terrible to overwrite them
 if (fs.existsSync(pubpath) || fs.existsSync(privpath)) {

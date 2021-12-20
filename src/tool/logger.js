@@ -1,17 +1,13 @@
 import path from "path";
-import { fileURLToPath } from "url";
 
 import config from "../config/index.js";
 import { default as winston } from "winston";
-import { getCallerDir, time as t } from "../util/index.js";
+import { dirname, getCallerDir, time as t } from "../util/index.js";
 
 const time = config.logging.absolute ? t.startTime : t.localeTime;
 
-const { dirname } = path;
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const moduleRoot = __dirname;
-const srcRoot = path.join(__dirname, `../`);
+const moduleRoot = dirname(import.meta);
+const srcRoot = dirname(import.meta, `../`);
 
 const enumerateErrorFormat = winston.format(info => {
   if (info instanceof Error) {

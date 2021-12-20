@@ -1,10 +1,7 @@
-import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
+import { dirname } from "../src/util/index.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const file = path.join(__dirname, `../test/.env`);
+const file = dirname(import.meta, `../test/.env`);
 if (!fs.existsSync(file)) {
   // TODO softcode this
   // If you have a lot of time, just rewrite the entire setup thing
