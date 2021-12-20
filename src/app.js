@@ -61,10 +61,13 @@ if (config.cors) {
 
 app.options(`*`, cors());
 
+let v;
+
 app.get(`/`, async (req, res) => {
-  res
-    .status(200)
-    .json({ message: `OK`, version: await git.status.getLastCommit() });
+  v ??= git.status.getLastCommit();
+  // eslint-disable-next-line require-atomic-updates
+  v = await v;
+  res.status(200).json({ message: `OK`, version: v });
 });
 
 // limit repeated failed requests to auth endpoints
