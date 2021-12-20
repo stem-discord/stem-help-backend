@@ -31,7 +31,7 @@ router
 
       source_code = source_code.replace(/\r\n|\r\n/g, `\n`);
 
-      if (source_code.length > 2000) {
+      if (source_code.length > (code_type === `java` ? 4000 : 2000)) {
         throw new ApiError(
           httpStatus.BAD_REQUEST,
           `source_code is too long. Max length is 2000. Recieved ${source_code.len} characters`
