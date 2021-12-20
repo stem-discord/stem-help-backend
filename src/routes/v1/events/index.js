@@ -9,8 +9,6 @@ const config = lib.config;
 
 const router = lib.Router();
 
-import fs from "fs";
-
 router
   .route(`/christmastree`)
   .post(
