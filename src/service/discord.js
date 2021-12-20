@@ -6,7 +6,16 @@ import crypto from "crypto";
 // import Discord from "discord.js";
 
 import shared from "../shared/index.js";
-import { DSA, normalize, ApiError, cache } from "../util/index.js";
+import {
+  DSA,
+  normalize,
+  ApiError,
+  cache,
+  streamToBuffer,
+} from "../util/index.js";
+
+import { logger } from "../tool/index.js";
+
 import config from "../config/index.js";
 
 const { NodeCache, ProxyCache } = cache;
@@ -103,10 +112,25 @@ async function uploadFile(buffer, options = {}) {
 
   const form = new FormData();
 
+  const filename = buffer.filename ?? options.filename;
+
+  if (filename === undefined) {
+    throw new Error(`Filename must be provided from buffer or from options`);
+  }
+
   form.append(`file`, buffer, {
-    filename: options.filename,
+    filename,
   });
-  return promisify(form.submit.bind(form))(config.discord.uploadWebhook);
+
+  const r = promisify(form.submit.bind(form))(config.discord.uploadWebhook)
+    .then(streamToBuffer)
+    .then(v => JSON.parse(v).attachments[0].url)
+    .catch(e => logger.error(e));
+  if (r === null) {
+    throw new Error(`Upload failed`);
+  }
+
+  return r;
 }
 
 async function sendToUser(userId, message) {
