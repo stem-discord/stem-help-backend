@@ -9,20 +9,33 @@ const config = lib.config;
 
 const router = lib.Router();
 
+import fs from "fs";
+
 router
   .route(`/christmastree`)
   .post(
     lib.middlewares.Validate({
       body: Joi.object().keys({
         code_type: Joi.string().required(),
-        source_code: Joi.string().required().max(2000, `utf8`),
+        source_code: Joi.string().required(), // using .max() was causing issues
         title: Joi.string().required(),
         token: Joi.string().required(),
       }),
     }),
     catchAsync(async (req, res) => {
       // Check for Discord token
-      const { code_type, source_code, title, token: raw } = req.body;
+      const { code_type, title, token: raw } = req.body;
+
+      let { source_code } = req.body;
+
+      source_code = source_code.replace(/\r\n|\r\n/g, `\n`);
+
+      if (source_code.length > 2000) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `source_code is too long. Max length is 2000. Recieved ${source_code.len} characters`
+        );
+      }
 
       if (!code_type || !source_code || !title || !raw) {
         throw new ApiError(
