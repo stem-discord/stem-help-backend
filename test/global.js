@@ -1,5 +1,6 @@
 import chai from "chai";
 import spies from "chai-spies";
+import chaiAsPromised from "chai-as-promised";
 import { Context } from "mocha";
 
 import { Connection, NullConnection } from "../src/connection/connection.js";
@@ -9,6 +10,7 @@ import chaiString from "chai-string";
 
 chai.use(spies);
 chai.use(chaiString);
+chai.use(chaiAsPromised);
 
 chai.config.truncateThreshold = 0;
 
