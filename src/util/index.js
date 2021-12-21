@@ -1,6 +1,7 @@
 // named exports
 export * as async from "./async/index.js";
 export * as git from "./git/index.js";
+export * as scc from "./scc/index.js";
 export * as discord from "./discord/index.js";
 export * as http from "./http/index.js";
 export * as crypto from "./crypto/index.js";
