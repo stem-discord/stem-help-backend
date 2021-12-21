@@ -48,7 +48,9 @@ function connDesc(connection) {
           connection.state
         )
       ) {
-        return `⚠️  ${connection.state} ${connection.rejectReason}`;
+        return `⚠️  ${connection.state} ${
+          connection.rejectReason ?? `Unknown reason`
+        }`;
       }
     }
   } else {
@@ -72,7 +74,7 @@ const openConnections = async selection => {
   const initializations = Object.entries(modules)
     .filter(v => selection.includes(v[0]))
     .map(v => v[1])
-    .map(c => c.connection.init());
+    .map(c => c.connection.init().catch(e => logger.error(e)));
   await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
   const WIDTH = 20;
