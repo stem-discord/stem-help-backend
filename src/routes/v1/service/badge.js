@@ -17,6 +17,9 @@ function builder(title = ``, description = ``, color = `ff69b4`, logo = ``) {
   )}-${encodeURI(color)}?style=for-the-badge&logo=${encodeURI(logo)}`;
 }
 
+// https://api.github.com/repos/lassana/continuous-audiorecorder/contents/
+// There is an additional way to get information
+
 router.get(
   `/git/:query`,
   catchAsync(async (req, res) => {
