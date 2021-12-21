@@ -35,7 +35,7 @@ module.exports = {
         checkForEach: true,
       },
     ],
-    "no-duplicate-imports": [`error`, { includeExports: true }],
+    "no-duplicate-imports": `error`,
     "no-promise-executor-return": `error`,
     "no-use-before-define": [`error`, { functions: true, classes: true }],
     "require-atomic-updates": `error`,
