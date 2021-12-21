@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
-import { isMain, nullWrapper } from "../util/index.js";
+import { isMain, nullWrapper, git, scc } from "../util/index.js";
 import config from "../config/index.js";
 import shared from "../shared/index.js";
 import * as discordService from "./discord.js";
@@ -70,6 +70,20 @@ function handleIssueToken(message) {
 
 client.on(`messageCreate`, async message => {
   if (handleIssueToken(message)) return;
+  if (message.content.match(`stemapi stats`)) {
+    let s = ``;
+
+    for (const v of [
+      `Branch: \`${await git.status.getBranch()}\``,
+      `Commit: \`${await git.status.getLastCommit()}\``,
+      `File count: \n\`\`\`\n${await scc.stats()}\`\`\``,
+    ]) {
+      s += `${v}\n`;
+    }
+
+    await message.reply(s);
+    return;
+  }
   if (
     !shared.discord.stem.guild ||
     message.guild?.id !== shared.discord.stem.guild.id
