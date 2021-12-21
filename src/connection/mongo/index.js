@@ -26,6 +26,26 @@ if (config.mongoose.url) {
 
       mongooseConnection = conn;
 
+      const disp = (() => {
+        const o = new URL(config.mongoose.url);
+        const CUT = 4;
+        o.username = o.username.replace(
+          /(.{0,4})(.*)/,
+          (_, f, b) => `${f}${`*`.repeat(b.length)}`
+        );
+        o.password = o.password.replace(
+          /(.{0,4})(.*)/,
+          (_, f, b) => `${f}${`*`.repeat(b.length)}`
+        );
+
+        return o.toString();
+      })();
+
+      const open = new Promise((resolve, reject) => {
+        dbOpen = resolve;
+        dbClose = reject;
+      });
+
       conn
         .then(() => {
           logger.info(`Connected to MongoDB ${disp}`);
