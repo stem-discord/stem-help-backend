@@ -18,9 +18,11 @@ const envVarsSchema = Joi.object()
       .valid(`true`, `false`)
       .description(`Logging absolute time`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
-    CONNECTIONS: Joi.string().description(
-      `Connections to open when the server starts. Leave it empty to enable all connections`
-    ),
+    CONNECTIONS: Joi.string()
+      .allow(``)
+      .description(
+        `Connections to open when the server starts. Leave it empty to enable all connections`
+      ),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
     JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
