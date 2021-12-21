@@ -76,6 +76,11 @@ class Connection extends EventEmitter {
       .then(() => {
         this.state = ConnectionState.CONNECTED;
       })
+      .catch(e => {
+        this.state = ConnectionState.DISCONNECTED;
+        this.rejectReason = e.toString();
+        throw e;
+      })
       .finally(() => {
         this.initialized = true;
       });
