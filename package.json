@@ -82,6 +82,7 @@
     "express-csp-header": "^5.0.0",
     "express-mongo-sanitize": "^2.0.0",
     "express-rate-limit": "^5.0.0",
+    "file-system-cache": "github:nopeless/file-system-cache#master",
     "form-data": "^3.0.1",
     "hellgate": "^0.4.0-beta",
     "helmet": "^4.1.0",

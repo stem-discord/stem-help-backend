@@ -27,5 +27,6 @@ env/
 
 *.copy
 
-# User generated files
+# User generated files and cache
 .data
+/.cache
