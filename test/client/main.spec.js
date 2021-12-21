@@ -139,7 +139,7 @@ describe(`client run`, function () {
         const res = await a().then(v => v.arrayBuffer());
         expect(res).to.be.an.instanceof(ArrayBuffer);
         expect(res.byteLength).to.be.above(
-          10000,
+          1000,
           `message was ${new TextDecoder().decode(res)}`
         );
       });
@@ -149,7 +149,7 @@ describe(`client run`, function () {
         const res = await a().then(v => v.arrayBuffer());
         expect(res).to.be.an.instanceof(ArrayBuffer);
         expect(res.byteLength).to.be.above(
-          10000,
+          1000,
           `message was ${new TextDecoder().decode(res)}`
         );
       });
