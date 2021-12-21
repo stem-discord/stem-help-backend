@@ -11,10 +11,129 @@ const router = lib.Router();
 
 function filterTrees(trees, id) {
   Object.entries(trees).forEach(([k, v]) => {
-    console.log(k, id);
     k !== id && v.hide && (v.stdout = `[User has hidden this tree until vote]`);
   });
 }
+
+const tokenCheck = catchAsync(async (req, res, next) => {
+  const { token: raw } = req.body;
+
+  if (!raw) {
+    throw new ApiError(httpStatus.BAD_REQUEST, `missing token`);
+  }
+
+  const [id, token] = raw.split(`_`);
+
+  if (!token) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `token must be in the format of <id>_<token>`
+    );
+  }
+
+  const entry = lib.service.discord.tokens[id];
+
+  if (token !== entry) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, `Invalid token`);
+  }
+
+  req.body.id = id;
+
+  next();
+});
+
+const procTree = catchAsync(async (req, res) => {
+  // Check for Discord token
+  const { code_type, title, hide, token } = req.body;
+
+  const shouldHide = hide === `on`;
+
+  let { source_code } = req.body;
+
+  const id = req.body.id || token.split(`_`)[0];
+
+  source_code = source_code.replace(/\r\n|\r\n/g, `\n`);
+
+  if (source_code.length > (code_type === `java` ? 4000 : 2000)) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `source_code is too long. Max length is 2000. Recieved ${source_code.len} characters`
+    );
+  }
+
+  // do some logic
+  let db = await lib.shared.mongo.Data.findOne({
+    namespace: `christmastree`,
+  });
+
+  if (!db) {
+    db = await lib.shared.mongo.Data.create({ namespace: `christmastree` });
+  }
+
+  db.data.trees ??= {};
+  db.data.codes ??= {};
+
+  const execution = await lib.service.piston.client.execute(
+    code_type,
+    source_code
+  );
+
+  if (!execution.run) {
+    throw new ApiError(httpStatus.BAD_REQUEST, JSON.stringify(execution));
+  }
+
+  if (execution.run.code !== 0) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `Code exited with non-zero code. Error:\n` + execution.run.stderr
+    );
+  }
+
+  const stdout = execution?.run?.stdout;
+
+  if (!stdout) {
+    throw new ApiError(httpStatus.BAD_REQUEST, `No stdout`);
+  }
+
+  if ((stdout.match(/\n/g)?.length ?? 0) > 100) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `stdout is too long. Please limit to 100 lines`
+    );
+  }
+
+  if (stdout.length > 4000) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `Output is too long. Max 4000 characters.`
+    );
+  }
+
+  db.data.trees[id] = {
+    title,
+    stdout,
+    hide: shouldHide,
+    votes: {
+      // [user_id]: <1|0|-1>
+    },
+  };
+
+  db.data.codes[id] = {
+    code_type,
+    source_code,
+  };
+
+  db.markModified(`data.trees.${id}`);
+  db.markModified(`data.codes.${id}`);
+
+  await db.save();
+
+  const { trees } = db.toJSON().data;
+
+  filterTrees(trees, id);
+
+  res.json({ message: `OK`, trees: trees });
+});
 
 router
   .route(`/christmastree`)
@@ -28,118 +147,8 @@ router
         hide: Joi.string(),
       }),
     }),
-    catchAsync(async (req, res) => {
-      // Check for Discord token
-      const { code_type, title, token: raw, hide } = req.body;
-
-      const shouldHide = hide === `on`;
-
-      let { source_code } = req.body;
-
-      source_code = source_code.replace(/\r\n|\r\n/g, `\n`);
-
-      if (source_code.length > (code_type === `java` ? 4000 : 2000)) {
-        throw new ApiError(
-          httpStatus.BAD_REQUEST,
-          `source_code is too long. Max length is 2000. Recieved ${source_code.len} characters`
-        );
-      }
-
-      if (!code_type || !source_code || !title || !raw) {
-        throw new ApiError(
-          httpStatus.BAD_REQUEST,
-          `code_type, source_code, title, and token are required`
-        );
-      }
-
-      const [id, token] = raw.split(`_`);
-
-      if (!token) {
-        throw new ApiError(
-          httpStatus.BAD_REQUEST,
-          `token must be in the format of <id>_<token>`
-        );
-      }
-
-      const entry = lib.service.discord.tokens[id];
-
-      if (token !== entry) {
-        // throw new ApiError(httpStatus.UNAUTHORIZED, `Invalid token`);
-      }
-
-      // do some logic
-      let db = await lib.shared.mongo.Data.findOne({
-        namespace: `christmastree`,
-      });
-
-      if (!db) {
-        db = await lib.shared.mongo.Data.create({ namespace: `christmastree` });
-      }
-
-      db.data.trees ??= {};
-      db.data.codes ??= {};
-
-      const execution = await lib.service.piston.client.execute(
-        code_type,
-        source_code
-      );
-
-      if (!execution.run) {
-        throw new ApiError(httpStatus.BAD_REQUEST, JSON.stringify(execution));
-      }
-
-      if (execution.run.code !== 0) {
-        throw new ApiError(
-          httpStatus.BAD_REQUEST,
-          `Code exited with non-zero code. Error:\n` + execution.run.stderr
-        );
-      }
-
-      const stdout = execution?.run?.stdout;
-
-      if (!stdout) {
-        throw new ApiError(httpStatus.BAD_REQUEST, `No stdout`);
-      }
-
-      if ((stdout.match(/\n/g)?.length ?? 0) > 100) {
-        throw new ApiError(
-          httpStatus.BAD_REQUEST,
-          `stdout is too long. Please limit to 100 lines`
-        );
-      }
-
-      if (stdout.length > 4000) {
-        throw new ApiError(
-          httpStatus.BAD_REQUEST,
-          `Output is too long. Max 4000 characters.`
-        );
-      }
-
-      db.data.trees[id] = {
-        title,
-        stdout,
-        hide: shouldHide,
-        votes: {
-          // [user_id]: <1|0|-1>
-        },
-      };
-
-      db.data.codes[id] = {
-        code_type,
-        source_code,
-      };
-
-      db.markModified(`data.trees.${id}`);
-      db.markModified(`data.codes.${id}`);
-
-      await db.save();
-
-      const { trees } = db.toJSON().data;
-
-      filterTrees(trees, id);
-
-      res.json({ message: `OK`, trees: trees });
-    })
+    tokenCheck,
+    procTree
   )
   .get(
     catchAsync(async (req, res) => {
@@ -160,3 +169,5 @@ router
   );
 
 export default router;
+
+export { tokenCheck, procTree };
