@@ -16,7 +16,10 @@ console.log(`[src/config/index.js] Loading env ${envPath}`);
 
 const conf = dotenv.parse(fs.readFileSync(envPath));
 
-let config = (conf.NO_CONFIG ?? process.env.NO_CONFIG) === `true` ? {} : conf;
+let config =
+  (conf.NO_CONFIG ?? process.env.NO_CONFIG) === `true`
+    ? { ...process.env }
+    : { ...process.env, ...conf };
 
 for (const o of [envLoader(), argv]) {
   for (const [k, v] of Object.entries(o)) {
