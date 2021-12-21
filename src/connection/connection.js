@@ -100,6 +100,9 @@ class Connection extends EventEmitter {
   }
 
   set state(val) {
+    if (ConnectionState[val] === undefined) {
+      throw new Error(`${val} is not a valid ConnectionState`);
+    }
     this._state = val;
   }
 
