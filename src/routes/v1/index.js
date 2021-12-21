@@ -32,3 +32,11 @@ router.use(`/status`, status);
 router.use(`/events`, events);
 
 export default router;
+
+export * as docs from "./docs/index.js";
+export * as auth from "./auth/index.js";
+export * as oauth from "./oauth/index.js";
+export * as data from "./data/index.js";
+export * as service from "./service/index.js";
+export * as status from "./status/index.js";
+export * as events from "./events/index.js";

@@ -10,7 +10,7 @@ import bodyParser from "body-parser";
 import multer from "multer";
 
 import config from "./config/index.js";
-import routes from "./routes/v1/index.js";
+import routes from "./routes/index.js";
 import staticRoute from "./static/index.js";
 import * as middlewares from "./middlewares/index.js";
 import { ApiError, git } from "./util/index.js";
@@ -87,9 +87,6 @@ passport.deserializeUser(function (obj, done) {
 // initialize passport object on every request
 app.use(passport.initialize());
 
-// v1 api routes
-app.use(`/v1`, routes);
-
 if (config.staticRoute) {
   // Static pages for testing
   app.use(`/static`, staticRoute);
@@ -97,6 +94,9 @@ if (config.staticRoute) {
 } else {
   logger.info(`Static route is not deployed`);
 }
+
+// api routes
+app.use(`/`, routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
