@@ -1,9 +1,14 @@
+<div align="center">
+
 ![banner](https://api.stem.help/v1/service/banner/html/STEM_Help_Backend)
 
 ![file count badge](https://api.stem.help/v1/service/badge/git/file-count)
+![Dev badge](https://img.shields.io/badge/Developing%20stage-Almost%20Stable-ff69b4?style=for-the-badge)
+
 [![ci badge](https://github.com/stem-discord/stem-help-backend/actions/workflows/ci.yaml/badge.svg)](https://github.com/stem-discord/stem-help-backend/actions)
 [![Coverage Status](https://coveralls.io/repos/github/stem-discord/stem-help-backend/badge.svg?branch=main)](https://coveralls.io/github/stem-discord/stem-help-backend?branch=main)
-![Dev badge](https://img.shields.io/badge/Developing%20stage-Almost%20Stable-ff69b4)
+
+</div>
 
 Enviroment file, do
 
