@@ -3,6 +3,8 @@ import * as models from "../models/index.js";
 import * as connection from "../connection/index.js";
 import { RequireProxy } from "./RequireProxy.js";
 
+import config from "../config/index.js";
+
 let model = Object.create(null);
 
 const mongo = new RequireProxy(
@@ -33,10 +35,14 @@ const stem = new RequireProxy(
   () => connection.discord.connection.isOperational(),
   {
     get guild() {
-      return connection.discord.client.guilds.cache.get(`493173110799859713`);
+      return connection.discord.client.guilds.cache.get(
+        config.discord.server.stem
+      );
     },
     get generalChannel() {
-      return connection.discord.client.chanels.cache.get(`839399426643591188`);
+      return connection.discord.client.chanels.cache.get(
+        config.discord.server.stem
+      );
     },
   }
 );

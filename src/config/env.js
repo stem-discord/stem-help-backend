@@ -61,6 +61,10 @@ function generateConfig(env) {
       clientID: envVars.DISCORD_CLIENT_ID,
       clientSecret: envVars.DISCORD_CLIENT_SECRET,
       uploadWebhook: envVars.DISCORD_UPLOAD_WEBHOOK,
+      server: {
+        stem: envVars.DISCORD_SERVER_STEM,
+        general: envVars.DISCORD_SERVER_GENERAL,
+      },
     },
     staticServer: bool(envVars.STATIC_SERVER),
     staticServerPort: envVars.STATIC_SERVER_PORT,

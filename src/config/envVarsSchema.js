@@ -54,6 +54,12 @@ const envVarsSchema = Joi.object()
     DISCORD_OAUTH_URI: Joi.string().description(`discord oauth uri`),
     DISCORD_CLIENT_ID: Joi.string().description(`discord app id`),
     DISCORD_CLIENT_SECRET: Joi.string().description(`discord app secret`),
+    DISCORD_SERVER_STEM: Joi.string()
+      .default(`493173110799859713`)
+      .description(`main discord server id`),
+    DISCORD_SERVER_GENERAL: Joi.string()
+      .default(`839399426643591188`)
+      .description(`general channel for the main discord server`),
     STATIC_SERVER: Joi.string()
       .valid(`true`, `false`)
       .description(`Enable static server`),
