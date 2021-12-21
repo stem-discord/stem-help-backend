@@ -46,6 +46,12 @@ jobs:
         env:
           PORT: 4000
 
+      - name: run scripts (nothing should error)
+        run: >
+          npm run help:env &&
+          npm run benchmark &&
+          npm run mongodump mongodb://127.0.0.1:27017/database-test
+
       - name: run 0 config
         run: npm test
 
