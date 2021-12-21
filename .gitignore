@@ -30,3 +30,5 @@ env/
 # User generated files and cache
 .data
 /.cache
+
+mongodump*.gz
