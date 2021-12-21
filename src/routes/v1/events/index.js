@@ -11,7 +11,10 @@ const router = lib.Router();
 
 function filterTrees(trees, id) {
   Object.entries(trees).forEach(([k, v]) => {
-    k !== id && v.hide && (v.stdout = `[User has hidden this tree until vote]`);
+    if (k !== id && v.hide) {
+      v.stdout = `[User has hidden this tree until vote]`;
+      v.title = `[User has hidden tree title until vote]`;
+    }
   });
 }
 
@@ -157,7 +160,10 @@ router
       });
 
       if (!db) {
-        db = await lib.shared.mongo.Data.create({ namespace: `christmastree` });
+        db = await lib.shared.mongo.Data.create({
+          namespace: `christmastree`,
+          data: { trees: {}, codes: {} },
+        });
       }
 
       const { trees } = db.toJSON().data;
