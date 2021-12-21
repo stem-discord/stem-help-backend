@@ -21,6 +21,7 @@ const data = mongoose.Schema(
   {
     timestamps: true,
     strict: false,
+    minimize: false,
   }
 );
 
