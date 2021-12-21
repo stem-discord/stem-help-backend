@@ -27,7 +27,7 @@ router.get(
 
     res.writeHead(200, {
       "Content-Type": `image/png`,
-      "Content-Length": buf.length,
+      "Content-Length": buf.data.length,
     });
 
     res.end(buf);
