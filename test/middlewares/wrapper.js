@@ -97,11 +97,12 @@ function middleware(mid, req, opts = {}) {
                 `Middelware should throw an ApiError, not ${typeof error}`,
                 error
               );
+            } else {
+              generateError(
+                `Middelware should throw an ApiError, not a non-error ${typeof error}`,
+                error
+              );
             }
-            generateError(
-              `Middelware should throw an ApiError, not a non-error ${typeof error}`,
-              error
-            );
           } else {
             throw new Error(`Middleware threw an error in next()`);
           }
