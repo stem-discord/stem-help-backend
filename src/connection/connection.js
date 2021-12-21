@@ -78,7 +78,7 @@ class Connection extends EventEmitter {
       })
       .catch(e => {
         this.state = ConnectionState.DISCONNECTED;
-        this.rejectReason = e.toString();
+        this.rejectReason ??= e?.toString();
         throw e;
       })
       .finally(() => {
