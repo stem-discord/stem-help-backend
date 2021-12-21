@@ -23,7 +23,7 @@ export default (function (config) {
     config.jwt.privateKey ??= `0`;
   }
 
-  const w = config.discord.uploadWebhook;
+  let w = config.discord.uploadWebhook;
   if (w) {
     const o = new URL(w);
     if (o.searchParams.get(`wait`) === null) {
@@ -31,5 +31,16 @@ export default (function (config) {
       o.searchParams.append(`wait`, `true`);
     }
     config.discord.uploadWebhook = o.toString();
+  }
+
+  w = config.mongoose.url;
+  if (w) {
+    const o = new URL(w);
+    if (o.searchParams.get(`authSource`) === null) {
+      o.searchParams.append(`authSource`, `admin`);
+    }
+    if (o.searchParams.get(`w`) === null) {
+      o.searchParams.append(`w`, `1`);
+    }
   }
 });
