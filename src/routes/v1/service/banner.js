@@ -5,14 +5,14 @@ const config = lib.config;
 
 const router = lib.Router();
 
-console.log(lib.util.cache);
-
 const canvasCache = new lib.util.cache.FileSystemCache({
   ns: `canvas-cache`,
+  transformer: v => new Buffer.from(v.data),
 });
 
 const htmlCache = new lib.util.cache.FileSystemCache({
   ns: `html-cache`,
+  transformer: v => new Buffer.from(v.data),
 });
 
 router.get(
@@ -27,7 +27,7 @@ router.get(
 
     res.writeHead(200, {
       "Content-Type": `image/png`,
-      "Content-Length": buf.data.length,
+      "Content-Length": buf.length,
     });
 
     res.end(buf);
