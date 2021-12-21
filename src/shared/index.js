@@ -3,22 +3,28 @@ import * as models from "../models/index.js";
 import * as connection from "../connection/index.js";
 import { RequireProxy } from "./RequireProxy.js";
 
+let model = Object.create(null);
+
 const mongo = new RequireProxy(
   () => connection.mongo.connection.isOperational(),
   {
     get User() {
-      return connection.mongo.model(`User`, models.User);
+      return (model.user ??= connection.mongo.model(`User`, models.User));
     },
     // get Session() { return connection.mongo.model(`Session`, models.Session); },
     get Token() {
-      return connection.mongo.model(`Token`, models.Token);
+      return (model.token ??= connection.mongo.model(`Token`, models.Token));
     },
     get Potd() {
-      return connection.mongo.model(`Potd`, models.Potd);
+      return (model.potd ??= connection.mongo.model(`Potd`, models.Potd));
     },
     get Data() {
       // TODO: write an api for data
-      return connection.mongo.model(`Data`, models.Data, `data`);
+      return (model.data ??= connection.mongo.model(
+        `Data`,
+        models.Data,
+        `data`
+      ));
     },
   }
 );
