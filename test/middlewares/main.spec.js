@@ -3,21 +3,24 @@ import { discord } from "../../src/service/index.js";
 
 import * as wrapper from "./wrapper.js";
 
-import { request } from "express";
-
 describe(`v1`, function () {
   describe(`events`, function () {
     describe(`christmastree`, function () {
       describe(`token validations`, function () {
+        const v = v1.events.tokenCheck;
         it(`should invalidate`, async function () {
-          await wrapper.middleware(v1.events.tokenCheck).next(/invalid token/i);
+          await wrapper.middleware(v).next(/missing|no/i);
+          await wrapper
+            .middleware(v, { body: { token: `1234` } })
+            .next(/format/i);
+          await wrapper
+            .middleware(v, { body: { token: `1234_1234` } })
+            .next(/invalid/i);
         });
         it(`should validate`, async function () {
           // Register cache
-          const next = chai.spy();
           const token = discord.createToken(`12345678`);
-          await v1.events.tokenCheck(Object.create(request), null, next);
-          expect(next).to.have.been.called();
+          await wrapper.middleware(v, { body: { token } });
         });
       });
     });
