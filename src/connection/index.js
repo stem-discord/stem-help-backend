@@ -48,7 +48,7 @@ function connDesc(connection) {
           connection.state
         )
       ) {
-        return `⚠️ ${connection.state} ${connection.rejectReason}`;
+        return `⚠️  ${connection.state} ${connection.rejectReason}`;
       }
     }
   } else {
