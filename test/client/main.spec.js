@@ -138,14 +138,20 @@ describe(`client run`, function () {
         const a = () => fetch(`${url}/service/banner/html/hello`);
         const res = await a().then(v => v.arrayBuffer());
         expect(res).to.be.an.instanceof(ArrayBuffer);
-        expect(res.byteLength).to.be.above(100);
+        expect(res.byteLength).to.be.above(
+          10000,
+          `message was ${new TextDecoder().decode(res)}`
+        );
       });
       it(`should return the banner (html)`, async function () {
         // Should not error
         const a = () => fetch(`${url}/service/banner/html/hello`);
         const res = await a().then(v => v.arrayBuffer());
         expect(res).to.be.an.instanceof(ArrayBuffer);
-        expect(res.byteLength).to.be.above(100);
+        expect(res.byteLength).to.be.above(
+          10000,
+          `message was ${new TextDecoder().decode(res)}`
+        );
       });
     });
 
