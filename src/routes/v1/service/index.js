@@ -2,6 +2,7 @@ import discordlookup from "./discordlookup.js";
 import discordidlookup from "./discordidlookup.js";
 import banner from "./banner.js";
 import badge from "./badge.js";
+import dependency from "./dependency.js";
 
 import * as lib from "../../lib/index.js";
 
@@ -14,5 +15,7 @@ router.use(`/discordidlookup`, discordidlookup);
 router.use(`/banner`, banner);
 
 router.use(`/badge`, badge);
+
+router.use(`/dependency`, dependency);
 
 export default router;
