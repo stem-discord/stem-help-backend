@@ -15,6 +15,7 @@
     "static": "node src/server.js",
     "update": "git pull && npm ci && pm2 restart app",
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json src/server -- --",
+    "dev:noconn": "cross-env NODE_ENV=development nodemon --config nodemon.json src/server -- -- --connections \" \"",
     "cleanserver": "npm run mongoreset && cross-env NODE_ENV=test nodemon --config nodemon.json src/server --drop-all",
     "nodemon": "nodemon --watch .",
     "setup": "npm run setup:keygen && npm run setup:testenv",
