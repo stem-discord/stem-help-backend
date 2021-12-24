@@ -1,6 +1,6 @@
 import c from "canvas";
 
-import streamToBuffer from "../util/streamToBuffer.js";
+import { streamToBuffer } from "../util/index.js";
 
 const { createCanvas, loadImage } = c;
 
