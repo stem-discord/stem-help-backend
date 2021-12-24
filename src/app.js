@@ -59,8 +59,6 @@ if (config.cors) {
   app.use(cors());
 }
 
-app.options(`*`, cors());
-
 let v;
 
 app.get(`/`, async (req, res) => {
