@@ -103,6 +103,7 @@
     "secure-compare": "^3.0.1",
     "sorted-array": "^2.0.4",
     "string-similarity": "^4.0.4",
+    "svg2img": "^0.9.4",
     "swagger-jsdoc": "^6.0.8",
     "swagger-ui-express": "^4.1.6",
     "validator": ">=13.7.0",
