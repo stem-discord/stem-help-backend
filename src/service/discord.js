@@ -139,7 +139,11 @@ async function sendToUser(userId, message) {
   return user.send(message);
 }
 
-const tokens = new ProxyCache(new NodeCache());
+const tokens = new ProxyCache(
+  new NodeCache({
+    stdTTL: 48 * 60,
+  })
+);
 
 function createToken(userId) {
   if (userId === undefined) {
