@@ -175,6 +175,42 @@ router
     })
   );
 
+router.route(`/christmastree/vote`).post(
+  tokenCheck,
+  catchAsync(async (req, res) => {
+    const { votes, token } = req.body;
+
+    const id = req.body.id || token.split(`_`)[0];
+
+    let db = await lib.shared.mongo.Data.findOne({
+      namespace: `christmastree`,
+    });
+
+    if (!db) {
+      db = await lib.shared.mongo.Data.create({
+        namespace: `christmastree`,
+        data: { trees: {}, codes: {} },
+      });
+    }
+
+    for (const [u_id, v] of Object.entries(votes)) {
+      if (v === 0) continue;
+
+      db.data.trees[u_id].votes[id] = v;
+    }
+
+    db.markModified(`data.trees`);
+
+    await db.save();
+
+    const { trees: newTrees } = db.toJSON().data;
+
+    filterTrees(newTrees, id);
+
+    res.json({ message: `OK`, trees: newTrees });
+  })
+);
+
 export default router;
 
 export { tokenCheck, procTree };
