@@ -32,6 +32,8 @@ And also type `npm run setup`
 
 # Explanation of the project
 
+[![dependency graph](https://api.stem.help/v1/service/dependency/png)](https://stem.help/about/dependency-graph)
+
 project structure
 
 Lower modules require upper modules. The listing is not alphabetical
