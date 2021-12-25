@@ -10,7 +10,7 @@ const cache = new lib.util.cache.FileSystemCache({
   transformer: v => new Buffer.from(v.data),
 });
 
-const c = cache.clear();
+const c = cache.clear().then(() => null);
 
 router.get(
   `/:type`,
