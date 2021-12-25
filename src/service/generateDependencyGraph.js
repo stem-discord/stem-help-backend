@@ -9,7 +9,7 @@ const isGraphVizInstalled = sync(`gvpr`);
 
 const validTypes = [`svg`, `png`];
 
-const m = madge(`src/index.js`);
+const m = madge(`src/server.js`);
 
 async function generate(type = `svg`) {
   if (!isGraphVizInstalled)
