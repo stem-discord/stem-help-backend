@@ -48,10 +48,18 @@ function Logger(name, printPath = false) {
     pp = `▷ ${paths.join(`‣`)} `;
   }
   // I don't know if making a new winston logger every time is a good idea, but it works.
-  return WinstonLogger(
-    ({ level, message }) =>
-      `[⌚ ${time()}] ${level}: [${name}] ${pp}: ${message}`
-  );
+  return WinstonLogger(({ level, message }) => {
+    const front = `[⌚ ${time()}] ${level}: [${name}] ${pp}`;
+    if (message?.includes(`\n`)) {
+      // Create newline and stuff
+      const splits = message.split(`\n`);
+      let longest = Math.max(...splits.map(v => v.length));
+      longest = Math.max(0, longest - front.length + 15); // Have to account for posix color codes I think
+      message = `─`.repeat(longest) + splits.map(v => `\n    │${v}`).join(``);
+      return `${front}${message}`;
+    }
+    return `${front}: ${message}`;
+  });
 }
 
 export { logger, Logger };
