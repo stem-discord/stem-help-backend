@@ -197,7 +197,10 @@ router.route(`/christmastree/vote`).post(
     }
 
     for (const [u_id, v] of Object.entries(votes)) {
-      if (v === 0) continue;
+      if (v === 0) {
+        delete db.data.trees[u_id].votes[id];
+        continue;
+      }
 
       db.data.trees[u_id].votes[id] = v;
     }
