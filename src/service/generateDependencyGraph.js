@@ -9,6 +9,8 @@ const isGraphVizInstalled = sync(`gvpr`);
 
 const validTypes = [`svg`, `png`];
 
+const m = madge(`src/index.js`);
+
 async function generate(type = `svg`) {
   if (!isGraphVizInstalled)
     throw new ApiError(503, `GraphViz is not installed`);
@@ -20,7 +22,7 @@ async function generate(type = `svg`) {
     return promisify(svg2img.bind(svg2img))(svg);
   }
 
-  return madge(`src/index.js`).then(res => res[type]());
+  return m.then(res => res[type]());
 }
 
 export { generate };
