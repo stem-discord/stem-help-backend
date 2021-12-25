@@ -10,9 +10,12 @@ const cache = new lib.util.cache.FileSystemCache({
   transformer: v => new Buffer.from(v.data),
 });
 
+const c = cache.clear();
+
 router.get(
   `/:type`,
   catchAsync(async (req, res) => {
+    await c;
     const type = req.params.type;
 
     const buf =
