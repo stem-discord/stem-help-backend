@@ -92,8 +92,11 @@ const procTree = catchAsync(async (req, res) => {
     );
   }
 
-  // eslint-disable-next-line no-control-regex
-  const stdout = execution?.run?.stdout?.replace(/\x1B\[3[12]m/g, ``);
+  const stdout = execution?.run?.stdout?.replace(
+    // eslint-disable-next-line no-control-regex
+    /(?:\u001B\[\\d+;\\d+m)+/g,
+    ``
+  );
 
   if (!stdout) {
     throw new ApiError(httpStatus.BAD_REQUEST, `No stdout`);
