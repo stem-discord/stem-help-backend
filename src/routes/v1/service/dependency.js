@@ -2,6 +2,7 @@ import * as lib from "../../lib/index.js";
 
 const { ApiError, catchAsync, pick } = lib.util;
 const config = lib.config;
+const { logger } = lib.tool;
 
 const router = lib.Router();
 
@@ -10,7 +11,12 @@ const cache = new lib.util.cache.FileSystemCache({
   transformer: v => new Buffer.from(v.data),
 });
 
-const c = cache.clear().then(() => null);
+const c = cache
+  .clear()
+  .catch(e => {
+    logger.error(`Error while clearing cache`, e);
+  })
+  .finally(() => null);
 
 router.get(
   `/:type`,
