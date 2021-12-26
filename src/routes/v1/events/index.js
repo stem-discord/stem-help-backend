@@ -145,6 +145,12 @@ const procTree = catchAsync(async (req, res) => {
 router
   .route(`/christmastree`)
   .post(
+    () => {
+      throw new ApiError(
+        httpStatus.SERVICE_UNAVAILABLE,
+        `Cannot submit trees after event is over`
+      );
+    },
     lib.middlewares.Validate({
       body: Joi.object().keys({
         code_type: Joi.string().required(),
@@ -179,12 +185,6 @@ router
   );
 
 router.route(`/christmastree/vote`).post(
-  () => {
-    throw new ApiError(
-      httpStatus.SERVICE_UNAVAILABLE,
-      `Cannot submit trees after event is over`
-    );
-  },
   tokenCheck,
   catchAsync(async (req, res) => {
     const { votes, token } = req.body;
