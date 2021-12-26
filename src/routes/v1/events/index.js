@@ -170,11 +170,11 @@ router
         });
       }
 
-      const { trees } = db.toJSON().data;
+      const { trees, codes } = db.toJSON().data;
 
       filterTrees(trees);
 
-      res.json({ trees });
+      res.json({ trees, codes });
     })
   );
 
@@ -215,11 +215,11 @@ router.route(`/christmastree/vote`).post(
 
     await db.save();
 
-    const { trees: newTrees } = db.toJSON().data;
+    const { trees: newTrees, codes } = db.toJSON().data;
 
     filterTrees(newTrees, id);
 
-    res.json({ message: `OK`, trees: newTrees });
+    res.json({ message: `OK`, trees: newTrees, codes });
   })
 );
 
