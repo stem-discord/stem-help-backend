@@ -135,11 +135,11 @@ const procTree = catchAsync(async (req, res) => {
 
   await db.save();
 
-  const { trees } = db.toJSON().data;
+  const { trees, codes } = db.toJSON().data;
 
   filterTrees(trees, id);
 
-  res.json({ message: `OK`, trees: trees });
+  res.json({ message: `OK`, trees: trees, codes });
 });
 
 router
