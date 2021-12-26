@@ -12,8 +12,8 @@ const router = lib.Router();
 function filterTrees(trees, id) {
   Object.entries(trees).forEach(([k, v]) => {
     if (k !== id && v.hide) {
-      v.stdout = `[User has hidden this tree until vote]`;
-      v.title = `[User has hidden tree title until vote]`;
+      // v.stdout = `[User has hidden this tree until vote]`;
+      // v.title = `[User has hidden tree title until vote]`;
     }
   });
 }
