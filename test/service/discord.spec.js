@@ -63,7 +63,7 @@ describe(`Bot test mock`, function () {
       `882261053793239061`
     );
   });
-  it(`trigger scc`, async function () {
+  it(`trigger stats`, async function () {
     const msg = {
       author: {
         id: `341446613056880641`,
@@ -75,7 +75,7 @@ describe(`Bot test mock`, function () {
       reply: chai.spy(() => {}),
     };
     await stembot.client.emitPromise(`messageCreate`, msg);
-    expect(msg.reply).to.have.been.called.once;
+    expect(msg.reply).to.have.been.called.once.with(v => v.match(/branch/i));
   });
 });
 
