@@ -14,6 +14,9 @@ function isOperational(status) {
   return status >= 200 && status < 300;
 }
 
+/**
+ * @return string or number. If status is 404 -> "Not Found". if NOT_FOUND -> 404
+ */
 function getDescription(status) {
   if (status === undefined) {
     throw new Error(`status is required`);
