@@ -1,7 +1,9 @@
-export default {
+import Lock from "../Lock.js";
+
+export default Lock({
   DISCONNECTED: `DISCONNECTED`,
   CONNECTED: `CONNECTED`,
   CONNECTING: `CONNECTING`,
   DISCONNECTING: `DISCONNECTING`,
   UNINITIALIZED: `UNINITIALIZED`,
-};
+});

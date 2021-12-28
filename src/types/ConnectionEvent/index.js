@@ -1,4 +1,6 @@
-export default {
+import Lock from "../Lock.js";
+
+export default Lock({
   connected: `connected`,
   disconnected: `disconnected`,
   connecting: `connecting`,
@@ -8,4 +10,4 @@ export default {
   reconnected: `reconnected`,
   error: `error`,
   fullsetup: `fullsetup`,
-};
+});
