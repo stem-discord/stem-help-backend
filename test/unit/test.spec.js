@@ -1,4 +1,5 @@
 import * as util from "../../src/util/index.js";
+import * as types from "../../src/types/index.js";
 
 import { expect, assert } from "chai";
 
@@ -6,6 +7,54 @@ import Joi from "joi";
 
 import * as validations from "../../src/validations/index.js";
 const { fields } = validations;
+
+describe(`types`, function () {
+  describe(`Lock.js`, function () {
+    it(`should throw an error on invalid configs`, function () {
+      expect(() => types.Lock({})).to.throw(/empty/i);
+      expect(() => types.Lock({ name: `test` })).to.throw(/same/i);
+      expect(() => types.Lock({ name: `test`, timeout: `test` })).to.throw(
+        /same/i
+      );
+      expect(() => types.Lock({ name: `test`, timeout: 1 })).to.throw(/same/i);
+
+      // Should work
+      expect(() =>
+        types.Lock({ name: `name`, timeout: `timeout` })
+      ).to.not.throw();
+    });
+
+    it(`should not throw an error on valid configs`, function () {
+      // Should work
+      expect(() =>
+        types.Lock({ name: `name`, timeout: `timeout` })
+      ).to.not.throw();
+    });
+
+    describe(`production`, function () {
+      let env;
+      before(() => {
+        env = process.env.NODE_ENV;
+        process.env.NODE_ENV = `production`;
+      });
+      after(() => {
+        process.env.NODE_ENV = env;
+      });
+
+      it(`should not throw an error when accessing objects`, function () {
+        let t = types.Lock({ name: `name`, timeout: `timeout` });
+        expect(() => t[`test`]).to.not.throw();
+      });
+    });
+
+    describe(`non-production`, function () {
+      it(`should throw an error when accessing objects`, function () {
+        let t = types.Lock({ name: `name`, timeout: `timeout` });
+        expect(() => t[`test`]).to.throw();
+      });
+    });
+  });
+});
 
 describe(`util`, function () {
   it(`pick.js`, function () {
