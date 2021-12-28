@@ -16,9 +16,9 @@ const on = client._on;
 client.on = function (event, listener) {
   Reflect.apply(on, client, [
     event,
-    (...args) => {
+    async (...args) => {
       try {
-        Reflect.apply(listener, client, args);
+        await Reflect.apply(listener, client, args);
       } catch (e) {
         logger.error(e);
       }
@@ -93,6 +93,10 @@ client.on(`messageCreate`, async message => {
   }
 });
 
+function emitPromise(event, ...args) {
+  return Promise.all(client.listeners(event).map(f => f(...args)));
+}
+
 // Passthrough
 for (const event of Object.values(Discord.Constants.Events)) {
   discordClient.on(event, async (...args) => {
@@ -100,9 +104,11 @@ for (const event of Object.values(Discord.Constants.Events)) {
       const func = client.handler?.[n];
       if (func && (await func(...args))) return;
     }
-    await Promise.all(client.listeners(event).map(f => f(...args)));
+    await emitPromise(event, ...args);
   });
 }
+
+client.emitPromise = emitPromise;
 
 if (isMain(import.meta)) {
   (async () => {
