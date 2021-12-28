@@ -176,6 +176,33 @@ describe(`util`, function () {
     });
   });
 
+  describe(`http`, function () {
+    describe(`status`, function () {
+      describe(`isOperational`, function () {
+        it(`should work`, function () {
+          expect(() => util.http.status.isOperational()).to.throw(/required/i);
+          expect(() => util.http.status.isOperational({})).to.throw();
+          expect(() => util.http.status.isOperational(`test`)).to.throw(
+            /integer/i
+          );
+          expect(util.http.status.isOperational(`200`)).to.be.true;
+          expect(util.http.status.isOperational(`201`)).to.be.true;
+          expect(util.http.status.isOperational(`300`)).to.be.false;
+        });
+      });
+      describe(`getDescription`, function () {
+        it(`should work`, function () {
+          expect(() => util.http.status.getDescription()).to.throw(/required/i);
+          expect(() => util.http.status.getDescription(`test`)).to.throw(
+            /invalid/i
+          );
+          expect(util.http.status.getDescription(`BAD_REQUEST`)).to.equal(400);
+          expect(util.http.status.getDescription(404)).to.equal(`Not Found`);
+        });
+      });
+    });
+  });
+
   describe(`randomIdentifier.js`, function () {
     it(`should work`, function () {
       expect(util.randomIdentifier()).to.be.a(`string`);
