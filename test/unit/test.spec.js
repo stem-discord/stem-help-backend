@@ -6,7 +6,7 @@ import { expect, assert } from "chai";
 import Joi from "joi";
 
 import * as validations from "../../src/validations/index.js";
-const { fields } = validations;
+const { fields, discord } = validations;
 
 // https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
 function isValidHttpUrl(string) {
@@ -242,5 +242,15 @@ describe(`validations`, function () {
       [`thonk`, `usuk@d@nk`, `!()*()#$)(#)@#)$`, `karon!stupk#.com`],
       fields.email
     );
+  });
+  describe(`discord`, function () {
+    describe(`oauth`, function () {
+      validationFactory(
+        `token`,
+        [`NhhvTDYsFcdgNLnnLijcl7Ku7bEEeee`],
+        [`asdfaegadsfa`, `bonk.bonk`, `funk`],
+        discord.oauth.token
+      );
+    });
   });
 });
