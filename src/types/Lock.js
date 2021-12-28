@@ -1,4 +1,7 @@
 function Lock(obj) {
+  if (Object.keys(obj).length === 0) {
+    throw new Error(`obj must not be empty`);
+  }
   for (const [k, v] of Object.entries(obj)) {
     if (k !== v) {
       throw new Error(
