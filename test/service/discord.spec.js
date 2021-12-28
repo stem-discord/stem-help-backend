@@ -5,6 +5,7 @@ import {
 import { discord, stembot } from "../../src/service/index.js";
 import Discord, { Collection } from "discord.js";
 import { mock } from "../shared/index.js";
+import { format } from "util";
 
 describe(`Service tests`, function () {
   describe(`real`, function () {
@@ -64,6 +65,7 @@ describe(`Bot test mock`, function () {
     );
   });
   it(`trigger stats`, async function () {
+    let valid, arg;
     const msg = {
       author: {
         id: `341446613056880641`,
@@ -72,10 +74,14 @@ describe(`Bot test mock`, function () {
       guild: {
         id: `493173110799859713`,
       },
-      reply: chai.spy(() => {}),
+      reply: chai.spy(v => {
+        arg = v;
+        valid = !!v.match(/branch/i);
+      }),
     };
     await stembot.client.emitPromise(`messageCreate`, msg);
-    expect(msg.reply).to.have.been.called.once.with(v => v.match(/branch/i));
+    expect(msg.reply).to.have.been.called.once();
+    expect(valid, `validator was not satisfied. Reply was ${arg}`).to.be.true;
   });
 });
 
