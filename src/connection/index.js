@@ -17,12 +17,12 @@ const modules = {
 
 const connections = Object.values(modules).map(m => m.connection);
 
+let hasLoggedRegister = false;
+
 const moduleNames = [];
 for (const name of Object.keys(modules)) {
   moduleNames.push(name);
 }
-
-logger.info(`Registered modules: ${moduleNames.join(`, `)}`);
 
 function connDesc(connection) {
   // The connection is configured
@@ -63,6 +63,10 @@ function connDesc(connection) {
 }
 
 const openConnections = async selection => {
+  if (!hasLoggedRegister) {
+    logger.info(`Registered modules: ${moduleNames.join(`, `)}`);
+    hasLoggedRegister = true;
+  }
   selection ??= Object.keys(modules);
   if (!Array.isArray(selection)) {
     throw new Error(`Expected array, got ${typeof selection}`, selection);
