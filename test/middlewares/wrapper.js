@@ -74,7 +74,8 @@ function middleware(mid, req, opts = {}) {
       nextArgs.push(args?.[0]);
     };
 
-    mid(reqObj, resObj, next)
+    // If mid is synchronous, there wont be a .then
+    (async () => mid(reqObj, resObj, next))()
       .then(() => {
         // Check if it has been called once
         expect(nextSpy).to.have.been.called.once();
