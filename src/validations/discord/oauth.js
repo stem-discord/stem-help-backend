@@ -14,4 +14,4 @@ const redirectUri = {
   }),
 };
 
-export { redirectUri };
+export { redirectUri, token };
