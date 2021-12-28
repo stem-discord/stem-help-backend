@@ -40,8 +40,8 @@ describe(`Bot test mock`, function () {
       reply: chai.spy(() => {}),
       guild: { id: `493173110799859713` },
     };
-    stembot.client.emit(`messageCreate`, msg);
-    await expect(msg.reply).to.have.been.called.once.with(`hi`);
+    await stembot.client.emitPromise(`messageCreate`, msg);
+    expect(msg.reply).to.have.been.called.once.with(`hi`);
   });
   it(`Should give zen role when give me role is said`, async function () {
     const msg = {
@@ -58,10 +58,24 @@ describe(`Bot test mock`, function () {
         },
       },
     };
-    await stembot.client.emit(`messageCreate`, msg);
-    await expect(msg.member.roles.add).to.have.been.called.once.with(
+    await stembot.client.emitPromise(`messageCreate`, msg);
+    expect(msg.member.roles.add).to.have.been.called.once.with(
       `882261053793239061`
     );
+  });
+  it(`trigger scc`, async function () {
+    const msg = {
+      author: {
+        id: `341446613056880641`,
+      },
+      content: `stemapi stats`,
+      guild: {
+        id: `493173110799859713`,
+      },
+      reply: chai.spy(() => {}),
+    };
+    await stembot.client.emitPromise(`messageCreate`, msg);
+    expect(msg.reply).to.have.been.called.once;
   });
 });
 
