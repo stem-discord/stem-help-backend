@@ -200,7 +200,7 @@ describe(`validations`, function () {
     validationFactory(
       `password`,
       [`akfjioefklsdfjio123`, `thebestp@ssw0rd`],
-      [`correcthorsebatterystaple`, `tooshort`, `12345678`, `!()*()#$)(#)@#)$`],
+      [`correcthorsebatterystaple`, `toosh`, `12345678`, `!()*()#$)(#)@#)$`],
       fields.password
     );
   });
