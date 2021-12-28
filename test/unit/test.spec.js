@@ -112,20 +112,24 @@ describe(`util`, function () {
 
 function validationFactory(fieldname, passing, failing, validator) {
   describe(`validation for ${fieldname}`, function () {
-    it(`Should pass passing usernames`, function () {
+    describe(`Should pass passing usernames`, function () {
       for (const pass of passing) {
-        expect(
-          Joi.string().custom(validator).validate(pass),
-          `expected '${pass}' to be a valid ${fieldname}`
-        ).to.not.have.property(`error`);
+        it(`${pass}`, function () {
+          expect(
+            Joi.string().custom(validator).validate(pass),
+            `expected '${pass}' to be a valid ${fieldname}`
+          ).to.not.have.property(`error`);
+        });
       }
     });
-    it(`Should not pass invalid usernames`, function () {
+    describe(`Should not pass invalid usernames`, function () {
       for (const fail of failing) {
-        expect(
-          Joi.string().custom(validator).validate(fail),
-          `expected '${fail}' to not be a valid ${fieldname}`
-        ).to.have.property(`error`);
+        it(`${fail}`, function () {
+          expect(
+            Joi.string().custom(validator).validate(fail),
+            `expected '${fail}' to not be a valid ${fieldname}`
+          ).to.have.property(`error`);
+        });
       }
     });
   });
