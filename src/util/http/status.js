@@ -4,6 +4,13 @@ function isOperational(status) {
   if (status === undefined) {
     throw new Error(`status is required`);
   }
+
+  status = Number(status);
+
+  if (!Number.isInteger(status)) {
+    throw new Error(`status must be an integer or integer string`);
+  }
+
   return status >= 200 && status < 300;
 }
 
