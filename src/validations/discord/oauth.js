@@ -8,10 +8,4 @@ const token = (value, helpers) => {
   return value;
 };
 
-const redirectUri = {
-  query: Joi.object().keys({
-    code: Joi.string().custom(token).required(),
-  }),
-};
-
-export { redirectUri, token };
+export { token };
