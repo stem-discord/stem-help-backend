@@ -170,6 +170,7 @@ describe(`util`, function () {
       });
       it(`should work`, function () {
         expect(util.discord.oauth.buildUri(1, 2)).to.be.a(`string`);
+        expect(isValidHttpUrl(util.discord.oauth.buildUri(1, 2))).to.be.true;
         expect(() => util.discord.oauth.buildUri(1, 2)).to.not.throw();
       });
     });
