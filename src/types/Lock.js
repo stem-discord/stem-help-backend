@@ -9,7 +9,7 @@ function Lock(obj) {
       );
     }
   }
-  if (process.env.NODE_ENV === `development`) {
+  if (process.env.NODE_ENV !== `production`) {
     return new Proxy(obj, {
       get: function (target, key) {
         if (hasOwnProperty.call(target, key)) {
