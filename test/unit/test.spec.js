@@ -8,6 +8,19 @@ import Joi from "joi";
 import * as validations from "../../src/validations/index.js";
 const { fields } = validations;
 
+// https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+function isValidHttpUrl(string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === `http:` || url.protocol === `https:`;
+}
+
 describe(`types`, function () {
   describe(`Lock.js`, function () {
     it(`should throw an error on invalid configs`, function () {
@@ -145,6 +158,19 @@ describe(`util`, function () {
         await util.async.sleep(2);
         const end = Date.now();
         expect(end - start).to.be.least(1);
+      });
+    });
+  });
+
+  describe(`discord`, function () {
+    describe(`oauth`, function () {
+      it(`should throw errors`, function () {
+        expect(() => util.discord.oauth.buildUri()).to.throw(/required/i);
+        expect(() => util.discord.oauth.buildUri(1)).to.throw(/required/i);
+      });
+      it(`should work`, function () {
+        expect(util.discord.oauth.buildUri(1, 2)).to.be.a(`string`);
+        expect(() => util.discord.oauth.buildUri(1, 2)).to.not.throw();
       });
     });
   });
