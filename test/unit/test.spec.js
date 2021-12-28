@@ -203,5 +203,17 @@ describe(`validations`, function () {
       [`correcthorsebatterystaple`, `toosh`, `12345678`, `!()*()#$)(#)@#)$`],
       fields.password
     );
+    validationFactory(
+      `mongoId`,
+      [`61be52b80deb32d32263efbb`],
+      [`thonk`, `1`, `!()*()#$)(#)@#)$`],
+      fields.objectId
+    );
+    validationFactory(
+      `emails`,
+      [`themonk@gmail.com`, `nopeless@stem.help`, `b@b.b`],
+      [`thonk`, `usuk@d@nk`, `!()*()#$)(#)@#)$`, `karon!stupk#.com`],
+      fields.email
+    );
   });
 });
