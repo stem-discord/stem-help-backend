@@ -23,6 +23,15 @@ describe(`middlewares`, function () {
       await wrapper.middleware(m, { body: { test: `1` } }).next();
     });
   });
+  describe(`Debug`, function () {
+    it(`should throw an error if initialization is not correct`, function () {
+      expect(() => middlewares.Debug(1, 1)).to.throw(/initialize/i);
+    });
+    it(`should work`, async function () {
+      middlewares.Debug();
+      middlewares.Debug(`hello`);
+    });
+  });
 });
 
 describe(`API endpoint controllers`, function () {
