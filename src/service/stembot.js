@@ -42,17 +42,6 @@ if (config.env === `test`) {
   };
 }
 
-// Passthrough
-for (const event of Object.values(Discord.Constants.Events)) {
-  discordClient.on(event, (...args) => {
-    for (const n of [event, `*`]) {
-      const func = client.handler?.[n];
-      if (func && func(...args)) return;
-    }
-    client.emit(event, ...args);
-  });
-}
-
 function handleIssueToken(message) {
   if (message.content === `!token`) {
     if (message.channel?.type !== `DM`) {
@@ -103,6 +92,17 @@ client.on(`messageCreate`, async message => {
     }
   }
 });
+
+// Passthrough
+for (const event of Object.values(Discord.Constants.Events)) {
+  discordClient.on(event, async (...args) => {
+    for (const n of [event, `*`]) {
+      const func = client.handler?.[n];
+      if (func && (await func(...args))) return;
+    }
+    await Promise.all(client.listeners(event).map(f => f(...args)));
+  });
+}
 
 if (isMain(import.meta)) {
   (async () => {
