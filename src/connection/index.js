@@ -75,17 +75,38 @@ const openConnections = async selection => {
     logger.info(`Registered modules: ${moduleNames.join(`, `)}`);
     hasLoggedRegister = true;
   }
-  selection ??= Object.keys(modules);
-  if (!Array.isArray(selection)) {
-    throw new Error(`Expected array, got ${typeof selection}`, selection);
+
+  if (selection === undefined) {
+    selection = Object.keys(modules);
+  } else {
+    if (!Array.isArray(selection)) {
+      throw new Error(`Expected array, got ${typeof selection}`, selection);
+    }
+    const s = [];
+    sl: for (const sel of selection) {
+      const name = sel.toLowerCase();
+      // find a module with matching name
+      for (const key of Object.keys(modules)) {
+        if (key.toLowerCase().includes(name)) {
+          s.push(key);
+          continue sl;
+        }
+      }
+      throw new Error(
+        `Unknown module ${sel}. Available modules: [${Object.keys(modules).join(
+          `, `
+        )}]`
+      );
+    }
+    selection = s;
   }
+
   logger.info(
     `Awaiting for module initialization...` +
       (selection ? ` [${selection.join(`, `)}]` : ``)
   );
-  const initializations = Object.entries(modules)
-    .filter(v => selection.includes(v[0]))
-    .map(v => v[1])
+  const initializations = selection
+    .map(v => modules[v])
     .map(c => c.connection.init().catch(e => logger.error(e)));
   await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
