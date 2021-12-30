@@ -7,3 +7,4 @@ export * as generatePngFromHtml from "./generatePngFromHtml.js";
 export * as generatePngBanner from "./generatePngBanner.js";
 export * as generateDependencyGraph from "./generateDependencyGraph.js";
 export * as piston from "./piston.js";
+export * as stemInformation from "./stemInformation.js";
