@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 import { Connection, NullConnection } from "./connection.js";
 
-export function createMongoConnection({ config, ns }) {
+export function createMongoConnection({ config: mongooseConfig, ns }) {
   const logger = ns.logger;
 
   let connection;
   let mongooseConnection;
 
-  if (config.mongoose.url) {
+  if (mongooseConfig.url) {
     let dbOpen;
     let dbClose;
 
@@ -15,14 +15,14 @@ export function createMongoConnection({ config, ns }) {
       ...ns,
       init: () => {
         const conn = mongoose.createConnection(
-          config.mongoose.url,
-          config.mongoose.options
+          mongooseConfig.url,
+          mongooseConfig.options
         );
 
         mongooseConnection = conn;
 
         const disp = (() => {
-          const o = new URL(config.mongoose.url);
+          const o = new URL(mongooseConfig.url);
           o.username = o.username.replace(
             /(.{0,4})(.*)/,
             (_, f, b) => `${f}${`*`.repeat(b.length)}`
@@ -85,7 +85,7 @@ export function createMongoConnection({ config, ns }) {
       },
     });
   } else {
-    connection = new NullConnection(ns, `config.mongoose.url is missing`);
+    connection = new NullConnection(ns, `config for .url is missing`);
   }
 
   return { connection, mongooseConnection };
