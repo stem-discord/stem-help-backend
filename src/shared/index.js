@@ -5,32 +5,32 @@ import { RequireProxy } from "./RequireProxy.js";
 
 import config from "../config/index.js";
 
-let model = Object.create(null);
+let mongoModel = Object.create(null);
 
 const mongo = new RequireProxy(
   () => connection.mongo.connection.isOperational(),
   {
     get User() {
-      return (model.user ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.user ??= connection.mongo.mongooseConnection.model(
         `User`,
         models.User
       ));
     },
     get Token() {
-      return (model.token ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.token ??= connection.mongo.mongooseConnection.model(
         `Token`,
         models.Token
       ));
     },
     get Potd() {
-      return (model.potd ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.potd ??= connection.mongo.mongooseConnection.model(
         `Potd`,
         models.Potd
       ));
     },
     get Data() {
       // TODO: write an api for data
-      return (model.data ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.data ??= connection.mongo.mongooseConnection.model(
         `Data`,
         models.Data,
         `data`
