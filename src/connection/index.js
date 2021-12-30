@@ -1,5 +1,6 @@
 import * as google from "./google/index.js";
 import * as mongo from "./mongo/index.js";
+import * as stemInformation from "./stemInformation/index.js";
 import * as discord from "./discord/index.js";
 
 import { Logger } from "../tool/index.js";
@@ -13,6 +14,7 @@ const logger = new Logger(`ConnectionManager`);
 const modules = {
   mongo,
   discord,
+  stemInformation,
 };
 
 const connections = Object.values(modules).map(m => {
@@ -103,4 +105,11 @@ async function closeConnections() {
   return await Promise.all(connections.map(c => c.close()));
 }
 
-export { mongo, discord, connections, openConnections, closeConnections };
+export {
+  mongo,
+  discord,
+  stemInformation,
+  connections,
+  openConnections,
+  closeConnections,
+};
