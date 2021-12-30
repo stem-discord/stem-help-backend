@@ -39,6 +39,28 @@ const mongo = new RequireProxy(
   }
 );
 
+const stemInformationModel = Object.create(null);
+
+const stemInformation = new RequireProxy(
+  () => connection.stemInformation.connection.isOperational(),
+  {
+    get ThankedLog() {
+      return (stemInformationModel.user ??=
+        connection.stemInformation.mongooseConnection.model(
+          `ThankedLog`,
+          models.AnySchema
+        ));
+    },
+    get UserInfoPublic() {
+      return (stemInformationModel.token ??=
+        connection.stemInformation.mongooseConnection.model(
+          `UserInfo`,
+          models.AnySchema
+        ));
+    },
+  }
+);
+
 const stem = new RequireProxy(
   () => connection.discord.connection.isOperational(),
   {
@@ -67,4 +89,4 @@ const discord = new RequireProxy(
   }
 );
 
-export default { mongo, discord };
+export default { mongo, discord, stemInformation };
