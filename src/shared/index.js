@@ -11,18 +11,26 @@ const mongo = new RequireProxy(
   () => connection.mongo.connection.isOperational(),
   {
     get User() {
-      return (model.user ??= connection.mongo.model(`User`, models.User));
+      return (model.user ??= connection.mongo.mongooseConnection.model(
+        `User`,
+        models.User
+      ));
     },
-    // get Session() { return connection.mongo.model(`Session`, models.Session); },
     get Token() {
-      return (model.token ??= connection.mongo.model(`Token`, models.Token));
+      return (model.token ??= connection.mongo.mongooseConnection.model(
+        `Token`,
+        models.Token
+      ));
     },
     get Potd() {
-      return (model.potd ??= connection.mongo.model(`Potd`, models.Potd));
+      return (model.potd ??= connection.mongo.mongooseConnection.model(
+        `Potd`,
+        models.Potd
+      ));
     },
     get Data() {
       // TODO: write an api for data
-      return (model.data ??= connection.mongo.model(
+      return (model.data ??= connection.mongo.mongooseConnection.model(
         `Data`,
         models.Data,
         `data`
