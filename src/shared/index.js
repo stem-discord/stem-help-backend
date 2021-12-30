@@ -11,26 +11,26 @@ const mongo = new RequireProxy(
   () => connection.mongo.connection.isOperational(),
   {
     get User() {
-      return (mongoModel.user ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.user ??= connection.mongo.connection.mongoose.model(
         `User`,
         models.User
       ));
     },
     get Token() {
-      return (mongoModel.token ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.token ??= connection.mongo.connection.mongoose.model(
         `Token`,
         models.Token
       ));
     },
     get Potd() {
-      return (mongoModel.potd ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.potd ??= connection.mongo.connection.mongoose.model(
         `Potd`,
         models.Potd
       ));
     },
     get Data() {
       // TODO: write an api for data
-      return (mongoModel.data ??= connection.mongo.mongooseConnection.model(
+      return (mongoModel.data ??= connection.mongo.connection.mongoose.model(
         `Data`,
         models.Data,
         `data`
@@ -46,14 +46,14 @@ const stemInformation = new RequireProxy(
   {
     get ThankedLog() {
       return (stemInformationModel.user ??=
-        connection.stemInformation.mongooseConnection.model(
+        connection.stemInformation.connection.mongoose.model(
           `ThankedLog`,
           models.AnySchema
         ));
     },
     get UserInfoPublic() {
       return (stemInformationModel.token ??=
-        connection.stemInformation.mongooseConnection.model(
+        connection.stemInformation.connection.mongoose.model(
           `UserInfo`,
           models.AnySchema
         ));
