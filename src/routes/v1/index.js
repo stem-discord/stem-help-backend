@@ -9,13 +9,6 @@ import events from "./events/index.js";
 import * as lib from "../lib/index.js";
 
 const router = new lib.Router();
-const git = lib.util.git;
-
-router.get(`/`, async (req, res) => {
-  res
-    .status(200)
-    .json({ message: `OK`, version: await git.status.getLastCommit() });
-});
 
 router.use(`/docs`, docs);
 
