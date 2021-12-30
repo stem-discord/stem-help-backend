@@ -64,6 +64,21 @@ describe(`Bot test mock`, function () {
       `882261053793239061`
     );
   });
+  it(`trigger stats - no timeout`, async function () {
+    this.timeout(10000);
+    this.slow(5000);
+    const msg = {
+      author: {
+        id: `341446613056880641`,
+      },
+      content: `stemapi stats`,
+      guild: {
+        id: `493173110799859713`,
+      },
+      reply: () => 0,
+    };
+    await stembot.client.emitPromise(`messageCreate`, msg);
+  });
   it(`trigger stats`, async function () {
     let valid, arg;
     const msg = {
