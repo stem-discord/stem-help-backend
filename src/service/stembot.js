@@ -73,11 +73,7 @@ client.on(`messageCreate`, async message => {
     await message.reply(s);
     return;
   }
-  if (
-    !shared.discord.stem.guild ||
-    message.guild?.id !== shared.discord.stem.guild.id
-  )
-    return;
+  if (message.guild?.id !== config.discord.server.stem) return;
   if (message.content.match(/^give me zen$/i)) {
     await message.member.roles.add(`882261053793239061`);
   }
