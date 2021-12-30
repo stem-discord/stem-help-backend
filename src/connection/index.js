@@ -15,7 +15,13 @@ const modules = {
   discord,
 };
 
-const connections = Object.values(modules).map(m => m.connection);
+const connections = Object.values(modules).map(m => {
+  const c = m.connection;
+  if (c === undefined) {
+    throw new Error(`Module ${m.name} has no connection export`);
+  }
+  return c;
+});
 
 let hasLoggedRegister = false;
 
