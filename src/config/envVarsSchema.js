@@ -18,6 +18,9 @@ const envVarsSchema = Joi.object()
       .valid(`true`, `false`)
       .description(`Logging absolute time`),
     MONGODB_URL: Joi.string().description(`Mongo DB url`),
+    STEM_INFORMATION_URL: Joi.string().description(
+      `Mongo DB url for stem information (you won't have access to this unless ur an admin)`
+    ),
     CONNECTIONS: Joi.string()
       .allow(``)
       .description(

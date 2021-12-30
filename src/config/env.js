@@ -34,6 +34,18 @@ function generateConfig(env) {
         socketTimeoutMS: 5000,
       },
     },
+    stemInformation: {
+      url: envVars.STEM_INFORMATION_URL,
+      options: {
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        bufferMaxEntries: 0,
+        bufferCommands: false,
+        connectTimeoutMS: 5000,
+        socketTimeoutMS: 5000,
+      },
+    },
     jwt: {
       publicKey: envVars.JWT_PUBLIC_KEY,
       privateKey: envVars.JWT_PRIVATE_KEY,
