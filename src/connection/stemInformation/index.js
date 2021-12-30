@@ -7,7 +7,7 @@ const ns = new Namespace(
   `Database connection with mongodb (STEM Discord)`
 );
 
-const obj = createMongoConnection({ config: config.stemInformation, ns });
-
-export const connection = obj.connection;
-export const mongooseConnection = obj.mongooseConnection;
+export const connection = createMongoConnection({
+  config: config.stemInformation,
+  ns,
+});

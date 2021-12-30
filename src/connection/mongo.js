@@ -5,7 +5,6 @@ export function createMongoConnection({ config: mongooseConfig, ns }) {
   const logger = ns.logger;
 
   let connection;
-  let mongooseConnection;
 
   if (mongooseConfig.url) {
     let dbOpen;
@@ -19,7 +18,7 @@ export function createMongoConnection({ config: mongooseConfig, ns }) {
           mongooseConfig.options
         );
 
-        mongooseConnection = conn;
+        connection.mongoose = conn;
 
         const disp = (() => {
           const o = new URL(mongooseConfig.url);
@@ -81,14 +80,15 @@ export function createMongoConnection({ config: mongooseConfig, ns }) {
       },
       heartbeat: () => true,
       close: () => {
-        mongooseConnection?.close();
+        connection.mongoose?.close();
       },
     });
   } else {
     connection = new NullConnection(ns, `config for .url is missing`);
+    connection.mongoose = null;
   }
 
-  return { connection, mongooseConnection };
+  return connection;
 }
 
 export const states = {

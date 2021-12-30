@@ -4,7 +4,7 @@ import { createMongoConnection } from "../mongo.js";
 
 const ns = new Namespace(`MongoDB`, `Database connection with mongodb`);
 
-const obj = createMongoConnection({ config: config.mongoose, ns });
-
-export const connection = obj.connection;
-export const mongooseConnection = obj.mongooseConnection;
+export const connection = createMongoConnection({
+  config: config.mongoose,
+  ns,
+});

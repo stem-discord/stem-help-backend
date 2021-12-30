@@ -112,4 +112,6 @@ if (config.discord.botToken) {
   connection = new NullConnection(ns, `config.discord.botToken is missing`);
 }
 
+connection.client = client;
+
 export { connection, client };

@@ -17,10 +17,11 @@ const modules = {
   stemInformation,
 };
 
-const connections = Object.values(modules).map(m => {
+const connections = Object.entries(modules).map(e => {
+  const m = e[1];
   const c = m.connection;
   if (c === undefined) {
-    throw new Error(`Module ${m.name} has no connection export`);
+    throw new Error(`Module has no connection export '${e[0]}.js'`);
   }
   return c;
 });
