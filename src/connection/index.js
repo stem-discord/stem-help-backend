@@ -83,13 +83,14 @@ const openConnections = async selection => {
     if (!Array.isArray(selection)) {
       throw new Error(`Expected array, got ${typeof selection}`, selection);
     }
-    const s = [];
+    const si = Object.create(null);
     sl: for (const sel of selection) {
       const name = sel.toLowerCase();
       // find a module with matching name
       for (const key of Object.keys(modules)) {
+        if (si[key]) continue;
         if (key.toLowerCase().includes(name)) {
-          s.push(key);
+          si[key] = true;
           continue sl;
         }
       }
@@ -99,7 +100,7 @@ const openConnections = async selection => {
         )}]`
       );
     }
-    selection = s;
+    selection = Object.keys(si);
   }
 
   logger.info(
