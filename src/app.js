@@ -33,7 +33,7 @@ if (config.env !== `test`) {
 }
 
 // set security HTTP headers
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // parse json request body
 app.use(express.json());
