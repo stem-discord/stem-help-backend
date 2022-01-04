@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Discord from "discord.js";
 import httpStatus from "http-status";
 import config from "../config/index.js";
 import { logger } from "../tool/index.js";
@@ -9,9 +10,11 @@ const errorConverter = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof ApiError)) {
     const statusCode =
-      error.statusCode || error instanceof mongoose.Error
-        ? httpStatus.BAD_REQUEST
-        : httpStatus.INTERNAL_SERVER_ERROR;
+      error.statusCode ||
+      (error instanceof mongoose.Error ||
+      error instanceof Discord.DiscordAPIError
+        ? httpStatus.SERVICE_UNAVAILABLE
+        : httpStatus.INTERNAL_SERVER_ERROR);
     const message = error.message || httpStatus[statusCode];
     error = new ApiError(statusCode, message, false, err.stack);
   }
