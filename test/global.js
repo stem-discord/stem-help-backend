@@ -19,13 +19,33 @@ global.expect = chai.expect;
 global.should = chai.should;
 global.assert = chai.assert;
 
+for (const type of [`before`, `beforeEach`, `after`, `afterEach`]) {
+  let f = global[type];
+
+  global[type] = function (...args) {
+    const executor = args[args.length - 1];
+    if (executor instanceof Function) {
+      args[args.length - 1] = function (...args) {
+        // Lexical scoping
+        this._type = type;
+        Reflect.apply(executor, this, args);
+      };
+    }
+    return Reflect.apply(f, this, args);
+  };
+}
+
 /**
  * return falsy value for no error. throw or return anything else for error
  */
-function needs(...ops) {
+Context.prototype.needs = function (...ops) {
   if (typeof this.skip !== `function`) {
     // Assume we are in a describe
     throw new Error(`No this context (is it in an 'it' scope?)`);
+  }
+
+  if (![`before`, `beforeEach`].includes(this._type)) {
+    throw new Error(`needs() should be called in a 'before' or 'beforeEach'`);
   }
 
   let reason;
@@ -66,33 +86,18 @@ function needs(...ops) {
     }
   }
 
-  let t;
-
-  if (reason) {
-    t = this.test.title;
-    if (t) {
-      t += ` - reason: ${reason}`;
-    } else {
-      t = reason;
-    }
-  } else {
-    return;
+  function edit(test) {
+    test.title = `[⚠️ SKIPPED] ${test.title} - ${reason}`;
   }
 
-  function edit(it) {
-    it.title = `[⚠️ SKIPPED] ${t}`;
+  if (this._type === `before`) {
+    // modify test racks one by one
+    this.currentTest.parent.tests.forEach(test => edit(test));
+  } else if (this._type === `beforeEach`) {
+    // modify current test rack
+    // console.log(this)
+    edit(this.currentTest);
   }
 
-  // It is a suite
-  if (this.currentTest) {
-    for (const test of this.currentTest.parent.tests) {
-      edit(test);
-    }
-  } else {
-    edit(this.test);
-  }
-
-  this.skip(reason);
-}
-
-Context.prototype.needs = needs;
+  this.skip();
+};
