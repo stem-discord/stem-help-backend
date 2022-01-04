@@ -1,54 +1,69 @@
-import nock from "nock";
-import discordInterceptor from "./discord.com/index.js";
+import discordScope from "./discord.com/index.js";
 
-const interceptors = {
-  "discord.com": discordInterceptor,
+const scopes = {
+  "discord.com": discordScope,
 };
 
+function setEnabled(scopes, enabled) {
+  scopes.forEach(scope => {
+    scope.interceptors.forEach(i => {
+      i.enabled = enabled;
+    });
+  });
+}
+
+if (typeof before !== `undefined`) {
+  setEnabled(Object.values(scopes), false);
+}
+
 // Fast check
-for (const module of Object.values(interceptors)) {
-  // TODO add some type checking here
-  // if (typeof module !== ``) {
-  //   throw new Error(`Expected scope, got ${typeof module}`);
-  // }
+for (const [key, module] of Object.entries(scopes)) {
+  if (Array.isArray(module.interceptors)) {
+    module.key = key;
+    continue;
+  }
+  throw new Error(`module must be a nock.Scope`);
 }
 
 /**
  * Enables http intercept for the test case
  */
 function nockFunction(args) {
-  // eslint-disable-next-line no-console
-  return console.warn(`Until nock accepts my pr, this feature is disabled`);
-  /* eslint-disable no-unreachable */
-  if (typeof beforeEach !== `function`) {
-    throw new Error(`Mocha was not loaded`);
+  if (!Array.isArray(args)) {
+    args = [args];
   }
 
-  if (args === undefined) {
-    args = Object.keys(interceptors);
-  } else {
-    if (!Array.isArray(args)) args = [args];
+  for (const v of args) {
+    if (typeof v !== `string`) {
+      throw new Error(
+        `nockFunction expects an array of strings, recieved`,
+        args
+      );
+    }
   }
 
-  for (const name of args) {
-    if (!interceptors[name]) {
-      throw new Error(`Unknown interceptor: ${name}`);
+  const si = Object.create(null);
+
+  sl: for (const arg of args) {
+    for (const [dom, scope] of Object.entries(scopes)) {
+      if (si[dom]) continue;
+      if (arg.toLowerCase().includes(dom.toLowerCase())) {
+        si[dom] = scope;
+        continue sl;
+      }
     }
   }
 
   // only enable those that were not persisted
-  args = args.filter(v => v.enabled === false);
+  const nockingScopes = Object.values(si);
+  const nockingScopeNames = Object.keys(si).join(`, `);
 
-  before(`Nocking [${args.join(`,`)}]`, function () {
-    for (const name of args) {
-      interceptors[name].persist(true);
-    }
+  before(`Nocking [${nockingScopeNames}]`, function () {
+    setEnabled(nockingScopes, true);
   });
 
-  after(`Remove nocks [${args.join(`,`)}]`, function () {
-    for (const name of args) {
-      nock.removeInterceptor(interceptors[name]);
-    }
+  after(`Remove nocks [${nockingScopeNames}]`, function () {
+    setEnabled(nockingScopes, false);
   });
 }
 
