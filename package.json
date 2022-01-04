@@ -86,6 +86,7 @@
     "hellgate": "^0.4.0-beta",
     "helmet": "^4.1.0",
     "http-status": "^1.4.0",
+    "jimp": "^0.16.1",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
