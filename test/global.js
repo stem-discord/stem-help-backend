@@ -92,7 +92,7 @@ Context.prototype.needs = function (...ops) {
 
   if (this._type === `before`) {
     // modify test racks one by one
-    this.currentTest.parent.tests.forEach(test => edit(test));
+    this.currentTest.parent.tests.forEach(edit);
   } else if (this._type === `beforeEach`) {
     // modify current test rack
     // console.log(this)
