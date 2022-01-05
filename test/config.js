@@ -55,13 +55,6 @@ for (const k of Object.keys(schemaObj)) {
   process.env[k] = vars[k];
 }
 
-if (vars.CONNECTIONS) {
-  const connections = vars.CONNECTIONS.split(`,`);
-  before(`initialize connections`, async function () {
-    await openConnections(connections);
-  });
-}
-
 /**
  * .local is determined at runtime
  */
