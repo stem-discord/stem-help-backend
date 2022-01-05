@@ -25,7 +25,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "database": "echo 'This assumes that you already installed mongo. I just use it for my convinience' && mongod --dbpath ./database --port",
-    "mocha": "mocha --config ./test/.mocharc.cjs --exit --require test/global.js",
+    "mocha": "mocha --config ./test/.mocharc.cjs --exit --require test/global.js --require ./test/fixtures.js",
     "test": "cross-env NODE_ENV=test npm run mocha -- --recursive ./test/**/*.spec.js",
     "test:unit": "npm run mocha ./test/unit",
     "test:client": "npm run mocha ./test/client",
