@@ -9,8 +9,8 @@ module.exports = {
     assert: true,
   },
   rules: {
-    'no-unused-expressions': `off`,
-    'no-unused-vars': `off`,
-    'no-console': `off`,
+    "no-unused-expressions": `off`,
+    "no-unused-vars": `off`,
+    "no-console": `off`,
   },
 };
