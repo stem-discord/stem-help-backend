@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
-import { isMain, nullWrapper, git, scc } from "../util/index.js";
+import { isMain, nullWrapper, git, scc, async } from "../util/index.js";
 import config from "../config/index.js";
 import shared from "../shared/index.js";
 import * as discordService from "./discord.js";
@@ -57,6 +57,31 @@ function handleIssueToken(message) {
   return false;
 }
 
+const commonWords =
+  `like,important,new,really,and,interesting,good,smart,explain,thing,see,also,change,said,cute,tired,necessary,simple,special,accurate,clear,hungry,strange,old,big,few,wise,colorful,beautiful,nice,busy,bitter,really,very`.split(
+    `,`
+  );
+
+function handleCommonEnglishWords(message) {
+  const wl = [];
+  for (const w of commonWords) {
+    if (message.content.toLowerCase().includes(w)) {
+      wl.push(w);
+    }
+  }
+  if (wl.length) {
+    const m = message.reply(`detected uncommon words: ${wl.join(`, `)}`);
+    return m
+      .then(async m => {
+        await async.sleep(7000);
+        message.delete().catch(() => {});
+        return m.delete().catch(() => {});
+      })
+      .catch(v => logger.error(v));
+  }
+  return false;
+}
+
 client.on(`messageCreate`, async message => {
   if (handleIssueToken(message)) return;
   if (message.content.match(`stemapi stats`)) {
@@ -81,6 +106,7 @@ client.on(`messageCreate`, async message => {
     if (message.content === `stemtest`) {
       await message.reply(`hi`);
     }
+    if (handleCommonEnglishWords(message)) return;
     if (message.content === `stemdisable`) {
       // There is no way to enable this again though
       // Just a proof of concept for now
