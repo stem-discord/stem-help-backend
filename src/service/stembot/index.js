@@ -1,11 +1,19 @@
+import fs from "fs";
 import Discord from "discord.js";
 import EventEmitter2 from "eventemitter2";
-import { isMain, nullWrapper, git, scc, async } from "../util/index.js";
-import config from "../config/index.js";
-import shared from "../shared/index.js";
-import * as discordService from "./discord.js";
-import { client as discordClient } from "../connection/discord/index.js";
-import { Logger } from "../tool/index.js";
+import {
+  isMain,
+  nullWrapper,
+  git,
+  scc,
+  async,
+  dirname,
+} from "../../util/index.js";
+import config from "../../config/index.js";
+import shared from "../../shared/index.js";
+import * as discordService from "../discord.js";
+import { client as discordClient } from "../../connection/discord/index.js";
+import { Logger } from "../../tool/index.js";
 
 const logger = new Logger(`STEM Bot`);
 
@@ -57,10 +65,9 @@ function handleIssueToken(message) {
   return false;
 }
 
-const commonWords =
-  `like,important,new,really,and,interesting,good,smart,explain,thing,see,also,change,said,cute,tired,necessary,simple,special,accurate,clear,hungry,strange,old,big,few,wise,colorful,beautiful,nice,busy,bitter,really,very`.split(
-    `,`
-  );
+const commonWords = fs
+  .readFileSync(dirname(import.meta, `./common_words.csv`), `utf-8`)
+  .split(/\s*(?:[\n\r]+|,)\s*/);
 
 function handleCommonEnglishWords(message) {
   const wl = [];
@@ -70,7 +77,7 @@ function handleCommonEnglishWords(message) {
     }
   }
   if (wl.length) {
-    const m = message.reply(`detected uncommon words: ${wl.join(`, `)}`);
+    const m = message.reply(`detected common words: ${wl.join(`, `)}`);
     return m
       .then(async m => {
         await async.sleep(7000);
