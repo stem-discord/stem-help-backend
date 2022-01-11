@@ -15,7 +15,7 @@ const m = madge(`src/server.js`, {
   includeNpm: true,
 });
 
-async function optimize(p, { type = `image/png`, width = 2000 }) {
+async function optimize(p, { type = `image/png`, width = 2000 } = {}) {
   return p.then(v =>
     Jimp.read(v)
       .then(lenna => lenna.resize(width, Jimp.AUTO).getBufferAsync(type))
