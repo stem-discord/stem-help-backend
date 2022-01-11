@@ -28,7 +28,7 @@ Context.prototype.needs = function (...ops) {
     throw new Error(`No this context (is it in an 'it' scope?)`);
   }
 
-  let reason;
+  let reason = null;
 
   for (let op of ops) {
     if (op instanceof Function) {
@@ -65,6 +65,8 @@ Context.prototype.needs = function (...ops) {
       break;
     }
   }
+
+  if (reason === null) return;
 
   function edit(test) {
     test.title = `[⚠️ SKIPPED] ${test.title} - ${reason}`;
