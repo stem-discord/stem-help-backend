@@ -5,7 +5,57 @@ import {
 import { discord, stembot } from "../../src/service/index.js";
 import Discord, { Collection } from "discord.js";
 import { mock } from "../shared/index.js";
+import _ from "lodash";
 import { format } from "util";
+import config from "../../src/config/index.js";
+
+function f() {
+  return chai.spy(() => Promise.resolve(this));
+}
+
+/**
+ * opts will merge the properties with message, but
+ * if opts.message is specified, you have to put every message options under .message
+ */
+function MockMessage(msg, opts = {}) {
+  return _.merge(
+    Object.create(null),
+    {
+      author: {
+        id: `341446613056880641`,
+        username: `nope`,
+        discriminator: `6924`,
+      },
+      content: msg,
+      delete: f(),
+      reply: f(),
+      channel: {
+        send: f(),
+      },
+      guild: {
+        id: config.discord.server.stem,
+      },
+      member: {
+        roles: {
+          add: f(),
+        },
+      },
+    },
+    opts.message ?? opts
+  );
+}
+
+async function SendMockMessage(msg, opts) {
+  const message = MockMessage(msg, opts);
+  await stembot.client.emitPromise(`messageCreate`, message);
+  return message;
+}
+
+async function SendMockMessageCalled(msg, opts, param) {
+  const message = await SendMockMessage(msg, opts);
+  expect(message.reply).to.have.been.called.once.with(param);
+  return message;
+}
 
 describe(`Service tests`, function () {
   describe(`real`, function () {
@@ -29,37 +79,19 @@ describe(`Service tests`, function () {
   });
 });
 
-// TODO have proper mocks
 describe(`Bot test mock`, function () {
   mock(`discord`);
   it(`Should reply with hi when stemtest is said`, async function () {
-    const msg = {
-      author: {
-        id: `341446613056880641`,
+    await SendMockMessageCalled(
+      `stemtest`,
+      {
+        author: { id: `341446613056880641` },
       },
-      content: `stemtest`,
-      reply: chai.spy(() => {}),
-      guild: { id: `493173110799859713` },
-    };
-    await stembot.client.emitPromise(`messageCreate`, msg);
-    expect(msg.reply).to.have.been.called.once.with(`hi`);
+      `hi`
+    );
   });
   it(`Should give zen role when give me role is said`, async function () {
-    const msg = {
-      author: {
-        id: `341446613056880641`,
-      },
-      content: `give me zen`,
-      guild: {
-        id: `493173110799859713`,
-      },
-      member: {
-        roles: {
-          add: chai.spy(() => {}),
-        },
-      },
-    };
-    await stembot.client.emitPromise(`messageCreate`, msg);
+    const msg = await SendMockMessage(`give me zen`);
     expect(msg.member.roles.add).to.have.been.called.once.with(
       `882261053793239061`
     );
@@ -67,35 +99,23 @@ describe(`Bot test mock`, function () {
   it(`trigger stats - no timeout`, async function () {
     this.timeout(10000);
     this.slow(5000);
-    const msg = {
+    await SendMockMessage(`stemapi stats`, {
       author: {
         id: `341446613056880641`,
       },
-      content: `stemapi stats`,
-      guild: {
-        id: `493173110799859713`,
-      },
-      reply: () => 0,
-    };
-    await stembot.client.emitPromise(`messageCreate`, msg);
+    });
   });
   it(`trigger stats`, async function () {
     let valid, arg;
-    const msg = {
+    await SendMockMessage(`stemapi stats`, {
       author: {
         id: `341446613056880641`,
-      },
-      content: `stemapi stats`,
-      guild: {
-        id: `493173110799859713`,
       },
       reply: chai.spy(v => {
         arg = v;
         valid = !!v.match(/branch/i);
       }),
-    };
-    await stembot.client.emitPromise(`messageCreate`, msg);
-    expect(msg.reply).to.have.been.called.once();
+    });
     expect(valid, `validator was not satisfied. Reply was ${arg}`).to.be.true;
   });
 });
