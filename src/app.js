@@ -13,7 +13,7 @@ import config from "./config/index.js";
 import routes from "./routes/index.js";
 import staticRoute from "./static/index.js";
 import * as middlewares from "./middlewares/index.js";
-import { ApiError, git } from "./util/index.js";
+import { ApiError, git, dirname } from "./util/index.js";
 import { Logger, morgan } from "./tool/index.js";
 
 const upload = multer();
@@ -59,13 +59,8 @@ if (config.cors) {
   app.use(cors());
 }
 
-let v;
-
 app.get(`/`, async (req, res) => {
-  v ??= git.status.getLastCommit();
-  // eslint-disable-next-line require-atomic-updates
-  v = await v;
-  res.status(200).json({ message: `OK`, version: v });
+  res.sendFile(dirname(import.meta, `landing.html`));
 });
 
 // limit repeated failed requests to auth endpoints
