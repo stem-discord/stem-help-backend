@@ -30,9 +30,10 @@ function createConnection(
   };
 }
 
-function createNamespacedApiStatus(id, status, connections) {
+function createApiStatus(status, connections) {
   if (!Array.isArray(connections)) {
-    throw new Error(`connections must be an array`);
+    status = httpStatus[500];
+    logger.error(`connections must be an array`);
   }
 
   if (!httpStatus[status]) {
@@ -44,16 +45,19 @@ function createNamespacedApiStatus(id, status, connections) {
   status = Number.isInteger(status) ? httpStatus[status] : status;
 
   return {
-    [id]: {
-      status,
-      connections,
-    },
+    status,
+    connections,
+  };
+}
+
+function createNamespacedApiStatus(id, status, connections) {
+  return {
+    [id]: createApiStatus(status, connections),
   };
 }
 
 function getLocalStatus() {
-  return createNamespacedApiStatus(
-    `STEM_HELP_API_SERVER`,
+  return createApiStatus(
     `OK`,
     connections.map(c => createConnection(c.name, c.state, c.isOperational()))
   );
