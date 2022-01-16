@@ -89,7 +89,7 @@ router.get(
   `/everything`,
   catchAsync(async (req, res) => {
     res.json({
-      ...getLocalStatus(),
+      STEM_HELP_API_SERVER: getLocalStatus(),
       ...createNamespacedApiStatus(
         `STEM_SHIELD`,
         ...(await (async () => {
