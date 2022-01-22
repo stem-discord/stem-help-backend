@@ -124,9 +124,17 @@ describe(`client run`, function () {
   });
 
   describe(`Status`, function () {
-    it(`should return the status`, async function () {
+    it(`should return the status /status`, async function () {
       const res = await fetch(`${url}/status`).then(r => r.json());
       expect(res).to.be.an(`object`).with.keys(`connections`, `status`);
+    });
+    it(`should return every status /status/everything`, async function () {
+      this.timeout(5000);
+      this.slow(4000);
+      const res = await fetch(`${url}/status/everything`).then(r => r.json());
+      for (const obj of Object.values(res)) {
+        expect(obj).to.be.an(`object`).with.keys(`connections`, `status`);
+      }
     });
   });
 
