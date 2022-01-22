@@ -50,12 +50,6 @@ function createApiStatus(status, connections) {
   };
 }
 
-function createNamespacedApiStatus(id, status, connections) {
-  return {
-    [id]: createApiStatus(status, connections),
-  };
-}
-
 function getLocalStatus() {
   return createApiStatus(
     `OK`,
@@ -90,8 +84,7 @@ router.get(
   catchAsync(async (req, res) => {
     res.json({
       STEM_HELP_API_SERVER: getLocalStatus(),
-      ...createNamespacedApiStatus(
-        `STEM_SHIELD`,
+      STEM_SHIELD: createApiStatus(
         ...(await (async () => {
           const { data } = await fetch(`https://mod.stem.help/api/status`).then(
             v => v.json()
