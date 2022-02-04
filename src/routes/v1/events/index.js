@@ -18,6 +18,16 @@ function filterTrees(trees, id) {
   });
 }
 
+function filterGeneric(trees, id, material, fields) {
+  Object.entries(trees).forEach(([k, v]) => {
+    if (k !== id && v.hide) {
+      for (const f of fields) {
+        v[f] = `User has hidden ${material} [${f}] until vote`;
+      }
+    }
+  });
+}
+
 const tokenCheck = catchAsync(async (req, res, next) => {
   const { token: raw } = req.body;
 
@@ -220,6 +230,118 @@ router.route(`/christmastree/vote`).post(
     filterTrees(newTrees, id);
 
     res.json({ message: `OK`, trees: newTrees, codes });
+  })
+);
+
+async function fetchNamespacedDB(namespace, fields = {}) {
+  // do some logic
+  let db =
+    (await lib.shared.mongo.Data.findOne({ namespace })) ||
+    (await lib.shared.mongo.Data.create({ namespace, data: fields }));
+
+  Object.keys(fields).forEach(k => {
+    db.markModified(`data.${k}`);
+  });
+
+  return db;
+}
+
+const procPoem = catchAsync(async (req, res) => {
+  // Check for Discord token
+  const { title, poem, token, hide } = req.body;
+
+  const id = req.body.id || token.split(`_`)[0];
+
+  // Word limit
+  let l;
+  if ((l = poem.trim().split(/\s+/).length) > 150) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      `poem is too long. Max length is 150 words. Recieved ${l} words`
+    );
+  }
+
+  const db = await fetchNamespacedDB(`poem`, { poems: {} });
+
+  db.data.poems ??= {};
+
+  db.data.poems[id] = {
+    title,
+    poem,
+    hide: hide === `on`,
+    votes: {
+      // [user_id]: <1|0|-1>
+    },
+  };
+
+  db.markModified(`data.poems.${id}`);
+
+  await db.save();
+
+  const { poems } = db.toJSON().data;
+
+  filterGeneric(poems, id, `poem`, [`title`, `poem`]);
+
+  res.json({ message: `OK`, poems });
+});
+
+router
+  .route(`/poem`)
+  .post(
+    lib.middlewares.Validate({
+      body: Joi.object().keys({
+        poem: Joi.string().required(),
+        title: Joi.string().required(),
+        token: Joi.string().required(),
+        hide: Joi.string(),
+      }),
+    }),
+    tokenCheck,
+    procPoem
+  )
+  .get(
+    catchAsync(async (req, res) => {
+      const db = await fetchNamespacedDB(`poem`, { poems: {} });
+
+      const { poems } = db.toJSON().data;
+
+      let [id, entry] = req.query?.token?.split(`_`) ?? [];
+
+      if (!(id && entry && lib.service.discord.tokens[id] === entry)) {
+        id = null;
+      }
+
+      filterGeneric(poems, id, `poem`, [`title`, `poem`]);
+
+      res.json({ poems });
+    })
+  );
+
+router.route(`/poem/vote`).post(
+  tokenCheck,
+  catchAsync(async (req, res) => {
+    const { votes, token } = req.body;
+
+    const id = req.body.id || token.split(`_`)[0];
+
+    let db = await fetchNamespacedDB(`poem`, { poems: {} });
+
+    for (const [u_id, v] of Object.entries(votes)) {
+      if (v === 0) {
+        delete db.data.poems[u_id].votes[id];
+        continue;
+      }
+
+      db.data.poems[u_id].votes[id] = v;
+    }
+
+    db.markModified(`data.poems`);
+
+    await db.save();
+
+    const { poems: newPoems } = db.toJSON().data;
+
+    res.json({ message: `OK`, poems: newPoems });
   })
 );
 
