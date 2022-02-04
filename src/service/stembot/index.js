@@ -113,8 +113,8 @@ client.on(`messageCreate`, async message => {
     if (message.content === `stemtest`) {
       await message.reply(`hi`);
     }
-    if (!message.content.startsWith(`.`) && handleCommonEnglishWords(message))
-      return;
+    // if (!message.content.startsWith(`.`) && handleCommonEnglishWords(message))
+    //   return;
     if (message.content === `stemdisable`) {
       // There is no way to enable this again though
       // Just a proof of concept for now
