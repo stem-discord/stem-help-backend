@@ -77,7 +77,7 @@ const client = new CustomClient({
 
 // Override user fetch function
 (() => {
-  const clientFetch = client.users.fetch;
+  const clientFetch = client.users.fetch.bind(client.users);
   client.users.fetch = async function (...args) {
     // eslint-disable-next-line eqeqeq
     if (args[0] == 0) {
