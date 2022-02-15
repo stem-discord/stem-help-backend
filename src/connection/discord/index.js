@@ -75,6 +75,28 @@ const client = new CustomClient({
   disableMentions: `all`,
 });
 
+// Override user fetch function
+(() => {
+  const clientFetch = client.users.fetch;
+  client.users.fetch = async function (...args) {
+    // eslint-disable-next-line eqeqeq
+    if (args[0] == 0) {
+      return {
+        id: `0`,
+        bot: false,
+        system: false,
+        flags: { bitfield: 0 },
+        username: `Anonymous`,
+        discriminator: `0000`,
+        avatar: null,
+        banner: null,
+        accentColor: null,
+      };
+    }
+    return clientFetch(...args);
+  };
+})();
+
 if (config.discord.botToken) {
   Discord.Intents.ALL = Object.values(Discord.Intents.FLAGS).reduce(
     (acc, p) => acc | p,
