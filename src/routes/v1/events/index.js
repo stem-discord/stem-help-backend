@@ -152,15 +152,17 @@ const procTree = catchAsync(async (req, res) => {
   res.json({ message: `OK`, trees: trees, codes });
 });
 
+function cannotPost() {
+  throw new ApiError(
+    httpStatus.SERVICE_UNAVAILABLE,
+    `Cannot submit trees after event is over`
+  );
+}
+
 router
   .route(`/christmastree`)
   .post(
-    () => {
-      throw new ApiError(
-        httpStatus.SERVICE_UNAVAILABLE,
-        `Cannot submit trees after event is over`
-      );
-    },
+    cannotPost,
     lib.middlewares.Validate({
       body: Joi.object().keys({
         code_type: Joi.string().required(),
@@ -280,7 +282,7 @@ const procPoem = catchAsync(async (req, res) => {
 
   const { poems } = db.toJSON().data;
 
-  filterGeneric(poems, id, `poem`, [`title`, `poem`]);
+  // filterGeneric(poems, id, `poem`, [`title`, `poem`]);
 
   res.json({ message: `OK`, poems });
 });
@@ -288,6 +290,7 @@ const procPoem = catchAsync(async (req, res) => {
 router
   .route(`/poem`)
   .post(
+    cannotPost,
     lib.middlewares.Validate({
       body: Joi.object().keys({
         poem: Joi.string().required(),
@@ -311,7 +314,7 @@ router
         id = null;
       }
 
-      filterGeneric(poems, id, `poem`, [`title`, `poem`]);
+      // filterGeneric(poems, id, `poem`, [`title`, `poem`]);
 
       res.json({ poems });
     })
