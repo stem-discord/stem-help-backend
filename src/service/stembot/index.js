@@ -113,10 +113,8 @@ client.on(`messageCreate`, async message => {
   let m;
   if ((m = message.content.match(/^(?:simplify|auto|solve)\s*(.+)/im))) {
     const eq = m[1];
-    console.log(eq);
     const res = mathstepsutil.explain(eq);
     if (res) {
-      console.log(`here`);
       message.reply(res);
     }
   }
