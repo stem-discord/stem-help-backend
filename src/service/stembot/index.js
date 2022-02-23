@@ -8,6 +8,7 @@ import {
   scc,
   async,
   dirname,
+  mathstepsutil,
 } from "../../util/index.js";
 import config from "../../config/index.js";
 import shared from "../../shared/index.js";
@@ -108,6 +109,16 @@ client.on(`messageCreate`, async message => {
   if (message.guild?.id !== config.discord.server.stem) return;
   if (message.content.match(/^give me zen$/i)) {
     await message.member.roles.add(`882261053793239061`);
+  }
+  let m;
+  if ((m = message.content.match(/^(?:simplify|auto|solve)\s*(.+)/im))) {
+    const eq = m[1];
+    console.log(eq);
+    const res = mathstepsutil.explain(eq);
+    if (res) {
+      console.log(`here`);
+      message.reply(res);
+    }
   }
   if (message.author.id === `341446613056880641`) {
     if (message.content === `stemtest`) {

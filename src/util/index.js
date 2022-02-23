@@ -8,6 +8,7 @@ export * as crypto from "./crypto/index.js";
 export * as DSA from "./DSA/index.js";
 export * as time from "./time/index.js";
 export * as cache from "./cache/index.js";
+export * as mathstepsutil from "./mathstepsutil.js";
 
 export { default as ApiError } from "./ApiError.js";
 export { default as NotImplementedError } from "./NotImplementedError.js";
