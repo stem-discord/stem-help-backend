@@ -26,13 +26,14 @@ const client = new EventEmitter2();
 const on = client._on;
 
 fs.existsSync(dirname(import.meta, `playerdata.json`)) ||
-  fs.writeFileSync(dirname(import.meta, `playerdata.json`), `{}`);
+  fs.writeFileSync(
+    dirname(import.meta, `playerdata.json`),
+    `{ "players": {} }`
+  );
 
 const { file } = JSONF(
   dirname(import.meta, `playerdata.json`),
-  {
-    players: {},
-  },
+  {},
   {
     writeInterval: 100,
   }
@@ -109,6 +110,8 @@ function handleCommonEnglishWords(message) {
 const findEquationGames = {};
 
 const points = [5, 3, 1];
+
+const pointsSymbol = Symbol(`points`);
 
 client.on(`messageCreate`, async message => {
   if (handleIssueToken(message)) return;
@@ -204,7 +207,7 @@ client.on(`messageCreate`, async message => {
             return;
           }
           if (!numbers.includes(num)) {
-            message.reply(`You can only use numbers in target`);
+            message.reply(`You can only use numbers in the number list`);
             return;
           }
           used.push(num);
@@ -218,6 +221,8 @@ client.on(`messageCreate`, async message => {
               15 - numberCount
             }\` points for using \`${numberCount}\` numbers`
           );
+          message.author[pointsSymbol] =
+            15 - numberCount + points[winners.length];
           winners.push(message.author);
         }
 
@@ -227,24 +232,28 @@ client.on(`messageCreate`, async message => {
       }
     });
 
-    collector.on(`end`, () => {
+    collector.on(`end`, async () => {
       delete findEquationGames[message.channel.id];
       if (winners.length) {
         for (const winner of winners) {
-          file.players[winner.id] ??= { wins: 0 };
+          file.players[winner.id] ??= { wins: 0, score: 0 };
           file.players[winner.id].wins++;
+          file.players[winner.id].score += winner[pointsSymbol];
         }
         message.channel.send(
           `The winners are: ${winners.join(`, `)}\`\n**Scoreboard**\n` +
             `\`\`\`md\n` +
-            `${winners
-              .map(
-                v =>
-                  `${message.guild.member(v)?.displayName ?? v.username}: ${
-                    file.players[v.id].wins
-                  }`
+            `${(
+              await Promise.all(
+                winners.map(
+                  async v =>
+                    `${
+                      (await message.guild.members.fetch(v)?.displayName) ??
+                      v.username
+                    }: ${file.players[v.id].wins}`
+                )
               )
-              .join(`, `)}` +
+            ).join(`, `)}` +
             `\`\`\``
         );
       } else {
