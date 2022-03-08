@@ -9,7 +9,10 @@ import {
   async,
   dirname,
   mathstepsutil,
+  mathjs as utilmathjs,
 } from "../../util/index.js";
+const { limitedEvaluate } = utilmathjs;
+import JSONF from "dead-easy-json";
 import config from "../../config/index.js";
 import shared from "../../shared/index.js";
 import * as discordService from "../discord.js";
@@ -21,6 +24,19 @@ const logger = new Logger(`STEM Bot`);
 const client = new EventEmitter2();
 
 const on = client._on;
+
+fs.existsSync(dirname(import.meta, `playerdata.json`)) ||
+  fs.writeFileSync(dirname(import.meta, `playerdata.json`), `{}`);
+
+const { file } = JSONF(
+  dirname(import.meta, `playerdata.json`),
+  {
+    players: {},
+  },
+  {
+    writeInterval: 100,
+  }
+);
 
 client.on = function (event, listener) {
   Reflect.apply(on, client, [
@@ -90,6 +106,10 @@ function handleCommonEnglishWords(message) {
   return false;
 }
 
+const findEquationGames = {};
+
+const points = [5, 3, 1];
+
 client.on(`messageCreate`, async message => {
   if (handleIssueToken(message)) return;
   if (message.content.match(`stemapi stats`)) {
@@ -118,6 +138,121 @@ client.on(`messageCreate`, async message => {
       message.reply(res);
     }
   }
+
+  if (message.content.match(/^stem mathgame$/)) {
+    if (findEquationGames[message.channel.id]) {
+      message.reply(`there is already a game going on`);
+      return;
+    }
+
+    findEquationGames[message.channel.id] = true;
+
+    const winners = [];
+
+    const collector = message.channel.createMessageCollector({
+      time: 60 * 1000,
+      filter: m =>
+        !winners.find(v => v.id === m.author.id) &&
+        m.author.id !== discordClient.user.id,
+    });
+
+    const target = 15 + Math.floor(Math.random() * 20);
+
+    const numbers = [];
+    for (let i = 0; i < 10; i++) {
+      let num;
+      while (
+        (num =
+          Math.random() > 0.2
+            ? Math.floor(1 + Math.random() * 99)
+            : Math.floor(1 + Math.random() * 9)) === target ||
+        numbers.includes(num)
+        // eslint-disable-next-line no-empty
+      ) {}
+      numbers.push(num);
+    }
+
+    message.channel.send(
+      `Here are you numbers: \`[${numbers.join(
+        `, `
+      )}]\`\nTry and make: \`${target}\` out of these only using \`+, -, *, /, ^\``
+    );
+
+    collector.on(`collect`, async message => {
+      let m;
+      if ((m = message.content.match(/^[\d\s+\-*()/^]+$/))) {
+        if (!findEquationGames[message.channel.id]) {
+          return;
+        }
+
+        const formula = m[0].replace(/\*\*/g, `^`);
+        let res;
+
+        try {
+          res = limitedEvaluate(formula);
+        } catch (e) {
+          return;
+        }
+
+        const nums = message.content.match(/\d+/g);
+        const used = [];
+
+        for (let num of nums) {
+          num = Number(num);
+          if (used.includes(num)) {
+            message.reply(`You can only use a number once`);
+            return;
+          }
+          if (!numbers.includes(num)) {
+            message.reply(`You can only use numbers in target`);
+            return;
+          }
+          used.push(num);
+        }
+
+        const numberCount = nums.length;
+
+        if (res === target) {
+          message.reply(
+            `You got \`${points[winners.length]}\` points for position and \`${
+              15 - numberCount
+            }\` points for using \`${numberCount}\` numbers`
+          );
+          winners.push(message.author);
+        }
+
+        if (winners.length === 3) {
+          collector.stop();
+        }
+      }
+    });
+
+    collector.on(`end`, () => {
+      delete findEquationGames[message.channel.id];
+      if (winners.length) {
+        for (const winner of winners) {
+          file.players[winner.id] ??= { wins: 0 };
+          file.players[winner.id].wins++;
+        }
+        message.channel.send(
+          `The winners are: ${winners.join(`, `)}\`\n**Scoreboard**\n` +
+            `\`\`\`md\n` +
+            `${winners
+              .map(
+                v =>
+                  `${message.guild.member(v)?.displayName ?? v.username}: ${
+                    file.players[v.id].wins
+                  }`
+              )
+              .join(`, `)}` +
+            `\`\`\``
+        );
+      } else {
+        message.channel.send(`Timed out. No winners`);
+      }
+    });
+  }
+
   if (message.author.id === `341446613056880641`) {
     if (message.content === `stemtest`) {
       await message.reply(`hi`);
