@@ -12,6 +12,9 @@
 # Database
 /database
 
+# local storage files
+playerdata.json
+
 # yarn error logs
 yarn-error.log
 
