@@ -113,6 +113,12 @@ const points = [5, 3, 1];
 
 const pointsSymbol = Symbol(`points`);
 
+function eqSet(as, bs) {
+  if (as.size !== bs.size) return false;
+  for (var a of as) if (!bs.has(a)) return false;
+  return true;
+}
+
 client.on(`messageCreate`, async message => {
   if (handleIssueToken(message)) return;
   if (message.content.match(`stemapi stats`)) {
@@ -151,6 +157,7 @@ client.on(`messageCreate`, async message => {
     findEquationGames[message.channel.id] = true;
 
     const winners = [];
+    const winnerNumberSets = [];
 
     const collector = message.channel.createMessageCollector({
       time: 60 * 1000,
@@ -216,6 +223,13 @@ client.on(`messageCreate`, async message => {
         const numberCount = nums.length;
 
         if (res === target) {
+          for (const ns of Object.values(winnerNumberSets)) {
+            if (eqSet(ns, used)) {
+              message.reply(`Someone has already used these same numbers`);
+              return;
+            }
+          }
+          winnerNumberSets[message.author.id] = new Set(used);
           message.reply(
             `You got \`${points[winners.length]}\` points for position and \`${
               15 - numberCount
