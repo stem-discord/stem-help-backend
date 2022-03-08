@@ -151,7 +151,7 @@ client.emitPromise = emitPromise;
 
 if (isMain(import.meta)) {
   (async () => {
-    const { connection } = await import(`../connection/discord`);
+    const { connection } = await import(`../../connection/discord/index.js`);
     await connection.init().then(() => {
       logger.log(`ready`);
     });
