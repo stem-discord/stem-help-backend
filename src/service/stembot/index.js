@@ -250,10 +250,12 @@ client.on(`messageCreate`, async message => {
                     `${
                       (await message.guild.members.fetch(v)?.displayName) ??
                       v.username
-                    }: ${file.players[v.id].wins}`
+                    }: ${file.players[v.id].wins} wins, ${
+                      file.players[v.id].score
+                    } points`
                 )
               )
-            ).join(`, `)}` +
+            ).join(`\n`)}` +
             `\`\`\``
         );
       } else {
