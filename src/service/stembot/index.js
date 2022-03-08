@@ -115,8 +115,6 @@ const points = [5, 3, 1];
 
 const pointsSymbol = Symbol(`points`);
 
-const channelCollectors = {};
-
 function eqSet(as, bs) {
   if (as.size !== bs.size) return false;
   for (var a of as) if (!bs.has(a)) return false;
@@ -163,14 +161,14 @@ client.on(`messageCreate`, async message => {
     const winners = [];
     const winnerNumberSets = [];
 
-    const collector = (channelCollectors[message.channel.id] ??=
-      message.channel.createMessageCollector({
-        time: 60 * 1000,
-      }));
+    const collectorId = Math.random();
 
-    collector.filter = m =>
-      !winners.find(v => v.id === m.author.id) &&
-      m.author.id !== discordClient.user.id;
+    const collector = message.channel.createMessageCollector({
+      time: 60 * 1000,
+      filter: m =>
+        !winners.find(v => v.id === m.author.id) &&
+        m.author.id !== discordClient.user.id,
+    });
 
     const target = 15 + Math.floor(Math.random() * 20);
 

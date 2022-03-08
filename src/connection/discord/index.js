@@ -17,55 +17,6 @@ class CustomClient extends Discord.Client {
     this._taskQueue = {};
     this._taskCounter = 0;
   }
-
-  on(event, callback) {
-    super.on(event, async (...args) => {
-      const i = this._taskCounter;
-      let resolve;
-      let reject;
-      this._taskQueue[i] = new Promise((r, re) => {
-        resolve = r;
-        reject = re;
-      });
-      this._taskCounter++;
-      try {
-        resolve(await callback(...args));
-      } catch (e) {
-        logger.error(e);
-        reject(e);
-      }
-      delete this._taskQueue[i];
-    });
-  }
-
-  /**
-   * Returns a promise
-   */
-  emitPromise(event, ...args) {
-    args ??= [];
-
-    const ignore = Object.keys(this._taskQueue);
-
-    return new Promise((r, re) => {
-      super.emit(event, ...args);
-      setImmediate(() => {
-        const waiting = [];
-        for (const [k, v] of Object.entries(this._taskQueue)) {
-          if (ignore.includes(k)) continue;
-          waiting.push(v);
-        }
-        Promise.all(waiting).then(r).catch(re);
-      });
-    });
-  }
-
-  get tasks() {
-    return Object.values(this._taskQueue);
-  }
-
-  get tasksAsPromise() {
-    return Promise.all(this.tasks);
-  }
 }
 
 let connection;
