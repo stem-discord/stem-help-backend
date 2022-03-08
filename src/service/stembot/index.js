@@ -249,6 +249,7 @@ client.on(`messageCreate`, async message => {
     collector.on(`end`, async () => {
       delete findEquationGames[message.channel.id];
       if (winners.length) {
+        winners.sort((a, b) => b[pointsSymbol] - a[pointsSymbol]);
         for (const winner of winners) {
           file.players[winner.id] ??= { wins: 0, score: 0 };
           file.players[winner.id].wins++;
