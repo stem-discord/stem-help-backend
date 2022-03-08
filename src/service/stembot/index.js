@@ -191,6 +191,7 @@ client.on(`messageCreate`, async message => {
     );
 
     collector.on(`collect`, async message => {
+      console.log(`I have recieved: ` + message.content);
       let m;
       if ((m = message.content.match(/^[\d\s+\-*()/^]+$/))) {
         if (!findEquationGames[message.channel.id]) {
