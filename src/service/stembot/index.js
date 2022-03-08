@@ -10,8 +10,10 @@ import {
   dirname,
   mathstepsutil,
   mathjs as utilmathjs,
+  async as utilasync,
 } from "../../util/index.js";
 const { limitedEvaluate } = utilmathjs;
+const { sleep } = utilasync;
 import JSONF from "dead-easy-json";
 import config from "../../config/index.js";
 import shared from "../../shared/index.js";
@@ -210,11 +212,19 @@ client.on(`messageCreate`, async message => {
         for (let num of nums) {
           num = Number(num);
           if (used.includes(num)) {
-            message.reply(`You can only use a number once`);
+            message
+              .reply(`You can only use a number once`)
+              .then(async m => sleep(5000).then(() => m.delete()))
+              .catch(() => {});
             return;
           }
           if (!numbers.includes(num)) {
-            message.reply(`You can only use numbers in the number list`);
+            message
+              .reply(
+                `You can only use numbers in the number list. Invalid number: ${num}`
+              )
+              .then(async m => sleep(5000).then(() => m.delete()))
+              .catch(() => {});
             return;
           }
           used.push(num);
@@ -225,7 +235,10 @@ client.on(`messageCreate`, async message => {
         if (res === target) {
           for (const ns of Object.values(winnerNumberSets)) {
             if (eqSet(ns, used)) {
-              message.reply(`Someone has already used these same numbers`);
+              message
+                .reply(`Someone has already used these same numbers`)
+                .then(async m => sleep(5000).then(() => m.delete()))
+                .catch(() => {});
               return;
             }
           }
