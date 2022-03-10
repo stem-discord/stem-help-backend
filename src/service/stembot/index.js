@@ -161,8 +161,6 @@ client.on(`messageCreate`, async message => {
     const winners = [];
     const winnerNumberSets = [];
 
-    const collectorId = Math.random();
-
     const collector = message.channel.createMessageCollector({
       time: 60 * 1000,
       filter: m =>
@@ -236,7 +234,8 @@ client.on(`messageCreate`, async message => {
 
         if (res === target) {
           for (const ns of Object.values(winnerNumberSets)) {
-            if (eqSet(ns, used)) {
+            const u = new Set(used);
+            if (eqSet(ns, u)) {
               message
                 .reply(`Someone has already used these same numbers`)
                 .then(async m => sleep(5000).then(() => m.delete()))
