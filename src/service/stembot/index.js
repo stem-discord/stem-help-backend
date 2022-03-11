@@ -41,6 +41,8 @@ const { file } = JSONF(
   }
 );
 
+file.disabledChannels ??= [];
+
 client.on = function (event, listener) {
   Reflect.apply(on, client, [
     event,
@@ -150,7 +152,25 @@ client.on(`messageCreate`, async message => {
     }
   }
 
+  if ((m = message.content.match(/^stem mathgame (disable|enable)$/))) {
+    // disable for the chanel
+    if (m[1] === `disable`) {
+      file.disabledChannels.push(message.channel.id);
+      message.reply(`disabled for this channel`);
+    } else {
+      file.disabledChannels = file.disabledChannels.filter(
+        v => v !== message.channel.id
+      );
+      message.reply(`enabled for this channel`);
+    }
+    return;
+  }
+
   if (message.content.match(/^stem mathgame$/)) {
+    if (file.disabledChannels.includes(message.channel.id)) {
+      message.reply(`mathgame is disabled for this channel`);
+      return;
+    }
     if (findEquationGames[message.channel.id]) {
       message.reply(`there is already a game going on`);
       return;
