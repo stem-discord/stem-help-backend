@@ -29,11 +29,9 @@ If you have any questions on running this ask me in discord.gg/stem
 
 If there is no `.env` file in root directory, then create one.
 
-To set up `.env`, run `npm run help:env`
+To setup some files to run the project (you only need to run it once) do `npm run setup`
 
-And also type `npm run setup:keygen`
-
-Then `npm run dev`
+`npm run dev` - runs the dev server
 
 
 
