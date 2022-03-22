@@ -21,7 +21,7 @@ test
 .env.test - used for testing. Loaded by the test
 
 ```
-help:env
+
 If you have any questions on running this ask me in discord.gg/stem
 
 # Starting the project for yourself
