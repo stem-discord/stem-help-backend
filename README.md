@@ -12,7 +12,7 @@
 
 Enviroment file, do
 
-`npm run env:help`
+`npm run help:env`
 
 ```
 test
@@ -21,14 +21,21 @@ test
 .env.test - used for testing. Loaded by the test
 
 ```
-
+help:env
 If you have any questions on running this ask me in discord.gg/stem
 
 # Starting the project for yourself
+`git clone https://github.com/stem-discord/stem-help-backend.git`
 
-To set up `.env`, run `npm run env:help`
+If there is no `.env` file in root directory, then create one.
 
-And also type `npm run setup`
+To set up `.env`, run `npm run help:env`
+
+And also type `npm run setup:keygen`
+
+Then `npm run dev`
+
+
 
 # Explanation of the project
 
