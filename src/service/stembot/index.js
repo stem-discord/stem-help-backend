@@ -123,8 +123,7 @@ function eqSet(as, bs) {
   return true;
 }
 
-client.on(`messageCreate`, async message => {
-  if (handleIssueToken(message)) return;
+async function handleStats(message) {
   if (message.content.match(`stemapi stats`)) {
     let s = ``;
 
@@ -137,43 +136,20 @@ client.on(`messageCreate`, async message => {
     }
 
     await message.reply(s);
-    return;
+    return true;
   }
-  if (message.guild?.id !== config.discord.server.stem) return;
-  if (message.content.match(/^give me zen$/i)) {
-    await message.member.roles.add(`882261053793239061`);
-  }
-  let m;
-  if ((m = message.content.match(/^(?:simplify|auto|solve)\s*(.+)/im))) {
-    const eq = m[1];
-    const res = mathstepsutil.explain(eq);
-    if (res) {
-      message.reply(res);
-    }
-  }
+  return false;
+}
 
-  if ((m = message.content.match(/^stem mathgame (disable|enable)$/))) {
-    // disable for the chanel
-    if (m[1] === `disable`) {
-      file.disabledChannels.push(message.channel.id);
-      message.reply(`disabled for this channel`);
-    } else {
-      file.disabledChannels = file.disabledChannels.filter(
-        v => v !== message.channel.id
-      );
-      message.reply(`enabled for this channel`);
-    }
-    return;
-  }
-
+async function handleMainMathgame(message) {
   if (message.content.match(/^stem mathgame$/)) {
     if (file.disabledChannels.includes(message.channel.id)) {
       message.reply(`mathgame is disabled for this channel`);
-      return;
+      return true;
     }
     if (findEquationGames[message.channel.id]) {
       message.reply(`there is already a game going on`);
-      return;
+      return true;
     }
 
     findEquationGames[message.channel.id] = true;
@@ -311,7 +287,51 @@ client.on(`messageCreate`, async message => {
         message.channel.send(`Timed out. No winners`);
       }
     });
+    return true;
   }
+  return false;
+}
+
+client.on(`messageCreate`, async message => {
+  if (handleIssueToken(message)) return;
+  if (await handleStats(message)) return;
+  if (message.guild?.id !== config.discord.server.stem) return;
+  if (message.content.match(/^give me zen$/i)) {
+    await message.member.roles.add(`882261053793239061`);
+  }
+
+  if (
+    message.author.id === `589261729289207810` &&
+    message.content.match(/^i(?:'m| am) losing it/i)
+  ) {
+    await message.reply(`https://youtu.be/o3WdLtpWM_c`);
+    return;
+  }
+
+  let m;
+  if ((m = message.content.match(/^(?:simplify|auto|solve)\s*(.+)/im))) {
+    const eq = m[1];
+    const res = mathstepsutil.explain(eq);
+    if (res) {
+      message.reply(res);
+    }
+  }
+
+  if ((m = message.content.match(/^stem mathgame (disable|enable)$/))) {
+    // disable for the chanel
+    if (m[1] === `disable`) {
+      file.disabledChannels.push(message.channel.id);
+      message.reply(`disabled for this channel`);
+    } else {
+      file.disabledChannels = file.disabledChannels.filter(
+        v => v !== message.channel.id
+      );
+      message.reply(`enabled for this channel`);
+    }
+    return;
+  }
+
+  if (await handleMainMathgame(message)) return;
 
   if (message.author.id === `341446613056880641`) {
     if (message.content === `stemtest`) {
