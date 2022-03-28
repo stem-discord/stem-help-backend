@@ -302,9 +302,9 @@ client.on(`messageCreate`, async message => {
 
   if (
     message.author.id === `589261729289207810` &&
-    message.content.match(/^i(?:'m| am) losing it/i)
+    message.content.match(/i(?:'m|m| am) losing it/i)
   ) {
-    await message.reply(`https://youtu.be/o3WdLtpWM_c`);
+    await message.reply(`https://www.youtube.com/watch?v=KxGRhd_iWuE`);
     return;
   }
 
