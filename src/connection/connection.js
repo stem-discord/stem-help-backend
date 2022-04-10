@@ -126,7 +126,9 @@ class NullConnection extends Connection {
   }
 
   init() {
-    return Promise.reject(new Error(`${this.name} is not initialized`));
+    return Promise.reject(
+      new Error(`${this.name} is not initialized because ${this.rejectReason}`)
+    );
   }
   heartbeat() {
     return Promise.reject(
