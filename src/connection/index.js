@@ -107,9 +107,13 @@ const openConnections = async selection => {
     `Awaiting for module initialization...` +
       (selection ? ` [${selection.join(`, `)}]` : ``)
   );
-  const initializations = selection
-    .map(v => modules[v])
-    .map(c => c.connection.init().catch(e => logger.error(e)));
+  const initializations = selection.map(v =>
+    modules[v].connection.init().catch(e => {
+      logger.error(`An error has occured with module "${v}"`);
+      if (e.processed) return;
+      logger.error(e);
+    })
+  );
   await Promise.any([sleep(10000), Promise.allSettled(initializations)]);
   const reports = [];
   const WIDTH = 20;

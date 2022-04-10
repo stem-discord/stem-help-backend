@@ -44,12 +44,16 @@ export function createMongoConnection({ config: mongooseConfig, ns }) {
             logger.info(`Connected to MongoDB ${disp}`);
           })
           .catch(e => {
-            logger.error(`Error connecting to MongoDB ${disp}`, e);
+            logger.error(`Error connecting to MongoDB ${disp}`);
+            logger.error(e);
+            e.processed = true;
             dbClose(e);
           });
 
         conn.on(`error`, e => {
-          logger.error(`Error in database`, e);
+          if (e.processed) return;
+          logger.error(`Error in database`);
+          logger.error(e);
         });
 
         conn.on(`open`, () => {
