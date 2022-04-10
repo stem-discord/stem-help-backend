@@ -71,8 +71,9 @@ if (config.discord.botToken) {
 
   connection = new Connection({
     ...ns,
-    init: () => {
-      if (!calledLogin) client.login(config.discord.botToken);
+    init: async () => {
+      if (!calledLogin) await client.login(config.discord.botToken);
+      // eslint-disable-next-line require-atomic-updates
       calledLogin = true;
       return open;
     },

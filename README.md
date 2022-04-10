@@ -12,7 +12,7 @@
 
 Enviroment file, do
 
-`npm run env:help`
+`npm run help:env`
 
 ```
 test
@@ -25,10 +25,15 @@ test
 If you have any questions on running this ask me in discord.gg/stem
 
 # Starting the project for yourself
+`git clone https://github.com/stem-discord/stem-help-backend.git`
 
-To set up `.env`, run `npm run env:help`
+If there is no `.env` file in root directory, then create one.
 
-And also type `npm run setup`
+To setup some files to run the project (you only need to run it once) do `npm run setup`
+
+`npm run dev` - runs the dev server
+
+
 
 # Explanation of the project
 
