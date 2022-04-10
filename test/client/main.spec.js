@@ -42,7 +42,7 @@ describe(`client run`, function () {
     env.local = true;
 
     this.timeout(20 * 1000);
-    const server = await import(`../../src/server.js`);
+    const server = await import(`../../src/api-server.js`);
     // eslint-disable-next-line no-console
     console.log(`Imported server. Awaiting ready signal...`);
     await server.apiServer.ready;
