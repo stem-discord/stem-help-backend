@@ -12,7 +12,7 @@
   "type": "module",
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
-    "static": "node src/server.js",
+    "static": "node src/api-server.js",
     "update": "git pull && npm ci && pm2 restart app",
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json src/server -- --",
     "dev:noconn": "cross-env NODE_ENV=development nodemon --config nodemon.json src/server -- -- --connections \" \"",
