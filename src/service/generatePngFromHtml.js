@@ -19,6 +19,7 @@ const init = () => {
   browserInit = puppeteer
     .launch({
       args: [`--no-sandbox`, `--disable-setuid-sandbox`],
+      headless: config.env !== `development`,
     })
     .then(async v => {
       browser = v;
@@ -43,8 +44,9 @@ async function generateInner(text, options = {}) {
   await page.evaluate(
     (t, style) => {
       /* eslint-disable no-undef */
-      document.getElementById(`text`).innerHTML = t;
-      document.getElementById(`text`).style = style;
+      const body = document.getElementsByTagName(`body`)[0];
+      body.innerHTML = t;
+      body.style = style;
       /* eslint-enable no-undef */
     },
     t,
