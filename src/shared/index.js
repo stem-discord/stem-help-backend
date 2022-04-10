@@ -71,7 +71,7 @@ const stem = new RequireProxy(
     },
     get generalChannel() {
       return connection.discord.client.chanels.cache.get(
-        config.discord.server.stem
+        config.discord.server.general
       );
     },
   }
