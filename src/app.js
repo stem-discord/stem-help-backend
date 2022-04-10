@@ -45,9 +45,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // form-urlencoded
 
-// for parsing multipart/form-data
-app.use(upload.array());
-
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
