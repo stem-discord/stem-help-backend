@@ -11,7 +11,7 @@ const isGraphVizInstalled = sync(`gvpr`);
 
 const validTypes = [`svg`, `png`];
 
-const m = madge(`src/server.js`, {
+const m = madge(`src/api-server.js`, {
   includeNpm: true,
 });
 

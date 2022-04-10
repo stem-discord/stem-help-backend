@@ -13,7 +13,7 @@ import config from "./config/index.js";
 import routes from "./routes/index.js";
 import staticRoute from "./static-views/index.js";
 import * as middlewares from "./middlewares/index.js";
-import { ApiError, git, dirname } from "./util/index.js";
+import { ApiError, dirname } from "./util/index.js";
 import { Logger, morgan } from "./tool/index.js";
 
 const upload = multer();
