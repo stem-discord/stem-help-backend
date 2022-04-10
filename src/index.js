@@ -9,7 +9,7 @@ export * as models from "./models/index.js";
 export * as routes from "./routes/index.js";
 export * as service from "./service/index.js";
 export * as shared from "./shared/index.js";
-export * as static from "./static/index.js";
+export * as staticViews from "./static-views/index.js";
 export * as types from "./types/index.js";
 export * as validations from "./validations/index.js";
 export * as app from "./app.js";
