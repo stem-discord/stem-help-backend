@@ -70,6 +70,9 @@ function generateConfig(env) {
     },
     cors: bool(envVars.CORS),
     discord: {
+      apiServer: {
+        port: envVars.DISCORD_BOT_SERVER_PORT,
+      },
       botToken: envVars.DISCORD_BOT_TOKEN,
       OAuthUri: envVars.DISCORD_OAUTH_URI,
       clientID: envVars.DISCORD_CLIENT_ID,

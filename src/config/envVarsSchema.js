@@ -53,6 +53,9 @@ const envVarsSchema = Joi.object()
     ),
     DISCORD_BOT_TOKEN: Joi.string().description(`discord bot token`),
     DISCORD_UPLOAD_WEBHOOK: Joi.string().description(`discord upload webhook`),
+    DISCORD_BOT_SERVER_PORT: Joi.number()
+      .description(`discord bot api server (graphql) port`)
+      .default(5003),
     // temporary
     DISCORD_OAUTH_URI: Joi.string().description(`discord oauth uri`),
     DISCORD_CLIENT_ID: Joi.string().description(`discord app id`),
