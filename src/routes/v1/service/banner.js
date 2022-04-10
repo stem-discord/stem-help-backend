@@ -22,7 +22,10 @@ router.get(
 
     const buf =
       (await htmlCache.get(text)) ??
-      (await lib.service.generatePngFromHtml.generate(text));
+      (await lib.service.generatePngFromHtml.generate(`
+        <div>
+          <h1 id="text">${text}</h1>
+        </div>`));
     htmlCache.set(text, buf);
 
     res.writeHead(200, {
