@@ -1,8 +1,9 @@
 import httpStatus from "http-status";
 import fetch from "node-fetch";
 import Joi from "joi";
-
+import * as discord from "../../../service/discord.js"
 import * as lib from "../../lib/index.js";
+
 
 const { ApiError, catchAsync, pick } = lib.util;
 const config = lib.config;
@@ -345,8 +346,11 @@ router.route(`/poem/vote`).post(
     const { poems: newPoems } = db.toJSON().data;
 
     res.json({ message: `OK`, poems: newPoems });
-  })
+   })
 );
+
+router.route("/talentshow").post()
+
 
 export default router;
 
