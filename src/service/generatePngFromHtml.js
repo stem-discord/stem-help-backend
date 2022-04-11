@@ -62,7 +62,9 @@ async function generateInner(text, options = {}) {
   width = Math.ceil(width);
   height = Math.ceil(height);
 
-  return await page.screenshot({ clip: { width, height, x, y } });
+  return await page.screenshot({
+    clip: { width: Math.max(width, 1), height: Math.max(height, 1), x, y },
+  });
 }
 
 const generate = new Sequential(generateInner);
