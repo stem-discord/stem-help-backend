@@ -4,3 +4,4 @@ export { default as Potd } from "./potd.js";
 export { default as Token } from "./token.js";
 export { default as Data } from "./data.js";
 export { default as AnySchema } from "./anySchema.js";
+export { default as Error } from "./error.js";
