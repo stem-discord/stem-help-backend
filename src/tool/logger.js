@@ -2,7 +2,7 @@ import path from "path";
 
 import config from "../config/index.js";
 import { default as winston } from "winston";
-import { dirname, getCallerDir, time as t } from "../util/index.js";
+import { dirname, getCallerDir, time as t, async } from "../util/index.js";
 
 const time = config.logging.absolute ? t.startTime : t.localeTime;
 
@@ -39,6 +39,40 @@ const logger = WinstonLogger(
   ({ level, message }) => `[⌚ ${time()}] ${level}: ${message}`
 );
 
+function logErrorsToDatabase(lgr, name = `default`) {
+  const o = lgr.error.bind(lgr);
+  lgr.error = function (...args) {
+    o(...args);
+    const err = args[0];
+    if (err.internal) return;
+    (async () => {
+      const error =
+        typeof err === `string`
+          ? { message: err, stack: new Error().stack, from: name }
+          : {
+              message: err?.message,
+              stack: err?.stack,
+              from: name,
+            };
+      const shared = (await import(`../shared/index.js`)).default;
+      try {
+        shared.mongo.Error;
+      } catch (e) {
+        e.internal = true;
+        logger.error(e);
+        return;
+      }
+      const ErrorModel = shared.mongo.Error;
+      ErrorModel.create(error).catch(e => {
+        e.internal = true;
+        logger.error(e);
+      });
+    })();
+  };
+}
+
+logErrorsToDatabase(logger);
+
 function Logger(name, printPath = false) {
   let pp = ``;
   if (printPath) {
@@ -48,7 +82,7 @@ function Logger(name, printPath = false) {
     pp = `▷ ${paths.join(`‣`)} `;
   }
   // I don't know if making a new winston logger every time is a good idea, but it works.
-  return WinstonLogger(({ level, message }) => {
+  const logger = WinstonLogger(({ level, message }) => {
     const front = `[⌚ ${time()}] ${level}: [${name}] ${pp}`;
     if (message?.includes(`\n`)) {
       // Create newline and stuff
@@ -60,6 +94,8 @@ function Logger(name, printPath = false) {
     }
     return `${front}: ${message}`;
   });
+  logErrorsToDatabase(logger, name);
+  return logger;
 }
 
 export { logger, Logger };
