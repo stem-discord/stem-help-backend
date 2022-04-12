@@ -10,6 +10,12 @@ let mongoModel = Object.create(null);
 const mongo = new RequireProxy(
   () => connection.mongo.connection.isOperational(),
   {
+    get Error() {
+      return (mongoModel.error ??= connection.mongo.connection.mongoose.model(
+        `Error`,
+        models.Error
+      ));
+    },
     get User() {
       return (mongoModel.user ??= connection.mongo.connection.mongoose.model(
         `User`,
