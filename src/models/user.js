@@ -9,7 +9,7 @@ import { Role, Group } from "../types/index.js";
 
 import { pick } from "../util/index.js";
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,

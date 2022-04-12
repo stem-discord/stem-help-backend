@@ -2,7 +2,7 @@ import { default as mongoose } from "mongoose";
 import User from "./user.js";
 
 // stores the id of refresh tokens
-const tokenSchema = mongoose.Schema(
+const tokenSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,

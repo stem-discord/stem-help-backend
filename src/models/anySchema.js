@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const data = mongoose.Schema(
+const data = new mongoose.Schema(
   {},
   {
     timestamps: false,
