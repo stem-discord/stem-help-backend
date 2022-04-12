@@ -145,6 +145,7 @@
     "nock": "github:nopeless/nock#main",
     "node-mocks-http": "^1.8.0",
     "nodemon": "^2.0.0",
+    "render-file-live": "^2.0.0",
     "supertest": "^6.0.1"
   }
 }
