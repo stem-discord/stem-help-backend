@@ -2,7 +2,7 @@ import path from "path";
 
 import config from "../config/index.js";
 import { default as winston } from "winston";
-import { dirname, getCallerDir, time as t, async } from "../util/index.js";
+import { dirname, getCallerDir, time as t } from "../util/index.js";
 
 const time = config.logging.absolute ? t.startTime : t.localeTime;
 
@@ -58,8 +58,7 @@ function logErrorsToDatabase(lgr, name = `default`) {
       try {
         shared.mongo.Error;
       } catch (e) {
-        e.internal = true;
-        logger.error(e);
+        logger.info(`Error was not saved to DB due to it not being avaialble`);
         return;
       }
       const ErrorModel = shared.mongo.Error;
