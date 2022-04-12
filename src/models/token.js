@@ -1,5 +1,4 @@
 import { default as mongoose } from "mongoose";
-import User from "./user.js";
 
 // stores the id of refresh tokens
 const tokenSchema = new mongoose.Schema(
