@@ -56,7 +56,7 @@ module.exports = {
     "linebreak-style": [`error`, `unix`],
     semi: [`error`, `always`],
     quotes: [`error`, `backtick`],
-    indent: [`error`, 2],
+    indent: `off`,
     "quote-props": [`error`, `as-needed`],
     strict: 0,
     "comma-dangle": [
