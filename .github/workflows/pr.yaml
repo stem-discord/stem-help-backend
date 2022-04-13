@@ -7,6 +7,9 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
+      - name: fetch head (Head is not avaliable in prs for some reason)
+        run: git fetch origin HEAD
+
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
         id: nvm
