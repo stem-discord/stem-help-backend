@@ -7,6 +7,6 @@
     ".env",
     "src"
   ],
-  "ext": "js,yml,ejs",
+  "ext": "js,yml,ejs,ts",
   "delay": 1000
 }
