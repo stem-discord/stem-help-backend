@@ -35,7 +35,7 @@
     "test:coverage": "c8 --reporter=text npm run test",
     "test:html": "c8 --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
     "test:docs": "npm run test test/minreq.spec.js ",
-    "tsc": "tsc && cpy 'src/**/*' dist --no-overwrite",
+    "tsc": "tsc || cpy 'src/**/*' dist --no-overwrite",
     "locov": "c8 --reporter=lcov npm run test",
     "mongodump": "mongodump --gzip --archive=\"test/mongodump.gz\" --uri",
     "mongoreset": "node test/_database/loadScript.js",
