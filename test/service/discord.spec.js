@@ -87,6 +87,9 @@ describe(`Service tests`, function () {
     });
   });
   describe(`real`, function () {
+    before(function () {
+      this.needs(discordConnection);
+    });
     it(`Should be able to fetch discord users (Real test)`, function () {
       const res = discord.userResolveAnything(`nope#6924`);
       expect(res).to.be.an(`array`);
