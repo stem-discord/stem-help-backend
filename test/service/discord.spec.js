@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 import {
   discord as discordConnection,
   openConnections,
@@ -58,10 +60,33 @@ async function SendMockMessageCalled(msg, opts, param) {
 }
 
 describe(`Service tests`, function () {
-  describe(`real`, function () {
+  describe(`uploadFile`, function () {
+    this.slow(4000);
+    this.timeout(5000);
     before(function () {
-      this.needs(discordConnection);
+      this.needs(() => {
+        if (config.discord.uploadWebhook) {
+          return null;
+        }
+        return new Error(`uploadwebhook is not set`);
+      });
     });
+    it(`should upload a string`, async function () {
+      const str = `teststring`;
+      const url = await discord.uploadFile(str, { filename: `hi.txt` });
+      expect(url).to.be.a.string;
+      expect(await fetch(url).then(v => v.text())).to.equal(str);
+    });
+    it(`should upload a buffer`, async function () {
+      const str = `teststring`;
+      const buf = Buffer.from(str);
+      buf.filename = `hi.txt`;
+      const url = await discord.uploadFile(buf);
+      expect(url).to.be.a.string;
+      expect(await fetch(url).then(v => v.text())).to.equal(str);
+    });
+  });
+  describe(`real`, function () {
     it(`Should be able to fetch discord users (Real test)`, function () {
       const res = discord.userResolveAnything(`nope#6924`);
       expect(res).to.be.an(`array`);
