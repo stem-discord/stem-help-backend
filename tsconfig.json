@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "types": ["node", "mocha", "chai"],
+    "esModuleInterop": true,
+    "outDir":  "./dist",
+    "target": "es2021",
+    "module": "es2020",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+  },
+  "include": [
+	  "./src/**/*.*"
+  ],
+  "exclude": ["./node_modules", "./**/*.spec.ts"],
+  "rootDir": "./src",
+}
