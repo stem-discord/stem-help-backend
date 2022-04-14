@@ -118,6 +118,9 @@ async function uploadFile(buffer, options = {}) {
     throw new Error(`Filename must be provided from buffer or from options`);
   }
 
+  // Compatibility with Multer's File api
+  buffer = buffer.buffer ?? buffer;
+
   form.append(`file`, buffer, {
     filename,
   });
