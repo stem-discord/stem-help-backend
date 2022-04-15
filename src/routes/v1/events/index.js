@@ -4,6 +4,7 @@ import Joi from "joi";
 import mutler from "multer";
 import * as lib from "../../lib/index.js";
 import userSchema from "../../../models/user.js";
+import { async } from "../../../util/index.js";
 
 const upload = mutler();
 const { ApiError, catchAsync, pick } = lib.util;
@@ -393,6 +394,17 @@ router.post(
     const { entries } = db.toJSON().data;
 
     res.json({ message: `OK`, entries });
+  })
+);
+
+router.get(
+  `/talent-show`,
+  catchAsync(async (req, res, next) => {
+      const db = await fetchNamespacedDB(`TalentShow`, { entries: {} });
+
+      const { entries } = db.toJSON().data;
+
+      res.json({ entries });
   })
 );
 export default router;
