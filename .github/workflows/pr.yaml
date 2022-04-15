@@ -7,7 +7,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: fetch head (Head is not avaliable in prs for some reason)
+      - name: fetch head
         run: git fetch origin HEAD
 
       - name: Read .nvmrc
