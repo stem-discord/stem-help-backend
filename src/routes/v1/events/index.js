@@ -1,9 +1,11 @@
 import httpStatus from "http-status";
 import fetch from "node-fetch";
 import Joi from "joi";
-
+import mutler from "multer";
 import * as lib from "../../lib/index.js";
+import userSchema from "../../../models/user.js";
 
+const upload = mutler();
 const { ApiError, catchAsync, pick } = lib.util;
 const config = lib.config;
 
@@ -348,6 +350,47 @@ router.route(`/poem/vote`).post(
   })
 );
 
+// Route -> TalentShow
+router.post(
+  `/Talent-Show`,
+  upload.array(`TalentShowFiles`),
+  catchAsync(async (req, res) => {
+    const { title, text, token } = req.body;
+
+    const id = req.body.id || token.split(`_`)[0];
+    const files = req.files;
+    var fileLinks = [];
+    // check if files are available
+    if (!files) {
+      res.status(400).send({
+        status: false,
+        data: `No file is selected.`,
+      });
+    } else {
+      fileLinks = await Promise.all(
+        files.map(file => lib.service.discord.uploadFile(file))
+      );
+    }
+
+    const db = await fetchNamespacedDB(`TalentShow`, { entries: {} });
+
+    db.data.entries ??= {};
+
+    db.data.entries[id] = {
+      title,
+      text,
+      attachments: fileLinks,
+    };
+
+    db.markModified(`data.entries.${id}`);
+
+    await db.save();
+
+    const { entries } = db.toJSON().data;
+
+    res.json({ message: `OK`, entries });
+  })
+);
 export default router;
 
 export { tokenCheck, procTree };

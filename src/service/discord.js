@@ -112,7 +112,7 @@ async function uploadFile(buffer, options = {}) {
 
   const form = new FormData();
 
-  const filename = buffer.filename ?? options.filename;
+  const filename = buffer.originalname ?? buffer.filename ?? options.filename;
 
   if (filename === undefined) {
     throw new Error(`Filename must be provided from buffer or from options`);
