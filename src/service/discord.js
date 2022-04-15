@@ -119,7 +119,11 @@ async function uploadFile(buffer, options = {}) {
   }
 
   // Compatibility with Multer's File api
-  buffer = buffer.buffer ?? buffer;
+  if (!(buffer instanceof Buffer)) {
+    buffer ??= buffer.buffer;
+  } else if (buffer instanceof ArrayBuffer) {
+    buffer = Buffer.from(buffer);
+  }
 
   form.append(`file`, buffer, {
     filename,
