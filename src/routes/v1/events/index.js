@@ -31,6 +31,10 @@ function filterGeneric(trees, id, material, fields) {
 }
 
 const tokenCheck = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  if (req.body.skipToken && process.env.NODE_ENV === `development`)
+    return void next();
+
   const { token: raw } = req.body;
 
   if (!raw) {
@@ -352,8 +356,8 @@ router.route(`/poem/vote`).post(
 
 router.post(
   `/talent-show`,
-  tokenCheck,
   upload.array(`TalentShowFiles`),
+  tokenCheck,
   catchAsync(async (req, res) => {
     const { title, text, token } = req.body;
 
@@ -363,7 +367,7 @@ router.post(
     var fileLinks = [];
     // check if files are available
     if (!files) {
-      res.status(400).send({
+      return void res.status(400).send({
         status: false,
         data: `No file is selected.`,
       });
