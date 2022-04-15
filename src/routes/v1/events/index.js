@@ -308,18 +308,11 @@ router
     procPoem
   )
   .get(
+    tokenCheck,
     catchAsync(async (req, res) => {
       const db = await fetchNamespacedDB(`poem`, { poems: {} });
 
       const { poems } = db.toJSON().data;
-
-      let [id, entry] = req.query?.token?.split(`_`) ?? [];
-
-      if (!(id && entry && lib.service.discord.tokens[id] === entry)) {
-        id = null;
-      }
-
-      // filterGeneric(poems, id, `poem`, [`title`, `poem`]);
 
       res.json({ poems });
     })
