@@ -41,7 +41,7 @@ mongoose.connect(uri, {
 });
 
 mongoose.connection.on(`connected`, function () {
-  console.log(`connected to MongoDB`);
+  console.log(`connected to MongoDB: ${uri}`);
   mongoose.connection.db.listCollections().toArray((err, names) => {
     const drops = [];
     names.forEach(function (e) {
