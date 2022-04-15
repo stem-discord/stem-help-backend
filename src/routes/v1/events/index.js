@@ -400,11 +400,11 @@ router.post(
 router.get(
   `/talent-show`,
   catchAsync(async (req, res, next) => {
-      const db = await fetchNamespacedDB(`TalentShow`, { entries: {} });
+    const db = await fetchNamespacedDB(`TalentShow`, { entries: {} });
 
-      const { entries } = db.toJSON().data;
+    const { entries } = db.toJSON().data;
 
-      res.json({ entries });
+    res.json({ entries });
   })
 );
 export default router;
