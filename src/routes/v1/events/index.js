@@ -351,42 +351,45 @@ router.route(`/poem/vote`).post(
 );
 
 // Route -> TalentShow
-router.post("/Talent-Show", upload.array("TalentShowFiles"), catchAsync(async (req, res) => {
-  const { title, text, token } = req.body;
+router.post(
+  `/Talent-Show`,
+  upload.array(`TalentShowFiles`),
+  catchAsync(async (req, res) => {
+    const { title, text, token } = req.body;
 
-  const id = req.body.id || token.split(`_`)[0];
-  const files = req.files;
-  var fileLinks = [];
-  // check if files are available
-  if (!files) {
-    res.status(400).send({
-      status: false,
-      data: "No file is selected.",
-    });
-  } else {
+    const id = req.body.id || token.split(`_`)[0];
+    const files = req.files;
+    var fileLinks = [];
+    // check if files are available
+    if (!files) {
+      res.status(400).send({
+        status: false,
+        data: `No file is selected.`,
+      });
+    } else {
+      fileLinks = await Promise.all(
+        files.map(file => lib.service.discord.uploadFile(file))
+      );
+    }
 
-    fileLinks = await Promise.all(files.map(file => (lib.service.discord.uploadFile(file))))
-  }
+    const db = await fetchNamespacedDB(`TalentShow`, { entries: {} });
 
-  const db = await fetchNamespacedDB(`TalentShow`, { entries: {} });
+    db.data.entries ??= {};
 
-  db.data.entries ??= {};
+    db.data.entries[id] = {
+      title,
+      text,
+      attachments: fileLinks,
+    };
 
-  db.data.entries[id] = {
-    title,
-    text,
-    attachments: fileLinks
+    db.markModified(`data.entries.${id}`);
 
-  };
+    await db.save();
 
-  db.markModified(`data.entries.${id}`);
+    const { entries } = db.toJSON().data;
 
-  await db.save();
-
-  const { entries } = db.toJSON().data;
-
-  res.json({ message: `OK`, entries });
-})
+    res.json({ message: `OK`, entries });
+  })
 );
 export default router;
 
