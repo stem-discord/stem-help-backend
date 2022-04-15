@@ -31,7 +31,6 @@ function filterGeneric(trees, id, material, fields) {
 }
 
 const tokenCheck = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   if (req.body.skipToken && process.env.NODE_ENV === `development`)
     return void next();
 
@@ -364,7 +363,7 @@ router.post(
     const id = req.body.id || token.split(`_`)[0];
     const files = req.files;
 
-    var fileLinks = [];
+    let fileLinks = [];
     // check if files are available
     if (!files) {
       return void res.status(400).send({
