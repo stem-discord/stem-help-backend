@@ -350,15 +350,16 @@ router.route(`/poem/vote`).post(
   })
 );
 
-// Route -> TalentShow
 router.post(
-  `/Talent-Show`,
+  `/talent-show`,
   upload.array(`TalentShowFiles`),
+  tokenCheck,
   catchAsync(async (req, res) => {
     const { title, text, token } = req.body;
 
     const id = req.body.id || token.split(`_`)[0];
     const files = req.files;
+
     var fileLinks = [];
     // check if files are available
     if (!files) {
