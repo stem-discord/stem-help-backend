@@ -15,6 +15,7 @@
   "ts-node": {
     "transpileOnly": true,
     "files": true,
+    "esm": true,
   },
   "include": [
 	  "./src/**/*.*"
