@@ -12,7 +12,7 @@
   "type": "module",
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
-    "static": "node src/api-server.js",
+    "static": "ts-node src/api-server.js",
     "update": "git pull && npm ci && pm2 restart app",
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json src/api-server.js -- --",
     "dev:noconn": "cross-env NODE_ENV=development nodemon --config nodemon.json src/api-server.js -- -- --connections \" \"",
@@ -35,6 +35,7 @@
     "test:coverage": "c8 --reporter=text npm run test",
     "test:html": "c8 --reporter=html npm run test && echo 'Opening index.html...' && (start coverage/index.html || echo 'could not open coverage/index.html')",
     "test:docs": "npm run test test/minreq.spec.js ",
+    "tsc": "tsc || cpy 'src/**/*' dist --no-overwrite",
     "locov": "c8 --reporter=lcov npm run test",
     "mongodump": "mongodump --gzip --archive=\"test/mongodump.gz\" --uri",
     "mongoreset": "node test/_database/loadScript.js",
@@ -121,6 +122,10 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/lodash": "^4.14.181",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.23",
     "benchmark": "^2.1.4",
     "c8": "^7.10.0",
     "chai": "^4.3.4",
@@ -128,6 +133,7 @@
     "chai-spies": "^1.0.0",
     "chai-string": "^1.5.0",
     "coveralls": "^3.0.7",
+    "cpy-cli": "^4.1.0",
     "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-jest": "^24.0.1",
@@ -146,6 +152,8 @@
     "node-mocks-http": "^1.8.0",
     "nodemon": "^2.0.0",
     "render-file-live": "^2.0.0",
-    "supertest": "^6.0.1"
+    "supertest": "^6.0.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
   }
 }
