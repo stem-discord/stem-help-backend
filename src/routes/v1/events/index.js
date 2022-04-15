@@ -352,8 +352,8 @@ router.route(`/poem/vote`).post(
 
 router.post(
   `/talent-show`,
-  upload.array(`TalentShowFiles`),
   tokenCheck,
+  upload.array(`TalentShowFiles`),
   catchAsync(async (req, res) => {
     const { title, text, token } = req.body;
 
