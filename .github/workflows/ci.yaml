@@ -7,8 +7,8 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: fetch head
-        run: git fetch origin HEAD
+      - name: fetch heads and origin head
+        run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
 
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
