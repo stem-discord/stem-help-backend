@@ -1,7 +1,9 @@
 {
   "verbose": false,
   "execMap": {
-    "pde": "--throw-deprecation --trace-deprecation"
+    "pde": "--throw-deprecation --trace-deprecation",
+    "js": "npx ts-node",
+    "ts": "npx ts-node"
   },
   "watch": [
     ".env",
