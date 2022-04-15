@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "mocha", "chai"],
+  },
+  "typeRoots": ["global.d.ts"]
+}
