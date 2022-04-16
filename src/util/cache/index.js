@@ -1,28 +1,8 @@
 import NodeCache from "node-cache";
-import fsc from "file-system-cache";
+import * as NopeFSCache from "nope-fs-cache";
 
-const fscDefault = fsc.default;
-
-class FileSystemCache extends fscDefault {
-  /**
-   * transformer should be sync if you intend to use getSync
-   */
-  constructor(opts = {}) {
-    if (opts.ns === undefined) {
-      throw new Error(`FileSystemCache: 'ns' is required`);
-    }
-    super(opts);
-    this.transformer = opts.transformer ?? (v => v);
-  }
-
-  get(key, defaultValue) {
-    return super.get(key, defaultValue).then(v => v && this.transformer(v));
-  }
-
-  getSync(key, defaultValue) {
-    return this.transformer(super.getSync(key, defaultValue));
-  }
-}
+// This class just works fine
+class FileSystemCache extends NopeFSCache.FileSystemCacheDelux {}
 
 class KeepAliveCache extends NodeCache {
   constructor(options) {

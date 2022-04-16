@@ -6,13 +6,21 @@ const config = lib.config;
 const router = lib.Router();
 
 const canvasCache = new lib.util.cache.FileSystemCache({
-  ns: `canvas-cache`,
-  transformer: v => new Buffer.from(v.data),
+  basePath: `./.cache/canvas-cache`,
+  transform: v => v,
+  toBuffer: v => v,
+  generator: text => lib.service.generatePngBanner.generate(text),
 });
 
 const htmlCache = new lib.util.cache.FileSystemCache({
-  ns: `html-cache`,
-  transformer: v => new Buffer.from(v.data),
+  basePath: `./.cache/html-cache`,
+  transform: v => v,
+  toBuffer: v => v,
+  generator: text =>
+    lib.service.generatePngFromHtml.generate(`
+        <div>
+          <h1 id="text">${text}</h1>
+        </div>`),
 });
 
 router.get(
@@ -20,13 +28,7 @@ router.get(
   catchAsync(async (req, res) => {
     const text = req.params[0].replace(/_/g, ` `);
 
-    const buf =
-      (await htmlCache.get(text)) ??
-      (await lib.service.generatePngFromHtml.generate(`
-        <div>
-          <h1 id="text">${text}</h1>
-        </div>`));
-    htmlCache.set(text, buf);
+    const buf = await htmlCache.get(text);
 
     res.writeHead(200, {
       "Content-Type": `image/png`,
@@ -42,10 +44,7 @@ router.get(
   catchAsync(async (req, res) => {
     const text = req.params[0].replace(/_/g, ` `);
 
-    const buf =
-      (await canvasCache.get(text)) ??
-      (await lib.service.generatePngBanner.generate(text));
-    canvasCache.set(text, buf);
+    const buf = await canvasCache.get(text);
 
     res.writeHead(200, {
       "Content-Type": `image/png`,

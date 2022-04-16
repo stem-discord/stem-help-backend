@@ -7,8 +7,10 @@ const { logger } = lib.tool;
 const router = lib.Router();
 
 const cache = new lib.util.cache.FileSystemCache({
-  ns: `dependency`,
-  transformer: v => new Buffer.from(v.data),
+  baseDir: `./.cache/dependency`,
+  generator: t => lib.service.generateDependencyGraph.generate(t),
+  toBuffer: b => b,
+  transform: b => b,
 });
 
 const c = cache
@@ -24,11 +26,7 @@ router.get(
     await c;
     const type = req.params.type;
 
-    const buf =
-      (await cache.get(type)) ??
-      (await lib.service.generateDependencyGraph.generate(type));
-
-    cache.set(type, buf);
+    const buf = await cache.get(type);
 
     res.writeHead(200, {
       "Content-Type": `image/${type}`,
