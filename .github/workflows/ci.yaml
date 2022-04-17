@@ -74,7 +74,7 @@ jobs:
   sandbox-deploy:
     needs: build
     runs-on: self-hosted
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'dev' }}
+    if: ${{ github.ref == 'dev' }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
