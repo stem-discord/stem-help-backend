@@ -80,6 +80,6 @@ jobs:
         uses: actions/checkout@v2
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
-      - run: npm ci
+      - run: npm ci --production
       - run: npm run tsc
       - run: pm2 restart 0
