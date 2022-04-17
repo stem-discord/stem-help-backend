@@ -74,7 +74,7 @@ jobs:
   sandbox-deploy:
     needs: build
     runs-on: self-hosted
-    if: ${{ github.ref == 'dev' }}
+    if: github.ref == 'refs/heads/dev'
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
