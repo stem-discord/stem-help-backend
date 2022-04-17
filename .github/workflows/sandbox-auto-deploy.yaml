@@ -1,0 +1,20 @@
+name: Automatic sandbox environment deployment
+
+on:
+  workflow_run:
+    branches: dev
+    workflows: ["Unit tests & Coverage"]
+    types: [completed]
+
+jobs:
+  on-success:
+    runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: fetch heads and origin head
+        run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
+      - run: npm ci
+      - run: npm run tsc
+      - run: pm2 restart 0
