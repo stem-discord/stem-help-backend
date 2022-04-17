@@ -3,7 +3,7 @@ name: Automatic sandbox environment deployment
 on:
   workflow_run:
     branches: dev
-    workflows: ["Unit tests & Coverage"]
+    workflows: ["CI"]
     types: [completed]
 
 jobs:

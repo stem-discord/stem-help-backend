@@ -1,4 +1,4 @@
-name: Unit tests
+name: PRCI
 on: ["pull_request"]
 jobs:
   build:
