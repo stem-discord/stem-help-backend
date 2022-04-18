@@ -81,7 +81,7 @@ jobs:
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
       - run: npm ci --production
-      - run: npm i --no-save ts-node 
+      - run: npm i --no-save ts-node cpy-cli
       - run: npm run build 
       - run: npm run setup
       - run: touch .env
