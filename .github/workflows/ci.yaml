@@ -82,4 +82,7 @@ jobs:
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
       - run: npm ci --production
       - run: npm run build 
+      - run: npm run setup
+      - run: touch .env
+      - run: echo ${{ secrets.SANDBOX_MONGO_DB_URL }} >> .env
       - run: pm2 restart 0
