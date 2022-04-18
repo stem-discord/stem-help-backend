@@ -81,5 +81,5 @@ jobs:
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
       - run: npm ci --production
-      - run: npm run tsc
+      - run: npm run build 
       - run: pm2 restart 0
