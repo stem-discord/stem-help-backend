@@ -18,6 +18,21 @@ const htmlCache = new lib.util.cache.FileSystemCache({
   toBuffer: v => v,
   generator: text =>
     lib.service.generatePngFromHtml.generate(`
+    <style>
+    div {
+      padding: 10px;
+      background-image: linear-gradient(45deg, #e04cd9 0%, #58059c 100%);
+    }
+
+    h1 {
+      width: 760;
+      padding: 10px;
+      background-color: white;
+      font-size: 50px;
+      text-align: center;
+      font-weight: 900;
+    }
+    </style>
         <div>
           <h1 id="text">${text}</h1>
         </div>`),

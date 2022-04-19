@@ -26,7 +26,7 @@ const init = () => {
       page = await browser.newPage();
 
       await page.goto(`file:${dirname(import.meta, `htmlBoilerPlate.html`)}`);
-      await page.setJavaScriptEnabled(false);
+      await page.setJavaScriptEnabled(true);
     });
   return browserInit;
 };
@@ -42,16 +42,28 @@ async function generateInner(text, options = {}) {
   const style = options.style;
 
   await page.evaluate(
-    (t, style) => {
+    async (t, style) => {
       /* eslint-disable no-undef */
       const body = document.getElementsByTagName(`body`)[0];
       body.innerHTML = t;
       body.style = style;
+      const selectors = Array.from(document.querySelectorAll(`img`));
+      await Promise.all(
+        selectors.map(img => {
+          if (img.complete) return null;
+          return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        })
+      );
       /* eslint-enable no-undef */
     },
     t,
     style
   );
+
+  console.log(`evaluating...`);
 
   const body = await page.$(`body`);
 
