@@ -17,7 +17,7 @@ module.exports = {
     "consistent-return": [`error`, { treatUndefinedAsUnspecified: true }],
     "jest/expect-expect": `off`,
     "security/detect-object-injection": `off`,
-    "no-unused-vars": `warn`,
+    "no-unused-vars": [`warn`, { argsIgnorePattern: `^_` }],
     "import-quotes/import-quotes": [`error`, `double`],
 
     "import/extensions": [
