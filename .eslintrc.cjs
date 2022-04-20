@@ -21,7 +21,9 @@ module.exports = {
     "consistent-return": [`error`, { treatUndefinedAsUnspecified: true }],
     "jest/expect-expect": `off`,
     "security/detect-object-injection": `off`,
-    "no-unused-vars": [`warn`, { argsIgnorePattern: `^_` }],
+    // note you must disable the base rule as it can report incorrect errors
+    "no-unused-vars": `off`,
+    "@typescript-eslint/no-unused-vars": [`warn`, { argsIgnorePattern: `^_` }],
     "import-quotes/import-quotes": [`error`, `double`],
 
     "@typescript-eslint/no-empty-function": `off`,
