@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 // @ts-ignore
 import Discord from "discord.js";
 import config from "./config/index.js";
