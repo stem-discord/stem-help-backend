@@ -8,7 +8,11 @@ module.exports = {
     sourceType: `module`,
   },
   plugins: [`import-quotes`, `import`, `prettier`],
-  extends: [`eslint:recommended`],
+  extends: [
+    `eslint:recommended`,
+    `plugin:@typescript-eslint/eslint-recommended`,
+    `plugin:@typescript-eslint/recommended`,
+  ],
   rules: {
     "prettier/prettier": `warn`,
     "no-console": `warn`,
@@ -19,6 +23,8 @@ module.exports = {
     "security/detect-object-injection": `off`,
     "no-unused-vars": [`warn`, { argsIgnorePattern: `^_` }],
     "import-quotes/import-quotes": [`error`, `double`],
+
+    "@typescript-eslint/no-empty-function": `off`,
 
     "import/extensions": [
       `error`,
