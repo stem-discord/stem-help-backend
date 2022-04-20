@@ -2,6 +2,9 @@
 ?.*
 *.temp.*
 
+# dev
+dist
+
 # IDE
 /.vscode
 /.idea
