@@ -13,7 +13,7 @@ import * as Discord from "discord.js";
 export function SchemaFromClient(client: Discord.Client) {
   const Snowflake = NN(Str);
   const TypeSnowflake = { type: Snowflake };
-  
+
   const Role = new ObjectType({
     name: `Role`,
     fields: {
@@ -24,7 +24,7 @@ export function SchemaFromClient(client: Discord.Client) {
       rawPostition: { type: Int },
     },
   });
-  
+
   const User = new ObjectType({
     name: `DiscordUser`,
     fields: {
@@ -45,7 +45,7 @@ export function SchemaFromClient(client: Discord.Client) {
       avatarURL: { type: Str },
     },
   });
-  
+
   const GuildMember = new ObjectType({
     name: `DiscordGuildMember`,
     fields: {
@@ -59,7 +59,7 @@ export function SchemaFromClient(client: Discord.Client) {
       },
     },
   });
-  
+
   const Guild = new ObjectType({
     name: `DiscordGuild`,
     fields: {
@@ -81,14 +81,14 @@ export function SchemaFromClient(client: Discord.Client) {
       },
     },
   });
-  
+
   const Channel = new ObjectType({
     name: `Channel`,
     fields: {
       id: TypeSnowflake,
     },
   });
-  
+
   const Message = new ObjectType({
     name: `Message`,
     fields: {
@@ -98,7 +98,7 @@ export function SchemaFromClient(client: Discord.Client) {
       channel: { type: Channel },
     },
   });
-  
+
   const RootQuery = new ObjectType({
     name: `RootQuery`,
     fields: () => ({
@@ -118,7 +118,7 @@ export function SchemaFromClient(client: Discord.Client) {
       },
     }),
   });
-  
+
   return new GraphQLSchema({
     query: RootQuery,
   });
