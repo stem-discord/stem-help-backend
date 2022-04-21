@@ -4,7 +4,7 @@ const server = net.createServer();
 
 export default function (port) {
   let resolve;
-  server.once(`error`, function (err) {
+  server.once(`error`, function (err: NodeJS.ErrnoException) {
     if (err.code === `EADDRINUSE`) resolve(false);
   });
 
