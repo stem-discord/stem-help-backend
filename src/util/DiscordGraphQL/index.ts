@@ -102,6 +102,7 @@ export function SchemaFromClient(client: Discord.Client) {
   const RootQuery = new ObjectType({
     name: `RootQuery`,
     fields: () => ({
+      status: { type: Str, resolve: () => `200` },
       guild: {
         type: Guild,
         args: {
