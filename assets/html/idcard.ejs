@@ -1,201 +1,207 @@
 <style>
-.parent {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 5px;
-    /* color: rgb(255, 255, 255); */
-    font-family: 'Source Code Pro', monospace;
-    text-rendering: optimizelegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    /* background-color: rgb(0, 0, 0); */
-    background-image: url('https://cdn.discordapp.com/attachments/839399426643591188/965853294159356004/unknown.png');
-    background-color: #f8e6db; /* the image color */
-    background-size: cover;
-    background-repeat: no-repeat;
-    /* background-attachment: fixed; */
-    background-position: center;
-    border-radius: 1em;
-    position:fixed;
+    .parent {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 5px;
+        /* color: rgb(255, 255, 255); */
+        font-family: 'Source Code Pro', monospace;
+        text-rendering: optimizelegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* background-color: rgb(0, 0, 0); */
+        background-image: url('https://cdn.discordapp.com/attachments/839399426643591188/965853294159356004/unknown.png');
+        background-color: #f8e6db;
+        /* the image color */
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* background-attachment: fixed; */
+        background-position: center;
+        border-radius: 1em;
     }
 
-.parent > div {
-    color: black;
-}
+    .parent>div {
+        color: black;
+    }
 
-.logo {
-    grid-area: 1 / 1 / 3 / 3;
-    /* background-color: blue;  */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 15px;
-    z-index: 2;
-}
-.circle {
-    grid-area: 1 / 1 / 3 / 3;
-    width: 85px;
-    height: 85px;
-    -webkit-border-radius: 42.5px;
-    -moz-border-radius: 42.5px;
-    border-radius: 42.5px;
-    background: rgb(255, 243, 243);
-    display: flex;
-    justify-content: center;
-    margin-top: 23px;
-    margin-left: 73px;
-    z-index: 1;
-}
-.title {
-    grid-area: 1 / 3 / 3 / 9;
-    /* background-color: green; */
-    font-size: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.date {
-    grid-area: 1 / 9 / 3 / 11;
-    /* background-color: rgb(92, 236, 255); */
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    font-size: x-large;
-    padding-right: 30px;
-}
-.pfp {
-    grid-area: 3 / 1 / 9 / 4;
-    /* background-color: red; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.4em;
-    background-color: rgb(196,170,162);
-    margin-top: 65px;
-    margin-bottom: 95px;
-    margin-right: 40px; /*moves boarder left and right */
-    margin-left: 170px;
-    padding-left: 0px;
-}
-.list {
-    grid-area: 3 / 4 / 8 / 11;
-    align-items: center;
-    display: flex;
-    line-height: 300%;
-    font-weight: bold;
-    justify-content: space-between;
-}
-.answers {
-    padding-right: 20px;
-    text-align: right;
-}
-.performance {
-    /* Please don't do this in production */
-    color: white !important;
+    .logo {
+        grid-area: 1 / 1 / 3 / 3;
+        /* background-color: blue;  */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 15px;
+        z-index: 2;
+    }
 
-    grid-area: 8 / 4 / 9 / 11;
-    background-color: rgb(68, 66, 68);
-    display:flex;
-    align-items: center;
-    padding-left: 10px;
-    font-weight: bold;
-    border-radius: 0.4em;
-    margin-bottom: 45px;
-    margin-right: 10px;
-    margin-left: 30px;
-    margin-top: -25px;
-}
-.star1 {
-    grid-area: 8 / 6 / 9 / 7;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-top: -55px;
-}
-.star2 {
-    grid-area: 8 / 7 / 9 / 8;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-top: -55px;
-}
-.star3 {
-    grid-area: 8 / 8 / 9 / 9;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-top: -55px;
-}
-.star4 {
-    grid-area: 8 / 9 / 9 / 10;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-top: -55px;
-}
-.star5 {
-    grid-area: 8 / 10 / 9 / 11;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-top: -55px;
-}
+    .circle {
+        grid-area: 1 / 1 / 3 / 3;
+        width: 85px;
+        height: 85px;
+        -webkit-border-radius: 42.5px;
+        -moz-border-radius: 42.5px;
+        border-radius: 42.5px;
+        background: rgb(255, 243, 243);
+        display: flex;
+        justify-content: center;
+        margin-top: 23px;
+        margin-left: 73px;
+        z-index: 1;
+    }
+
+    .title {
+        grid-area: 1 / 3 / 3 / 9;
+        /* background-color: green; */
+        font-size: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .date {
+        grid-area: 1 / 9 / 3 / 11;
+        /* background-color: rgb(92, 236, 255); */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: x-large;
+        padding-right: 30px;
+    }
+
+    .pfp {
+        grid-area: 3 / 1 / 9 / 4;
+        /* background-color: red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.4em;
+        background-color: rgb(196, 170, 162);
+        margin-top: 65px;
+        margin-bottom: 95px;
+        margin-right: 40px;
+        /*moves boarder left and right */
+        margin-left: 170px;
+        padding-left: 0px;
+    }
+
+    .list {
+        grid-area: 3 / 4 / 8 / 11;
+        align-items: center;
+        display: flex;
+        line-height: 300%;
+        font-weight: bold;
+        justify-content: space-between;
+    }
+
+    .answers {
+        padding-right: 20px;
+        text-align: right;
+    }
+
+    .performance {
+        /* Please don't do this in production */
+        color: white !important;
+        grid-area: 8 / 4 / 9 / 11;
+        background-color: rgb(68, 66, 68);
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        font-weight: bold;
+        border-radius: 0.4em;
+        margin-bottom: 45px;
+        margin-right: 10px;
+        margin-left: 30px;
+        margin-top: -25px;
+    }
+
+    .star1 {
+        grid-area: 8 / 6 / 9 / 7;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: -55px;
+    }
+
+    .star2 {
+        grid-area: 8 / 7 / 9 / 8;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: -55px;
+    }
+
+    .star3 {
+        grid-area: 8 / 8 / 9 / 9;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: -55px;
+    }
+
+    .star4 {
+        grid-area: 8 / 9 / 9 / 10;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: -55px;
+    }
+
+    .star5 {
+        grid-area: 8 / 10 / 9 / 11;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: -55px;
+    }
+
 </style>
-    <div class="parent">
-        <div class="logo"> 
-            <img src="stemlogo.png" alt="logo" width="100" height="100">
-        </div>
-        <div class="title"> 
-            STEM UNIVERSITY
-        </div>
-        <div class="date"> 
-            April 16, 2022
-        </div>
-        <div class="pfp"> 
-            <!-- <img src="geralt.jpg" alt="pfp" width="150" height="175"> -->
-        </div>
-        <div class="circle"></div>
-        <div class="list"> 
-            <ul style="list-style-type:none"> 
-                <li>NAME:</li>
-                <li>STATUS:</li>
-                <li>JOINED:</li>
-                <li>BEHAVIOUR:</li>
-                <li>MESSAGES SENT:</li>
-            </ul>
-            <ul class="answers" style="list-style-type:none">
-                <li>TIM WERBENJAGERMANJENSON</li>
-                <li>FRESHMAN</li>
-                <li>DECEMBER 18, 2002</li>
-                <li>SPECTACULAR</li>
-                <li>ALEPH NULL</li>
-            </ul>
-        </div>
-        <div class="performance">
-            PERFORMANCE
-        </div>
-        <div class="star1"> 
-            <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
-        </div>
-        <div class="star2"> 
-            <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
-        </div>
-        <div class="star3"> 
-            <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height=30">
-        </div>
-        <div class="star4"> 
-            <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
-        </div>
-        <div class="star5"> 
-            <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
-        </div>
-        </div>
+<div class="parent">
+    <div class="logo">
+        <img src="https://cdn.discordapp.com/icons/493173110799859713/a_aad69a1f9ae499fcc33c36e85af556b1.webp" alt="logo" width="100" height="100">
     </div>
+    <div class="title"> STEM UNIVERSITY </div>
+    <div class="date"> <%=  Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(Date.now())%> </div>
+    <div class="pfp">
+        <img src="<%= user.pfp %>" alt="pfp" width="150" height="175">
+    </div>
+    <div class="circle"></div>
+    <div class="list">
+        <ul style="list-style-type:none">
+            <li>NAME:</li>
+            <li>STATUS:</li>
+            <li>JOINED:</li>
+            <li>BEHAVIOUR:</li>
+            <li>MESSAGES SENT:</li>
+        </ul>
+        <ul class="answers" style="list-style-type:none">
+            <li>TIM WERBENJAGERMANJENSON</li>
+            <li>FRESHMAN</li>
+            <li>DECEMBER 18, 2002</li>
+            <li>SPECTACULAR</li>
+            <li>ALEPH NULL</li>
+        </ul>
+    </div>
+    <div class="performance"> PERFORMANCE </div>
+    <div class="star1">
+        <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
+    </div>
+    <div class="star2">
+        <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
+    </div>
+    <div class="star3">
+        <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height=30">
+    </div>
+    <div class="star4">
+        <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
+    </div>
+    <div class="star5">
+        <img src="https://media.discordapp.net/attachments/951131768478650368/966900470792740944/starsss.png" alt="logo" width="30" height="30">
+    </div>
+</div>
+</div>
