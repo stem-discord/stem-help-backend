@@ -31,11 +31,13 @@ if (isProd) {
 
 app.use(`/graphql`, mid);
 
-const PORT = config.discord.apiServer.port;
+const PORT = config.discord.gql.port;
 
 if (!PORT) {
   logger.warn(`No port specified`);
 }
+
+logger.info(`Port: ${PORT}`);
 
 const listener = app.listen(PORT, () => {
   logger.info(`App is on '${config.env}' mode`);

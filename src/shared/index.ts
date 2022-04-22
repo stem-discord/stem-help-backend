@@ -89,4 +89,13 @@ const discord = RequireProxy(
   }
 );
 
-export default { mongo, discord, stemInformation };
+const discordgql = RequireProxy(
+  () => connection.discordgql.connection.isOperational(),
+  {
+    get query() {
+      return connection.discordgql.query;
+    },
+  }
+);
+
+export default { mongo, discord, discordgql, stemInformation };
