@@ -38,9 +38,7 @@ if (config.discord.gql.url) {
   });
   logger.info(`Connected to ${config.discord.gql.url}`);
 
-  query = clientQuery;
-
-  const q = query.bind(client);
+  const q = (query = clientQuery.bind(client));
 
   connection = new Connection({
     ...ns,
