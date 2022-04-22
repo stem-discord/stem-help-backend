@@ -13,17 +13,9 @@ const cache = new lib.util.cache.FileSystemCache({
   transform: b => b,
 });
 
-const c = cache
-  .clear()
-  .catch(e => {
-    logger.error(`Error while clearing cache`, e);
-  })
-  .finally(() => null);
-
 router.get(
   `/:type`,
   catchAsync(async (req, res) => {
-    await c;
     const type = req.params.type;
 
     const buf = await cache.get(type);

@@ -51,8 +51,6 @@ const profileBannerCache = new lib.util.cache.FileSystemCache({
   },
 });
 
-profileBannerCache.clear().catch(_ => _);
-
 /**
  * EXPERIMENTAL
  */
