@@ -1,4 +1,4 @@
 # Convert text file line endings to lf
-* text eol=lf
+# * text eol=lf
 *.js text
 *.ttf binary
