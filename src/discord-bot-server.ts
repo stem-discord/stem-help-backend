@@ -13,6 +13,11 @@ const app = express();
 
 const isProd = config.env === `production`;
 
+client.on(`ready`, () => {
+  if (client === null) return;
+  logger.info(`Logged in as ${client.user?.tag}`);
+});
+
 const gql = graphqlHTTP({
   schema: SchemaFromClient(client),
   graphiql: !isProd,
