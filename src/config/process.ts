@@ -33,6 +33,12 @@ export default (function (config) {
     config.discord.uploadWebhook = o.toString();
   }
 
+  w = config.discord.gql.url;
+  if (w) {
+    const o = new URL(w);
+    config.discord.gql.port = Number(o.port);
+  }
+
   w = config.mongoose.url;
   if (w) {
     const o = new URL(w);
