@@ -29,9 +29,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           eslint: true
           auto_fix: true
-      
-      - name: setup test
-        run: echo "" > .test.env
 
       - name: initiate mongo
         uses: supercharge/mongodb-github-action@1.3.0
