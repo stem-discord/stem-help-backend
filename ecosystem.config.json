@@ -1,15 +1,32 @@
 {
   "apps": [
     {
-      "name": "app",
+      "name": "API server",
       "script": "dist/api-server.js",
       "instances": 1,
       "autorestart": true,
       "watch": false,
       "time": true,
+      "min_uptime": "1 minute",
+      "max_restarts": 2,
       "args": "--experimental-specifier-resolution=node",
       "env": {
         "NODE_ENV": "production"
+      }
+    },
+    {
+      "name": "Discord Bot GraphQL server",
+      "script": "dist/discord-bot-server.js",
+      "instances": 1,
+      "min_uptime": "1 minute",
+      "autorestart": true,
+      "max_restarts": 2,
+      "watch": false,
+      "time": true,
+      "args": "--experimental-specifier-resolution=node",
+      "env": {
+        "NODE_ENV": "production",
+        "APPLICATION_ENV": ".discordbot"
       }
     }
   ]
