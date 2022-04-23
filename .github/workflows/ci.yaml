@@ -94,8 +94,9 @@ jobs:
       - run: npm run build 
       - run: npm run setup
       - run: touch .env
-      - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db-test" >> .env
+      - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db" >> .env
       - run: echo "CONNECTIONS=\"mongo,discordgql\"" >> .env
       - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}" >> .discordbot.env
+      - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/discord-api-server" >> .discordbot.env
       - run: pm2 restart 0
 
