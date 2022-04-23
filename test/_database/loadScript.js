@@ -21,10 +21,11 @@ const argv = yargs.argv;
 // Leave this filename as hard coded unless there is a really good reason
 const envPath = dirname(import.meta, `../../.test.env`);
 
-if (!fs.existsSync(envPath))
-  throw new Error(`Missing .test.env file ${envPath}`);
+const exist = fs.existsSync(envPath);
 
-const env = dotenv.parse(fs.readFileSync(envPath));
+if (!exist) console.warn(`${envPath} file is missing`);
+
+const env = exist ? dotenv.parse(fs.readFileSync(envPath)) : {};
 
 // This way the env variable cannot be passed by any other execution environment
 // This variable MUST exist in the .test.env file
