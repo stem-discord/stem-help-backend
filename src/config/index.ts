@@ -10,7 +10,7 @@ import proc from "./process.js";
 
 const envPath = dirname(
   import.meta,
-  `../../${process.env.APPLICATION_ENV}${
+  `../../${process.env.APPLICATION_ENV ?? ``}${
     process.env.NODE_ENV === `test` ? `.test` : ``
   }.env`
 );
