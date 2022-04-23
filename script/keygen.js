@@ -14,13 +14,6 @@ import { dirname } from "../src/util/index.js";
 const pubpath = dirname(import.meta, `../env/id_rsa_pub.pem`),
   privpath = dirname(import.meta, `../env/id_rsa_priv.pem`);
 
-// check if files already exist since it would be terrible to overwrite them
-if (fs.existsSync(pubpath) || fs.existsSync(privpath)) {
-  throw new Error(
-    `Files already exist, please remove them before generating new keys`
-  );
-}
-
 function genKeyPair() {
   // Generates an object where the keys are stored in properties `privateKey` and `publicKey`
   const keyPair = crypto.generateKeyPairSync(`rsa`, {
@@ -44,5 +37,12 @@ function genKeyPair() {
   console.log(`generated keypair`);
 }
 
-// Generate the keypair
-genKeyPair();
+// check if files already exist since it would be terrible to overwrite them
+if (fs.existsSync(pubpath) || fs.existsSync(privpath)) {
+  console.warn(
+    `Files already exist, please remove them before generating new keys\nNot doing anything.`
+  );
+} else {
+  // Generate the keypair
+  genKeyPair();
+}
