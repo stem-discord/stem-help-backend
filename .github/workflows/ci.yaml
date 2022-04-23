@@ -86,11 +86,11 @@ jobs:
 
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
-      - run: npm ci --production
+      - name: npm ci if npm ls errors
+        run: npm ls || npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           PUPPETEER_EXECUTABLE_PATH: which chromium
-      - run: npm i --no-save typescript cpy-cli
       - run: npm run build 
       - run: npm run setup
       - run: touch .env
