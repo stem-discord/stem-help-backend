@@ -15,6 +15,9 @@ const envPath = dirname(
   }.env`
 );
 
+// Ensure file exists
+fs.closeSync(fs.openSync(envPath, `a`));
+
 console.log(`[src/config/index.js] Loading env ${envPath}`);
 
 const conf = dotenv.parse(fs.readFileSync(envPath));
