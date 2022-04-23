@@ -73,8 +73,17 @@ jobs:
     runs-on: self-hosted
     if: github.ref == 'refs/heads/dev'
     steps:
+      - name: Clean Git Repository
+        run:
+          git clean -X -n --exclude="!node_modules" &&
+          git reset --hard HEAD
+
       - name: Check out Git repository
         uses: actions/checkout@v2
+        with:
+        # My poor raspberry pi needs to survive. No more disk stuff
+         clean: false
+
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
       - run: npm ci --production
