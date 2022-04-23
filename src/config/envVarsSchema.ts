@@ -7,7 +7,11 @@ const envVarsSchema = Joi.object()
       .description(`Deletes all environment variables (ignores cli flags)`),
     NODE_ENV: Joi.string()
       .valid(`production`, `development`, `test`)
-      .default(`development`),
+      .default(`development`)
+      .description(`If test, test.env will be loaded`),
+    APPLICATION_ENV: Joi.string().description(
+      `The .env file to load. <APPLICATION_ENV>.env will be loaded.`
+    ),
     PORT: Joi.number().default(3000).description(`The port for the API server`),
     SUPER_SECRET_ADMIN_KEY: Joi.string()
       .default(`admin`)
