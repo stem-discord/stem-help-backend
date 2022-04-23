@@ -90,7 +90,7 @@ jobs:
       - run: touch .env
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db-test" >> .env
       - run: echo "CONNECTIONS=\"mongo,discordgql\"" >> .env
-      - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}"
+      - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}" >> .discordbot.env
       - run: pm2 restart 0
 
       # Restart Discord GraphQL server too
