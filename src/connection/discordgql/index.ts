@@ -40,7 +40,7 @@ if (config.discord.gql.url) {
     url: config.discord.gql.url,
     requestPolicy: `network-only`,
   });
-  logger.info(`Connected to ${config.discord.gql.url}`);
+  logger.info(`Connecting to GraphQL server ${config.discord.gql.url}`);
 
   const pingStatus = async function () {
     return noCacheClient
