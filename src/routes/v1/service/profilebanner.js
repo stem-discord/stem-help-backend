@@ -22,10 +22,14 @@ const profileBannerCache = new lib.util.cache.FileSystemCache({
   toBuffer: v => v,
   generator: async id => {
     if (!id) return null;
-    let { user } = (
-      await lib.shared.discordgql
-        .query`query { user(id: "${id}") { displayAvatarURL(format: "png", size: 128) } }`
-    ).data;
+    const gq = lib.shared.discordgql
+      .query`query { user(id: "${id}") { displayAvatarURL(format: "png", size: 128) } }`;
+    const sq = lib.shared.stemInformation.UserInfoPublic.findOne({
+      user_id: id,
+    });
+
+    let { user } = (await gq).data;
+    const { stats } = (await sq.lean()) || {};
 
     let pfp =
       user.displayAvatarURL ||
@@ -39,6 +43,7 @@ const profileBannerCache = new lib.util.cache.FileSystemCache({
           {
             user: {
               pfp,
+              thanked: stats?.thanked,
             },
           },
           {},
