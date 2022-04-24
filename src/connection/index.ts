@@ -93,9 +93,18 @@ const openConnections = async (selection: string[]) => {
         `Expected array, got ${typeof selection} selection: ${selection}`
       );
     }
+
     const si = Object.create(null);
     sl: for (const sel of selection) {
       const name = sel.toLowerCase();
+
+      // Exact match, only select one
+      let m;
+      if ((m = Object.keys(modules).find(v => v.toLowerCase() === name))) {
+        si[m] = modules[m];
+        continue sl;
+      }
+
       // find a module with matching name
       for (const key of Object.keys(modules)) {
         if (si[key]) continue;
