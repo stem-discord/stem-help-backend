@@ -7,7 +7,7 @@
       "autorestart": true,
       "watch": false,
       "time": true,
-      "min_uptime": "1 minute",
+      "min_uptime": "1m",
       "max_restarts": 2,
       "args": "--experimental-specifier-resolution=node",
       "env": {
@@ -18,7 +18,7 @@
       "name": "Discord Bot GraphQL server",
       "script": "dist/discord-bot-server.js",
       "instances": 1,
-      "min_uptime": "1 minute",
+      "min_uptime": "1m",
       "autorestart": true,
       "max_restarts": 2,
       "watch": false,
