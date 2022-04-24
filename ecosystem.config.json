@@ -26,7 +26,6 @@
       "args": "--experimental-specifier-resolution=node",
       "env": {
         "NODE_ENV": "production",
-        "APPLICATION_ENV": ".discordbot"
       }
     }
   ]
