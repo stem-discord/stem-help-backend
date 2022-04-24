@@ -84,6 +84,11 @@ jobs:
         # My poor raspberry pi needs to survive. No more disk stuff
          clean: false
 
+      - name: curl latest database and restore
+        run:
+          curl https://mod.stem.help/backup/4/b3d5b82e81b9c5e19786506f0458e320865423d7 -o mongod.temp && 
+          mongorestore --drop --gzip --archive="mongodump.temp" --nsFrom "information-sanitized.*" --nsTo "information.*" && 
+          rm mongod.temp
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
       - name: npm ci if npm ls errors
@@ -96,6 +101,7 @@ jobs:
       - run: npm run clearcache
       - run: touch .env
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db" >> .env
+      - run: echo "STEM_INFORMATION_URL=mongodb://127.0.0.1:27017/information" >> .env
       - run: echo "CONNECTIONS=\"mongo,discordgql\"" >> .env
       - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}" >> .discordbot.env
       - run: echo "APPLICATION_ENV=.discordbot" >> .discordbot.env
