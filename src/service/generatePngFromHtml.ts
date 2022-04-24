@@ -25,7 +25,7 @@ const init = () => {
       browser = v;
       page = await browser.newPage();
 
-      await page.goto(`file:${dirname(import.meta, `htmlBoilerPlate.html`)}`);
+      await page.goto(`file:/${dirname(import.meta, `htmlBoilerPlate.html`)}`);
       await page.setJavaScriptEnabled(true);
     });
   return browserInit;
