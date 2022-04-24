@@ -4,35 +4,36 @@ import * as connection from "../connection/index.js";
 import { RequireProxy } from "./RequireProxy.js";
 
 import config from "../config/index.js";
+import { Model } from "mongoose";
 
 const mongoModel = Object.create(null);
 
 const mongo = RequireProxy(() => connection.mongo.connection.isOperational(), {
-  get Error() {
+  get Error(): Model<typeof models.Error> {
     return (mongoModel.error ??= connection.mongo.connection.mongoose.model(
       `Error`,
       models.Error
     ));
   },
-  get User() {
+  get User(): Model<typeof models.User> {
     return (mongoModel.user ??= connection.mongo.connection.mongoose.model(
       `User`,
       models.User
     ));
   },
-  get Token() {
+  get Token(): Model<typeof models.Token> {
     return (mongoModel.token ??= connection.mongo.connection.mongoose.model(
       `Token`,
       models.Token
     ));
   },
-  get Potd() {
+  get Potd(): Model<typeof models.Potd> {
     return (mongoModel.potd ??= connection.mongo.connection.mongoose.model(
       `Potd`,
       models.Potd
     ));
   },
-  get Data() {
+  get Data(): Model<typeof models.Data> {
     // TODO: write an api for data
     return (mongoModel.data ??= connection.mongo.connection.mongoose.model(
       `Data`,
@@ -47,14 +48,14 @@ const stemInformationModel = Object.create(null);
 const stemInformation = RequireProxy(
   () => connection.stemInformation.connection.isOperational(),
   {
-    get ThankedLog() {
+    get ThankedLog(): Model<typeof models.AnySchema> {
       return (stemInformationModel.user ??=
         connection.stemInformation.connection.mongoose.model(
           `ThankedLog`,
           models.AnySchema
         ));
     },
-    get UserInfoPublic() {
+    get UserInfoPublic(): Model<typeof models.AnySchema> {
       return (stemInformationModel.token ??=
         connection.stemInformation.connection.mongoose.model(
           `UserInfo`,
