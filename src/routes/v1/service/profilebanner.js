@@ -43,7 +43,7 @@ const profileBannerCache = new lib.util.cache.FileSystemCache({
           {
             user: {
               pfp,
-              thanked: stats?.thanked,
+              thanked: html(stats?.thanked),
             },
           },
           {},
