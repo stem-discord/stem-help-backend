@@ -87,7 +87,7 @@ jobs:
       - name: curl latest database and restore
         run:
           curl https://mod.stem.help/backup/4/b3d5b82e81b9c5e19786506f0458e320865423d7 -o mongod.temp && 
-          mongorestore --drop --gzip --archive="mongodump.temp" --nsFrom "information-sanitized.*" --nsTo "information.*" && 
+          mongorestore --drop --gzip --archive="mongod.temp" --nsFrom "information-sanitized.*" --nsTo "information.*" && 
           rm mongod.temp
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
