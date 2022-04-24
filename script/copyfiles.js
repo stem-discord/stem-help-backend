@@ -28,7 +28,7 @@ function apply({
   source,
   destination,
   destinationTransformer = null,
-  overwrite = false,
+  overwrite = true,
 }) {
   console.log(`[${cwd}] copying files from ${source} to ${destination}`);
   if (!source) throw new Error(`source is required`);
@@ -37,15 +37,18 @@ function apply({
 
   for (const file of walk(source)) {
     if (validator(file)) {
-      const destinationFile = destinationTransformer
-        ? destinationTransformer(file)
-        : path.join(destination, path.relative(source, file));
+      const relFile = path.relative(source, file);
+      const destinationFile = path.join(
+        destination,
+        destinationTransformer ? destinationTransformer(relFile) : relFile
+      );
       if (fs.existsSync(destinationFile) && !overwrite) {
         console.debug(`skipping ${file}`);
         continue;
       }
       fs.mkdirSync(path.dirname(destinationFile), { recursive: true });
       fs.copyFileSync(file, destinationFile);
+      console.debug(`copied ${file} to ${destinationFile}`);
     }
   }
 
