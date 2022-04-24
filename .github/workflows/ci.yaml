@@ -93,6 +93,7 @@ jobs:
           PUPPETEER_EXECUTABLE_PATH: which chromium
       - run: npm run build 
       - run: npm run setup
+      - run: npm run clearcache
       - run: touch .env
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db" >> .env
       - run: echo "CONNECTIONS=\"mongo,discordgql\"" >> .env
