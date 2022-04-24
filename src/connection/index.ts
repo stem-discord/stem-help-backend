@@ -117,6 +117,12 @@ const openConnections = async (selection: string[]) => {
     `Awaiting for module initialization...` +
       (selection ? ` [${selection.join(`, `)}]` : ``)
   );
+
+  const selectedConnections: Connection[] = selection.map(
+    v => modules[v].connection
+  );
+
+  // Duplicate code because file name is not exposed to connection
   const initializations = selection.map(v =>
     modules[v].connection.init().catch(e => {
       logger.error(`An error has occured with module "${v}"`);
@@ -136,6 +142,13 @@ const openConnections = async (selection: string[]) => {
       `  Status\n` +
       reports.join(`\n`)
   );
+
+  // Now start listening for status changes
+  for (const connection of selectedConnections) {
+    connection.statusUpdate = state => {
+      logger.info(`[${connection.name}] is now: ${state}`);
+    };
+  }
 };
 
 async function closeConnections() {

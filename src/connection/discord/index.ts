@@ -68,7 +68,9 @@ if (config.discord.botToken) {
       calledLogin = true;
       return open;
     },
-    heartbeat: client.isReady,
+    heartbeat: () => {
+      if (!client.isReady()) throw new Error(`client is not ready`);
+    },
     close: () => {
       client.destroy();
     },

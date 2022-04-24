@@ -18,12 +18,16 @@ class Connection extends EventEmitter {
   public description: string;
   public _state: keyof typeof ConnectionState;
   private _init: ConnectionOptions[`init`];
+  private _heartbeat: ConnectionOptions[`heartbeat`];
 
   public initialized = false;
   public null = false;
   public message: string | undefined = undefined;
   public rejectReason: string | undefined = undefined;
   public name: string;
+  // This is anti event emitter pattern, but ensures that only one listener is active
+  public statusUpdate: (status: keyof typeof ConnectionState) => void;
+  private heartbeatInterval: ReturnType<typeof setInterval> | null;
   constructor({
     init,
     heartbeat,
@@ -41,6 +45,8 @@ class Connection extends EventEmitter {
     this._init = init;
     this.close = close;
     this.name = name;
+    this.statusUpdate = () => {};
+    this._heartbeat = heartbeat;
 
     for (const [event, state] of [
       [ConnectionEvent.connected, ConnectionState.CONNECTED] as const,
@@ -54,7 +60,13 @@ class Connection extends EventEmitter {
     }
   }
 
+  clientPing(up: boolean) {
+    this.state = up ? ConnectionState.CONNECTED : ConnectionState.DISCONNECTED;
+  }
+
   async close() {
+    if (this.heartbeatInterval) clearInterval(this.heartbeatInterval);
+    this.heartbeatInterval = null;
     return await this.close();
   }
   /**
@@ -95,6 +107,25 @@ class Connection extends EventEmitter {
 
     this.state = ConnectionState.CONNECTING;
 
+    let first = true;
+
+    // Heartbeat
+    this.heartbeatInterval = setInterval(async () => {
+      if (first) {
+        first = false;
+        return;
+      }
+      try {
+        if ((await this.heartbeat()) === false) {
+          throw new Error(`Unknown reason`);
+        }
+        this.state = ConnectionState.CONNECTED;
+      } catch (e) {
+        this.state = ConnectionState.DISCONNECTED;
+        this.rejectReason = e.message;
+      }
+    }, 15 * 1000);
+
     return (async () => this._init())()
       .then(() => {
         this.state = ConnectionState.CONNECTED;
@@ -117,7 +148,14 @@ class Connection extends EventEmitter {
     if (ConnectionState[val] === undefined) {
       throw new Error(`${val} is not a valid ConnectionState`);
     }
+    if (this._state === val) return;
+    this.emit(`updateState`, val);
+    this.statusUpdate(val);
     this._state = val;
+  }
+
+  get heartbeat() {
+    return this._heartbeat;
   }
 
   isOperational() {
@@ -142,11 +180,6 @@ class NullConnection extends Connection {
   init() {
     return Promise.reject(
       new Error(`${this.name} is not initialized because ${this.rejectReason}`)
-    );
-  }
-  heartbeat() {
-    return Promise.reject(
-      new Error(`${this.name} cannot send heartbeat to uninitialized interface`)
     );
   }
 
