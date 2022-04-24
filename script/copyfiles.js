@@ -30,6 +30,7 @@ function apply({
   destinationTransformer = null,
   overwrite = false,
 }) {
+  console.log(`[${cwd}] copying files from ${source} to ${destination}`);
   if (!source) throw new Error(`source is required`);
   if (!destination && !destinationTransformer)
     throw new Error(`destination or destinationTransformer is required`);
