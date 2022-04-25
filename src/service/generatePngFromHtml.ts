@@ -3,6 +3,9 @@ import puppeteer from "puppeteer";
 import { dirname, async } from "../util/index.js";
 
 import config from "../config/index.js";
+import { Logger } from "../tool/logger.js";
+
+const logger = Logger(`generatePngFromHtml`);
 
 const { Sequential } = async;
 
@@ -12,8 +15,10 @@ let page;
 let browserInit;
 
 let isRunning = false;
+let error: Error;
 
 const init = () => {
+  if (error) throw error;
   if (isRunning) return null;
   isRunning = true;
   browserInit = puppeteer
@@ -25,11 +30,16 @@ const init = () => {
       browser = v;
       page = await browser.newPage();
 
-      await page.goto(`file://${dirname(import.meta, `htmlBoilerPlate.html`)}`);
+      await page.goto(`file:${dirname(import.meta, `htmlBoilerPlate.html`)}`);
       await page.setJavaScriptEnabled(true);
     });
-  return browserInit;
+  return browserInit.catch((e: Error) => {
+    logger.error(e);
+    error = e;
+  });
 };
+
+init();
 
 if (config.env === `production`) {
   init();
