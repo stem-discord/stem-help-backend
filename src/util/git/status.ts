@@ -34,7 +34,7 @@ export async function getLastCommit() {
   });
 }
 
-export async function getHeadDiff(ops: string) {
+export async function getHeadDiff(ops?: string) {
   return new Promise((res, rej) => {
     ops = ops ?? `--compact-summary`;
     exec(`git diff origin/HEAD HEAD ${ops}`, (err, stdout, stderr) => {
@@ -58,7 +58,7 @@ export async function getBranchDiff(a: string, b: string, ops: string) {
   });
 }
 
-export async function getUnstagedDiff(ops: string) {
+export async function getUnstagedDiff(ops?: string) {
   return new Promise((res, rej) => {
     ops = ops ?? `--compact-summary`;
     exec(`git diff ${ops}`, (err, stdout, stderr) => {
