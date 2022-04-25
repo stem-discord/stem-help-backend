@@ -1,3 +1,5 @@
+import fs from "fs";
+
 import puppeteer from "puppeteer";
 
 import { dirname, async } from "../util/index.js";
@@ -21,16 +23,25 @@ const init = () => {
   if (error) throw error;
   if (isRunning) return null;
   isRunning = true;
+  const headless = config.env !== `development`;
+
+  logger.info(`launching headless=${headless} chrome instance`);
+
   browserInit = puppeteer
     .launch({
       args: [`--no-sandbox`, `--disable-setuid-sandbox`],
-      headless: config.env !== `development`,
+      headless,
     })
     .then(async v => {
       browser = v;
       page = await browser.newPage();
 
-      await page.goto(`file:${dirname(import.meta, `htmlBoilerPlate.html`)}`);
+      await page.setContent(
+        await fs.promises.readFile(
+          dirname(import.meta, `htmlBoilerPlate.html`),
+          `utf8`
+        )
+      );
       await page.setJavaScriptEnabled(true);
     });
   return browserInit.catch((e: Error) => {
@@ -38,8 +49,6 @@ const init = () => {
     error = e;
   });
 };
-
-init();
 
 if (config.env === `production`) {
   init();
