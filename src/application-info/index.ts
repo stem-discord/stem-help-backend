@@ -12,8 +12,9 @@ export const application = (executor, name) => {
   executor ||= () => {};
   if (configured) throw new Error(`Application already configured`);
   configured = true;
-  const logger = new Logger(name);
-  const unexpectedErrorHandler = error => {
+  const logger = Logger(name);
+  const unexpectedHandler = (title: string) => (error: Error) => {
+    error.stack = title + error.stack;
     logger.error(error);
   };
 
@@ -22,8 +23,8 @@ export const application = (executor, name) => {
     logger.error(`Error in ${name}`, e);
   });
 
-  process.on(`uncaughtException`, unexpectedErrorHandler);
-  process.on(`unhandledRejection`, unexpectedErrorHandler);
+  process.on(`uncaughtException`, unexpectedHandler(`Unexpected Error`));
+  process.on(`unhandledRejection`, unexpectedHandler(`Unexpected Rejection`));
   process.on(`warning`, warning => {
     if (warning.message.includes(`stream/web`)) return;
     logger.warn(warning.stack);
