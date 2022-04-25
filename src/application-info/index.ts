@@ -23,8 +23,8 @@ export const application = (executor, name) => {
     logger.error(`Error in ${name}`, e);
   });
 
-  process.on(`uncaughtException`, unexpectedHandler(`Unexpected Error`));
-  process.on(`unhandledRejection`, unexpectedHandler(`Unexpected Rejection`));
+  process.on(`uncaughtException`, unexpectedHandler(`Unexpected `));
+  process.on(`unhandledRejection`, unexpectedHandler(`Unhandled Rejection:`));
   process.on(`warning`, warning => {
     if (warning.message.includes(`stream/web`)) return;
     logger.warn(warning.stack);
