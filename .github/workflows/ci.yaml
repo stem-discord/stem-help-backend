@@ -99,10 +99,13 @@ jobs:
       - run: npm run build 
       - run: npm run setup
       - run: npm run clearcache
-      - run: touch .env
+
+      - run: " > .env"
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db" >> .env
       - run: echo "STEM_INFORMATION_URL=mongodb://127.0.0.1:27017/information" >> .env
       - run: echo "CONNECTIONS=\"mongo,discordgql\"" >> .env
+
+      - run: " > .discordbot.env"
       - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}" >> .discordbot.env
       - run: echo "APPLICATION_ENV=.discordbot" >> .discordbot.env
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/discord-api-server" >> .discordbot.env
