@@ -7,27 +7,16 @@ function Sequential<T>(func: (...args: unknown[]) => Promise<T>) {
       ? `No stack available in production`
       : new Error().stack;
     const thisCurrent = current;
-    let resolve, reject;
-    const p = new Promise<T>((r, re) => {
-      resolve = r;
-      reject = re;
-    }).catch(e => {
-      e.stack += stack;
-      throw e;
-    });
-    current = p;
+
     await thisCurrent?.catch(() => null);
 
-    (async () => {
-      try {
-        const a = await Reflect.apply(func, this, args);
-        resolve(a);
-      } catch (e) {
-        reject(e);
-      }
-    })();
-
-    return p;
+    // eslint-disable-next-line require-atomic-updates
+    return (current = Reflect.apply(func, this, args)
+      .then()
+      .catch((e: Error) => {
+        e.stack += `\n\n-- Sequential Function created at\n` + stack;
+        throw e;
+      }));
   };
 }
 
