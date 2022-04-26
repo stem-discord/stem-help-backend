@@ -5,4 +5,4 @@ export default Lock({
   REFRESH: `REFRESH`,
   RESET_PASSWORD: `RESET_PASSWORD`,
   VERIFY_EMAIL: `VERIFY_EMAIL`,
-});
+} as const);
