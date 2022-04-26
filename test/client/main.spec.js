@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 import env from "../config.js";
 import { mongo } from "../../src/connection/index.js";
@@ -17,8 +17,8 @@ const sleep = t =>
 function tokenPair(obj) {
   const { access_token, refresh_token } = obj;
   return {
-    access: access_token && jwt_decode(access_token),
-    refresh: refresh_token && jwt_decode(refresh_token),
+    access: access_token && jwtDecode(access_token),
+    refresh: refresh_token && jwtDecode(refresh_token),
   };
 }
 
