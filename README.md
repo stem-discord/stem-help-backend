@@ -14,6 +14,10 @@ Enviroment file, do
 
 `npm run help:env`
 
+Install packages
+
+`yarn install --frozen-lockfile`
+
 ```
 test
   env - used for options when testing. Is not loaded to process.env

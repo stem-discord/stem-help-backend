@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
 
-      - name: npm ci
-        run: npm ci
+      - name: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: run lint
         uses: wearerequired/lint-action@v1.7.0

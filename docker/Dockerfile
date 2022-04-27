@@ -36,7 +36,7 @@ RUN n use $(cat .nvmrc)
 
 RUN apt-get update
 
-RUN npm ci
+RUN yarn install --frozen-lockfile
 
 ENV PORT=8080
 

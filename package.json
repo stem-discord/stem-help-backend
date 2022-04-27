@@ -13,7 +13,7 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "static": "ts-node src/api-server.ts",
-    "update": "git pull && npm ci && pm2 restart app",
+    "update": "git pull && yarn install --frozen-lockfile && pm2 restart app",
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json src/api-server.ts -- --",
     "dev:noconn": "cross-env NODE_ENV=development nodemon --config nodemon.json src/api-server.ts -- -- --connections \" \"",
     "cleanserver": "npm run mongoreset && cross-env NODE_ENV=test nodemon --config nodemon.json src/api-server.ts --drop-all",

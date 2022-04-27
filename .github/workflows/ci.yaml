@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
 
-      - name: npm ci
-        run: npm ci
+      - name: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: run lint
         uses: wearerequired/lint-action@v1.7.0
@@ -91,8 +91,8 @@ jobs:
           rm mongod.temp
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
-      - name: npm ci if npm ls errors
-        run: npm ls || npm ci
+      - name: yarn install --frozen-lockfile if npm ls errors
+        run: npm ls || yarn install --frozen-lockfile
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           PUPPETEER_EXECUTABLE_PATH: which chromium
