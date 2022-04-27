@@ -1,6 +1,6 @@
 import { generatePassword } from "../../src/util/crypto/index.js";
 
-const password = `testp@ssw0rd`;
+const password = `password1`;
 
 const { salt, hash } = generatePassword(password);
 
