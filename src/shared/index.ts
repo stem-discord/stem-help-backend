@@ -1,10 +1,12 @@
+import Discord from "discord.js";
+import { Model } from "mongoose";
+
 import * as models from "../models/index.js";
 
 import * as connection from "../connection/index.js";
 import { RequireProxy } from "./RequireProxy.js";
 
 import config from "../config/index.js";
-import { Model } from "mongoose";
 
 const mongoModel = Object.create(null);
 
@@ -66,15 +68,16 @@ const stemInformation = RequireProxy(
 );
 
 const stem = RequireProxy(() => connection.discord.connection.isOperational(), {
-  get guild() {
+  get guild(): Discord.Guild | undefined {
     return connection.discord.client.guilds.cache.get(
       config.discord.server.stem
     );
   },
-  get generalChannel() {
+  get generalChannel(): Discord.TextChannel | undefined {
     return connection.discord.client.channels.cache.get(
       config.discord.server.general
-    );
+      // TODO add runtime type checks
+    ) as Discord.TextChannel;
   },
 });
 
