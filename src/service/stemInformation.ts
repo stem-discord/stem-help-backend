@@ -14,7 +14,7 @@ export async function getUserStats(id: string) {
   if (!q) return false;
   if (!q2) return false;
   return {
-    ...q2,
-    stats: q?.stats,
+    ...q,
+    thankedStats: q2,
   };
 }
