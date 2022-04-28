@@ -7,14 +7,6 @@ const config = lib.config;
 
 const router = lib.Router();
 
-function html(str) {
-  return String(str)
-    .replace(/&/g, `&amp;`)
-    .replace(/</g, `&lt;`)
-    .replace(/>/g, `&gt;`)
-    .replace(/"/g, `&quot;`);
-}
-
 const profileBannerCache = new lib.util.cache.FileSystemCache({
   basePath: `./.cache/profile-banner-cache`,
   transform: v => v,
@@ -22,34 +14,9 @@ const profileBannerCache = new lib.util.cache.FileSystemCache({
   toBuffer: v => v,
   generator: async id => {
     if (!id) return null;
-    const gq = lib.shared.discordgql
-      .query`query { user(id: "${id}") { displayAvatarURL(format: "png", size: 128) } }`;
-    const sq = lib.shared.stemInformation.UserInfoPublic.findOne({
-      user_id: id,
-    });
-
-    let { user } = (await gq).data;
-    const { stats } = (await sq.lean()) || {};
-
-    let pfp =
-      user.displayAvatarURL ||
-      `https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png`;
-
-    // TODO make a resource manager for this
-    return lib.service.generatePngFromHtml.generate(
-      await new Promise((resolve, reject) => {
-        ejs.renderFile(
-          `${process.cwd()}/assets/html/idcard.ejs`,
-          {
-            user: {
-              pfp,
-              thanked: html(stats?.thanked),
-            },
-          },
-          {},
-          (err, str) => (err ? reject(err) : resolve(str))
-        );
-      })
+    if (!id.match(/\d+/)) return null;
+    return lib.service.generatePngFromHtml.generateUrl(
+      `${config.frontend.url}/component/user/${id}`
     );
   },
 });

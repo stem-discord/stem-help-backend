@@ -12,7 +12,8 @@ const logger = Logger(`generatePngFromHtml`);
 const { Sequential } = async;
 
 let browser;
-let page;
+let page: puppeteer.Page;
+let pageUrl: puppeteer.Page;
 
 let browserInit;
 
@@ -35,6 +36,7 @@ const init = () => {
     .then(async v => {
       browser = v;
       page = await browser.newPage();
+      pageUrl = await browser.newPage();
 
       await page.setContent(
         await fs.promises.readFile(
@@ -52,6 +54,38 @@ const init = () => {
 
 if (config.env === `production`) {
   init();
+}
+
+async function screenshot(page: puppeteer.Page) {
+  const body = await page.$(`body`);
+
+  if (!body) throw new Error(`body was null`);
+
+  const bb = await body.boundingBox();
+
+  if (!bb) throw new Error(`bb was null`);
+
+  let { x, y, width, height } = bb;
+
+  x = Math.ceil(x);
+  y = Math.ceil(y);
+  width = Math.ceil(width);
+  height = Math.ceil(height);
+
+  return await page.screenshot({
+    clip: { width: Math.max(width, 1), height: Math.max(height, 1), x, y },
+    omitBackground: true,
+  });
+}
+
+async function generateByUrl(url: string) {
+  await init();
+
+  await pageUrl.goto(url, {
+    waitUntil: `networkidle0`,
+  });
+
+  return screenshot(pageUrl);
 }
 
 async function generateInner(
@@ -86,23 +120,13 @@ async function generateInner(
       /* eslint-enable no-undef */
     },
     t,
-    style
+    style as puppeteer.Serializable
   );
 
-  const body = await page.$(`body`);
-
-  let { x, y, width, height } = await body.boundingBox();
-
-  x = Math.ceil(x);
-  y = Math.ceil(y);
-  width = Math.ceil(width);
-  height = Math.ceil(height);
-
-  return await page.screenshot({
-    clip: { width: Math.max(width, 1), height: Math.max(height, 1), x, y },
-  });
+  return screenshot(page);
 }
 
 const generate = Sequential(generateInner);
+const generateUrl = Sequential(generateByUrl);
 
-export { generate };
+export { generate, generateUrl };

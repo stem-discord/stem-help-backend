@@ -103,6 +103,7 @@ jobs:
 
       - run: " > .env"
       - run: echo "CORS=true" > .env
+      - run: echo "FRONTEND_URL=http://localhost:8080" >> .env
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/stem-backend-db" >> .env
       - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}" >> .env
       - run: echo "STEM_INFORMATION_URL=mongodb://127.0.0.1:27017/information" >> .env
