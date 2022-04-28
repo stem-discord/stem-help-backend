@@ -37,7 +37,7 @@ async function generate(type = `svg`) {
 
   if (type === `png`) {
     const svg = await generate(`svg`);
-    return optimize(promisify(svg2img.bind(svg2img))(svg));
+    return promisify(svg2img.bind(svg2img))(svg);
   } else if ([`jpeg`, `jpg`].includes(type)) {
     const svg = await generate(`svg`);
     return optimize(promisify(svg2img.bind(svg2img))(svg), {
