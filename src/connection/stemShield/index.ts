@@ -14,7 +14,9 @@ let connection: Connection;
 
 if (config.stemShield.heartbeatUrl) {
   logger.info(
-    `STEM Shield heartbeat configured to ${config.stemShield.heartbeatUrl}`
+    `STEM Shield heartbeat configured to ${(
+      config.stemShield.heartbeatUrl as string
+    ).replace(/[\da-f]{30,}/, m => `*`.repeat(m.length))}`
   );
 
   const heartbeat = async () => {
