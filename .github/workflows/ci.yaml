@@ -80,7 +80,7 @@ jobs:
         continue-on-error: true
 
       - name: Set node version
-        run: alias node='n use latest'
+        run: alias node='n use auto'
 
       - name: Check out Git repository
         uses: actions/checkout@v2
