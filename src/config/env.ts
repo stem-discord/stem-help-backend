@@ -23,6 +23,9 @@ function generateConfig(env: Env): Env {
     port: envVars.PORT,
     apiURL: envVars.API_URL,
     adminKey: envVars.SUPER_SECRET_ADMIN_KEY,
+    frontend: {
+      url: envVars.FRONTEND_URL,
+    },
     connections: envVars.CONNECTIONS?.match(/^\s+$/)
       ? []
       : envVars.CONNECTIONS?.split(/\s*,\s*/g),

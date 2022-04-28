@@ -18,6 +18,9 @@ const envVarsSchema = Joi.object()
       .description(
         `The super secret admin key used to bypass anything for testing a feature in production`
       ),
+    FRONTEND_URL: Joi.string()
+      .description(`Url to render components and stuff`)
+      .default(`https://beta.stem.help`),
     LOGGING_ABSOLUTE: Joi.string()
       .valid(`true`, `false`)
       .description(`Logging absolute time`),
