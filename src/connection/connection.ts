@@ -23,7 +23,7 @@ class Connection extends EventEmitter {
   public initialized = false;
   public null = false;
   public message: string | undefined = undefined;
-  public rejectReason: string | undefined = undefined;
+  public rejectReason = ``;
   public name: string;
   // This is anti event emitter pattern, but ensures that only one listener is active
   public statusUpdate: (status: keyof typeof ConnectionState) => void;
@@ -121,8 +121,8 @@ class Connection extends EventEmitter {
         }
         this.state = ConnectionState.CONNECTED;
       } catch (e) {
-        this.state = ConnectionState.DISCONNECTED;
         this.rejectReason = e.message;
+        this.state = ConnectionState.DISCONNECTED;
       }
     }, 15 * 1000);
 
@@ -150,8 +150,8 @@ class Connection extends EventEmitter {
     }
     if (this._state === val) return;
     this.emit(`updateState`, val);
-    this.statusUpdate(val);
     this._state = val;
+    this.statusUpdate(val);
   }
 
   get heartbeat() {
