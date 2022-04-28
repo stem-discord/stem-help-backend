@@ -79,6 +79,9 @@ jobs:
           git reset --hard HEAD
         continue-on-error: true
 
+      - name: Set node version
+        run: alias node='n use latest'
+
       - name: Check out Git repository
         uses: actions/checkout@v2
         with:
