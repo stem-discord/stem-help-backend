@@ -44,6 +44,10 @@ function generateConfig(env: Env): Env {
         socketTimeoutMS: 5000,
       },
     },
+    // You don't have to access this
+    stemShield: {
+      heartbeatUrl: envVars.STEM_SHIELD_HEARTBEAT_URL,
+    },
     stemInformation: {
       url: envVars.STEM_INFORMATION_URL,
       options: {
