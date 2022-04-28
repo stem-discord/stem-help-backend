@@ -34,9 +34,11 @@ const init = () => {
       headless,
     })
     .then(async v => {
+      // TODO When a browser is created, a new page automatically appears
+      // Currently I don't know how to disable that behavior
       browser = v;
       page = await browser.newPage();
-      pageUrl = await browser.newPage();
+      pageUrl = await browser.newPage(`https://google.com`);
 
       await page.setContent(
         await fs.promises.readFile(
@@ -56,7 +58,10 @@ if (config.env === `production`) {
   init();
 }
 
-async function screenshot(page: puppeteer.Page) {
+async function screenshot(
+  page: puppeteer.Page,
+  opts: puppeteer.ScreenshotOptions = {}
+) {
   const body = await page.$(`body`);
 
   if (!body) throw new Error(`body was null`);
@@ -75,17 +80,31 @@ async function screenshot(page: puppeteer.Page) {
   return await page.screenshot({
     clip: { width: Math.max(width, 1), height: Math.max(height, 1), x, y },
     omitBackground: true,
+    ...opts,
   });
 }
 
-async function generateByUrl(url: string) {
+async function generateByUrl(
+  url: string,
+  opts: puppeteer.ScreenshotOptions & Partial<puppeteer.Viewport> = {}
+) {
   await init();
+
+  const vp = page.viewport();
+
+  if (!vp) throw new Error(`viewport was null`);
+
+  await pageUrl.setViewport({
+    width: vp.width,
+    height: vp.height,
+    ...opts,
+  });
 
   await pageUrl.goto(url, {
     waitUntil: `networkidle0`,
   });
 
-  return screenshot(pageUrl);
+  return screenshot(pageUrl, opts);
 }
 
 async function generateInner(

@@ -16,7 +16,10 @@ const profileBannerCache = new lib.util.cache.FileSystemCache({
     if (!id) return null;
     if (!id.match(/\d+/)) return null;
     return lib.service.generatePngFromHtml.generateUrl(
-      `${config.frontend.url}/component/user/${id}`
+      `${config.frontend.url}/component/user/${id}`,
+      {
+        deviceScaleFactor: 2,
+      }
     );
   },
 });
