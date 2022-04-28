@@ -6592,9 +6592,9 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-"nock@github:nopeless/nock#main":
+"nock@https://github.com/nopeless/nock#main":
   version "0.0.0-development"
-  resolved "https://codeload.github.com/nopeless/nock/tar.gz/e0ce2c610264e108c80c65b4da421207135b7d1d"
+  resolved "https://github.com/nopeless/nock#e0ce2c610264e108c80c65b4da421207135b7d1d"
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"

@@ -92,8 +92,8 @@ jobs:
           rm mongod.temp
       - name: fetch heads and origin head
         run: git fetch origin main && git fetch origin HEAD && git remote set-head origin main
-      - name: yarn install --frozen-lockfile if npm ls errors
-        run: yarn list || yarn install --frozen-lockfile
+      - name: yarn install --frozen-lockfile (I believe yarn)
+        run: yarn install --frozen-lockfile
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           PUPPETEER_EXECUTABLE_PATH: which chromium
