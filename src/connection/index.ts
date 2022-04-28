@@ -1,5 +1,6 @@
 import * as mongo from "./mongo/index.js";
 import * as stemInformation from "./stemInformation/index.js";
+import * as stemShield from "./stemShield/index.js";
 import * as discord from "./discord/index.js";
 import * as discordgql from "./discordgql/index.js";
 
@@ -17,6 +18,7 @@ const modules = {
   discord,
   stemInformation,
   discordgql,
+  stemShield,
 };
 
 const connections = Object.entries(modules).map(e => {
