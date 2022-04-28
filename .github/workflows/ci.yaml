@@ -116,5 +116,13 @@ jobs:
       - run: echo "DISCORD_BOT_TOKEN=${{ secrets.SANDBOX_DISCORD_BOT_TOKEN }}" >> .discordbot.env
       - run: echo "APPLICATION_ENV=.discordbot" >> .discordbot.env
       - run: echo "MONGODB_URL=mongodb://127.0.0.1:27017/discord-api-server" >> .discordbot.env
+
       - run: pm2 restart ecosystem.config.json
 
+      - name: Discord notification
+        if: success() || failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_CD_UPDATE_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: '{{ EVENT_PAYLOAD.repository.full_name }} deploy to sandbox {{["FAILED", "SUCCEEDED"][success()]}} <@341446613056880641>'
