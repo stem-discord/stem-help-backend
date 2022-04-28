@@ -19,18 +19,21 @@ const envVarsSchema = Joi.object()
         `The super secret admin key used to bypass anything for testing a feature in production`
       ),
     FRONTEND_URL: Joi.string()
+      .uri()
       .description(`Url to render components and stuff`)
       .default(`https://beta.stem.help`),
     LOGGING_ABSOLUTE: Joi.string()
       .valid(`true`, `false`)
       .description(`Logging absolute time`),
-    MONGODB_URL: Joi.string().description(`Mongo DB url`),
+    MONGODB_URL: Joi.string().uri().description(`Mongo DB url`),
     STEM_SHIELD_HEARTBEAT_URL: Joi.string().description(
       `Sends a heartbeat as a connection`
     ),
-    STEM_INFORMATION_URL: Joi.string().description(
-      `Mongo DB url for stem information (you won't have access to this unless ur an admin)`
-    ),
+    STEM_INFORMATION_URL: Joi.string()
+      .uri()
+      .description(
+        `Mongo DB url for stem information (you won't have access to this unless ur an admin)`
+      ),
     CONNECTIONS: Joi.string()
       .allow(``)
       .description(
@@ -58,12 +61,13 @@ const envVarsSchema = Joi.object()
       `the from field in the emails sent by the app`
     ),
     CORS: Joi.string().valid(`true`, `false`).description(`Enable CORS`),
-    API_URL: Joi.string().description(
-      `url to make api calls to. used by src/static`
-    ),
+    API_URL: Joi.string()
+      .uri()
+      .description(`url to make api calls to. used by src/static`),
     DISCORD_BOT_TOKEN: Joi.string().description(`discord bot token`),
     DISCORD_UPLOAD_WEBHOOK: Joi.string().description(`discord upload webhook`),
     DISCORD_BOT_SERVER_GQL_URL: Joi.string()
+      .uri()
       .description(`discord bot api server (graphql) url`)
       .default(`http://localhost:5003/graphql`),
     // temporary
