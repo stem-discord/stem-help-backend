@@ -157,7 +157,10 @@ const openConnections = async (selection: string[]) => {
   // Now start listening for status changes
   for (const connection of selectedConnections) {
     connection.statusUpdate = state => {
-      logger.info(`[${connection.name}] is now: ${state}`);
+      logger.info(
+        `[${connection.name}] is now: ${state}` +
+          (connection.isOperational() ? `` : ` -> ${connection.rejectReason}`)
+      );
     };
   }
 };
