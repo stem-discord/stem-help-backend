@@ -23,7 +23,7 @@ if (config.stemShield.heartbeatUrl) {
     }).catch(() => {
       throw new Error(`Cannot reach server`);
     });
-    if (res.status !== 200) {
+    if (!res.ok) {
       throw new Error(`Connection is up, but the status is ${res.status}`);
     }
   };
