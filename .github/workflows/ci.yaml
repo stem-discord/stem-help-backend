@@ -119,9 +119,9 @@ jobs:
 
       - run: pm2 restart ecosystem.config.json
 
-      - name: Discord notification
-        uses: tsickert/discord-webhook@v4.0.0
-        if: success() || failure()
-        with:
-          content: '{{ EVENT_PAYLOAD.repository.full_name }} deploy to sandbox {{["FAILED", "SUCCEEDED"][success()]}} <@341446613056880641>'
-          webhook-url: ${{ secrets.DISCORD_CD_UPDATE_WEBHOOK }}
+      # - name: Discord notification
+      #   uses: tsickert/discord-webhook@v4.0.0
+      #   if: success() || failure()
+      #   with:
+      #     content: '{{ EVENT_PAYLOAD.repository.full_name }} deploy to sandbox {{["FAILED", "SUCCEEDED"][success()]}} <@341446613056880641>'
+      #     webhook-url: ${{ secrets.DISCORD_CD_UPDATE_WEBHOOK }}
