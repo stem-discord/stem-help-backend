@@ -7,7 +7,7 @@ const { logger } = lib.tool;
 const router = lib.Router();
 
 const cache = new lib.util.cache.FileSystemCache({
-  baseDir: `./.cache/dependency`,
+  basePath: `./.cache/dependency`,
   generator: t => lib.service.generateDependencyGraph.generate(t),
   toBuffer: b => b,
   transform: b => b,
