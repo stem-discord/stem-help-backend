@@ -60,7 +60,10 @@ const envVarsSchema = Joi.object()
     EMAIL_FROM: Joi.string().description(
       `the from field in the emails sent by the app`
     ),
-    CORS: Joi.string().valid(`true`, `false`).description(`Enable CORS`),
+    CORS: Joi.string()
+      .valid(`true`, `false`)
+      .default(`false`)
+      .description(`Enable CORS`),
     API_URL: Joi.string()
       .uri()
       .description(`url to make api calls to. used by src/static`),
