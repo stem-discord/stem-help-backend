@@ -10,7 +10,9 @@ const router = lib.Router();
 
 async function lookup(q) {
   const user = await lib.shared.discord.client.users.fetch(q);
-  const member = await lib.shared.discord.stem.guild.members.fetch(q);
+  const guild = lib.shared.discord.stem.guild;
+
+  const member = guild ? await guild.members.fetch(q) : null;
   return { ...user, stem: member };
 }
 
