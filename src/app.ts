@@ -53,7 +53,7 @@ app.use(compression());
 
 // enable cors
 if (config.cors) {
-  app.use(cors({ origin: true }));
+  app.use(cors());
 }
 
 app.get(`/`, async (req, res) => {
