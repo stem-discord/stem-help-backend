@@ -54,7 +54,11 @@ if (config.discord.botToken) {
   });
 
   client.on(`ready`, () => {
-    logger.info(`logged in as ${client.user?.tag}`);
+    logger.info(
+      `logged in as ${client.user?.tag}. In guilds ${client.guilds.cache
+        .map(g => `[${g.name}]`)
+        .join(`, `)}`
+    );
     clientReady();
   });
 
@@ -66,15 +70,23 @@ if (config.discord.botToken) {
       let cinit: null | Promise<unknown> = null;
       if (!calledLogin) cinit = client.login(config.discord.botToken);
 
-      await Promise.all([
-        cinit, // Might be present
-        // If stem server is configured, get it
-        config.discord.server.stem &&
-          client.guilds.fetch(config.discord.server.stem),
-      ]);
       // eslint-disable-next-line require-atomic-updates
       calledLogin = true;
-      return open;
+
+      return Promise.all([
+        cinit, // Might be present
+        open,
+        // If stem server is configured, get it
+        config.discord.server.stem &&
+          client.guilds.fetch(config.discord.server.stem).catch(e => {
+            logger.error(
+              `Could not fetch stem server. ` +
+                `Application will continue to work but will return ` +
+                `null fields for stem related operations`
+            );
+            logger.error(e);
+          }),
+      ]);
     },
     heartbeat: () => {
       if (!client.isReady()) throw new Error(`client is not ready`);
