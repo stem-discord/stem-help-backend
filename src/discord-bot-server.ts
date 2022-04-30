@@ -1,15 +1,27 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
+import httpStatus from "http-status";
 
+import * as middlewares from "./middlewares/index.js";
 import config from "./config/index.js";
 import { application } from "./application-info/index.js";
 import { SchemaFromClient } from "./util/DiscordGraphQL/index.js";
 import { client } from "./discord-bot.js";
+import { morgan } from "./tool/index.js";
+import { ApiError } from "./util/index.js";
+
+const { error } = middlewares;
+const { errorConverter, errorHandler } = error;
 
 const logger = application(null, `Discord Bot Server`);
 
 // GraphQL server
 const app = express();
+
+if (config.env !== `test`) {
+  app.use(morgan.successHandler);
+  app.use(morgan.errorHandler);
+}
 
 const isProd = config.env === `production`;
 
@@ -35,6 +47,17 @@ if (isProd) {
 }
 
 app.use(`/graphql`, mid);
+
+// send back a 404 error for any unknown api request
+app.use((req, res, next) => {
+  next(new ApiError(httpStatus.NOT_FOUND, `Not found`));
+});
+
+// convert error to ApiError, if needed
+app.use(errorConverter);
+
+// handle error
+app.use(errorHandler);
 
 const PORT = config.discord.gql.port;
 
