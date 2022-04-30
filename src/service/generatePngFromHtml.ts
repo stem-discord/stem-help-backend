@@ -62,7 +62,8 @@ async function screenshot(
   page: puppeteer.Page,
   opts: puppeteer.ScreenshotOptions = {}
 ) {
-  const body = await page.$(`body`);
+  const body =
+    (await page.$(`#puppeteer-screenshot`)) || (await page.$(`body`));
 
   if (!body) throw new Error(`body was null`);
 
