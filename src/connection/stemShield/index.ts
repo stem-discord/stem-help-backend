@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 import { Connection, NullConnection, Namespace } from "../connection.js";
 
 const ns = new Namespace(
-  `STEM Shield server`,
+  `STEM Shield`,
   `Interactions with STEM Shield (currently only supports heartbeats)`
 );
 const logger = ns.logger;
