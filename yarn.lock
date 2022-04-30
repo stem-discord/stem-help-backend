@@ -6705,10 +6705,10 @@ nodemon@^2.0.0:
     undefsafe "^2.0.5"
     update-notifier "^5.1.0"
 
-nope-fs-cache@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/nope-fs-cache/-/nope-fs-cache-0.1.3.tgz#68472b495a9810cc0ba1a26d3ad052a4cce2e428"
-  integrity sha512-Bai14Ujqtb7Dt08uaRH8Hc1nfLXdb7xUruha1HVpexbxXscxtToKCTXcM0UK6BcN/AEH1rBmH4rmIAMvVt1m0w==
+nope-fs-cache@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nope-fs-cache/-/nope-fs-cache-0.2.0.tgz#8a5aee05b071932935a7eb7224bb6aa9429d6ec4"
+  integrity sha512-fPWWCcK/W7HGw621++LfEyheHZM8x23z3f8c5YHwiDBFkv5bXWcWAGCsvKiTX1RcLlrvnP15FmyEVw9sxt75dA==
   dependencies:
     ms "^2.1.3"
 
