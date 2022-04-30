@@ -63,7 +63,15 @@ if (config.discord.botToken) {
   connection = new Connection({
     ...ns,
     init: async () => {
-      if (!calledLogin) await client.login(config.discord.botToken);
+      let cinit: null | Promise<unknown> = null;
+      if (!calledLogin) cinit = client.login(config.discord.botToken);
+
+      await Promise.all([
+        cinit, // Might be present
+        // If stem server is configured, get it
+        config.discord.server.stem &&
+          client.guilds.fetch(config.discord.server.stem),
+      ]);
       // eslint-disable-next-line require-atomic-updates
       calledLogin = true;
       return open;
