@@ -38,3 +38,6 @@ env/
 /.cache
 
 mongodump*.gz
+
+# Logs
+*.heapprofile
