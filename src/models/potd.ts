@@ -52,7 +52,10 @@ const potdSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: `metadata.createdTimestamp`,
+      updatedAt: `metadata.lastEditTimestamp`,
+    },
   }
 );
 
