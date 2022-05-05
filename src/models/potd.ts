@@ -1,45 +1,60 @@
 import mongoose from "mongoose";
 
 import { toJSON } from "./plugins/index.js";
-import userUploadable from "./base/userUploadable.js";
 
-const potdSchema = new mongoose.Schema({
-  ...userUploadable,
-  question: {
-    type: String,
-    required: true,
-  },
-  answer: {
-    type: String,
-    required: true,
-  },
-  explanation: {
-    type: String,
-    required: false,
-  },
-  upvotes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: `User`,
+const potdSchema = new mongoose.Schema(
+  {
+    metadata: {
+      author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: `User`,
+        required: true,
+      },
+      contributors: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: `User`,
+        default: [],
+      },
+      tags: {
+        type: [String],
+        default: [],
+      },
+      title: {
+        type: String,
+        required: true,
+      },
+      subject: {
+        type: String,
+        required: true,
+      },
     },
-  ],
-  downvotes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: `User`,
+    content: {
+      question: {
+        type: String,
+        required: true,
+      },
+      answer: {
+        type: String,
+        required: true,
+      },
+      hint: {
+        type: String,
+        default: ``,
+      },
+      images: {
+        type: [String],
+        default: [],
+      },
+      explanation: {
+        type: String,
+        default: ``,
+      },
     },
-  ],
-  images: [
-    {
-      type: String,
-    },
-  ],
-  // json metadata
-  metadata: {
-    type: String,
-    required: true,
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // add plugin that converts mongoose to json
 potdSchema.plugin(toJSON);
