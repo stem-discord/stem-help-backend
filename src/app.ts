@@ -56,6 +56,8 @@ if (config.cors) {
   app.use(cors());
 }
 
+app.enable(`trust proxy`);
+
 app.get(`/`, async (req, res) => {
   res.sendFile(dirname(import.meta, `landing.html`));
 });
