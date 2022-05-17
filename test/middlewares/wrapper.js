@@ -1,3 +1,4 @@
+import chai from "chai";
 import { request, response } from "express";
 import { ApiError } from "../../src/util/index.js";
 

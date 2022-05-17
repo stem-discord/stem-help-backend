@@ -19,7 +19,3 @@ describe(`discord api`, function () {
     });
   });
 });
-
-describe(`JWT Authflow`, function () {
-  it(`Should insert a token in the database`);
-});

@@ -1,5 +1,6 @@
 import * as util from "../../src/util/index.js";
 import * as types from "../../src/types/index.js";
+import chai from "chai";
 
 import Joi from "joi";
 
