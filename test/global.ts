@@ -26,7 +26,7 @@ Context.prototype.needs = function (...ops) {
     throw new Error(`No this context (is it in an 'it' scope?)`);
   }
 
-  let reason = null;
+  let reason: string | null = null;
 
   for (let op of ops) {
     if (op instanceof Function) {
