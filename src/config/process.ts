@@ -23,6 +23,13 @@ export default (function (config) {
     config.jwt.privateKey ??= `0`;
   }
 
+  if (config.session.secret === undefined) {
+    if (process.env.NODE_ENV === `production`) {
+      throw new Error(`session.secret is required in production`);
+    }
+    config.session.secret = `super secret key`;
+  }
+
   let w = config.discord.uploadWebhook;
   if (w) {
     const o = new URL(w);

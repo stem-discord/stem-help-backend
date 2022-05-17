@@ -60,6 +60,9 @@ function generateConfig(env: Env): Env {
         socketTimeoutMS: 5000,
       },
     },
+    session: {
+      secret: envVars.SESSION_SECRET,
+    },
     jwt: {
       publicKey: envVars.JWT_PUBLIC_KEY,
       privateKey: envVars.JWT_PRIVATE_KEY,

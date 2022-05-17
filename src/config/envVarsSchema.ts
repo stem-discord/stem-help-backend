@@ -39,6 +39,7 @@ const envVarsSchema = Joi.object()
       .description(
         `Connections to open when the server starts. Leave it empty to enable all connections`
       ),
+    SESSION_SECRET: Joi.string().description(`The session secret`),
     JWT_PRIVATE_KEY: Joi.string().description(`JWT private key pem`),
     JWT_PUBLIC_KEY: Joi.string().description(`JWT public key pem`),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
