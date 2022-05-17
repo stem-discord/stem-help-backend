@@ -16,6 +16,10 @@ import * as middlewares from "./middlewares/index.js";
 import { ApiError, dirname } from "./util/index.js";
 import { Logger, morgan } from "./tool/index.js";
 
+import expressSession, { Store } from "express-session";
+
+import { mongosession } from "./connection/index.js";
+
 // const upload = multer();
 
 const logger = Logger(`Express`);
@@ -54,6 +58,22 @@ app.use(compression());
 // enable cors
 if (config.cors) {
   app.use(cors());
+}
+
+// enable sessions
+if (!mongosession.connection.null) {
+  app.use(
+    expressSession({
+      secret: config.session.secret,
+      store: mongosession.store as Store,
+      resave: true,
+      saveUninitialized: true,
+    })
+  );
+} else {
+  logger.warn(
+    `No session store configured. Authenticated routes will not work properly`
+  );
 }
 
 app.enable(`trust proxy`);

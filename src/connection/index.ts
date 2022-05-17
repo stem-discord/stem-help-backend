@@ -1,4 +1,5 @@
 import * as mongo from "./mongo/index.js";
+import * as mongosession from "./mongosession/index.js";
 import * as stemInformation from "./stemInformation/index.js";
 import * as stemShield from "./stemShield/index.js";
 import * as discord from "./discord/index.js";
@@ -19,6 +20,7 @@ const modules = {
   stemInformation,
   discordgql,
   stemShield,
+  mongosession,
 };
 
 const connections = Object.entries(modules).map(e => {
@@ -171,6 +173,7 @@ async function closeConnections() {
 
 export {
   mongo,
+  mongosession,
   discord,
   discordgql,
   stemInformation,

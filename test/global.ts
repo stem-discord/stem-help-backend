@@ -14,9 +14,7 @@ chai.use(chaiAsPromised);
 
 chai.config.truncateThreshold = 0;
 
-global.chai = chai;
 global.expect = chai.expect;
-global.should = chai.should;
 global.assert = chai.assert;
 
 /**
@@ -35,7 +33,7 @@ Context.prototype.needs = function (...ops) {
       try {
         op = op();
         if (op?.then) {
-          throw new Error(`'needs' should be sync, recieved promise`, op);
+          throw new Error(`'needs' should be sync, recieved promise` + op);
         }
       } catch (e) {
         reason = e.message;
@@ -56,7 +54,7 @@ Context.prototype.needs = function (...ops) {
         reason = `${op.connection.name} - ${op.connection.rejectReason}`;
         break;
       } else {
-        throw new Error(`recieved argument that I can't understand`, op);
+        throw new Error(`recieved argument that I can't understand` + op);
       }
     }
 

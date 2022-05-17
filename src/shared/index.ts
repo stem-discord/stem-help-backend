@@ -23,12 +23,6 @@ const mongo = RequireProxy(() => connection.mongo.connection.isOperational(), {
       models.User
     ));
   },
-  get Token(): Model<typeof models.Token> {
-    return (mongoModel.token ??= connection.mongo.connection.mongoose.model(
-      `Token`,
-      models.Token
-    ));
-  },
   get Potd(): Model<typeof models.Potd> {
     return (mongoModel.potd ??= connection.mongo.connection.mongoose.model(
       `Potd`,
