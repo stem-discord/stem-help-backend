@@ -7,7 +7,7 @@ import helmet from "helmet";
 import passport from "passport";
 import httpStatus from "http-status";
 import bodyParser from "body-parser";
-import multer from "multer";
+// import multer from "multer";
 
 import config from "./config/index.js";
 import routes from "./routes/index.js";
