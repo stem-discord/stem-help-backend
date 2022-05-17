@@ -1,6 +1,5 @@
 import shared from "../shared/index.js";
 import { ApiError, crypto, UsernameGenerator } from "../util/index.js";
-import { jwt } from "../auth/index.js";
 import { logger } from "../tool/index.js";
 
 const create = (...arg) => shared.mongo.User.create(...arg);

@@ -7,7 +7,7 @@ import { paginate, toJSON } from "./plugins/index.js";
 
 import { Role, Group } from "../types/index.js";
 
-import { pick } from "../util/index.js";
+// import { pick } from "../util/index.js";
 
 const userSchema: Schema & {
   roles?: string[]; // TODO figure this out later
@@ -119,14 +119,6 @@ const userSchema: Schema & {
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
-
-// TODO tbh i don't know how to write this method
-// if you can write it in a cleaner way by using `access_token` please do
-userSchema.methods.toAccessToken = function () {
-  return {
-    ...pick(this.toJSON(), [`ranks`, `groups`, `name`, `username`]),
-  };
-};
 
 // userSchema.methods.hasRole = function (role) {
 //   return this.roles.includes(role);
