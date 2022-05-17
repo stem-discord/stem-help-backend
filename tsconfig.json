@@ -11,6 +11,7 @@
     "declarationMap": true,
     "moduleResolution": "node",
     "strictNullChecks": true,
+    "skipLibCheck": true
   },
   "ts-node": {
     "transpileOnly": true,
@@ -20,6 +21,6 @@
   "include": [
 	  "./src/**/*.*"
   ],
-  "exclude": ["./node_modules", "./**/*.spec.ts"],
+  "exclude": ["./node_modules/**", "./**/*.spec.ts"],
   "rootDir": "./src",
 }
