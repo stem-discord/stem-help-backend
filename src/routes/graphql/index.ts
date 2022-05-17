@@ -1,5 +1,3 @@
-import helmet from "helmet";
-
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "graphql";
 
