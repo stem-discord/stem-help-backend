@@ -3,5 +3,8 @@
   "compilerOptions": {
     "types": ["node", "mocha", "chai"],
   },
-  "typeRoots": ["global.d.ts"]
+  "typeRoots": [
+    "../node_modules/@types",
+    "global.d.ts"
+ ]
 }
