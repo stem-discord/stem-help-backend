@@ -62,66 +62,67 @@ describe(`client run`, function () {
     });
   });
 
-  describe(`auth cycle`, function () {
-    describe(`monk (normal user)`, function () {
-      before(function () {
-        this.needs(mongo);
-      });
+  // TODO rewrite auth cycle
+  // describe(`auth cycle`, function () {
+  //   describe(`monk (normal user)`, function () {
+  //     before(function () {
+  //       this.needs(mongo);
+  //     });
 
-      let access_token, refresh_token;
+  //     let access_token, refresh_token;
 
-      it(`should register a user`, async function () {
-        const res = await i.register(`monk`, `monk1234`, {
-          email: `monk@gmail.com`,
-        });
-        expect(res)
-          .to.be.an(`object`)
-          .with.keys(`access_token`, `refresh_token`, `user`);
-        const { access, refresh } = tokenPair(res);
-        expect(access.user).to.include.keys([`ranks`, `groups`]);
-        expect(access.user).to.not.include.keys([`email`]);
+  //     it(`should register a user`, async function () {
+  //       const res = await i.register(`monk`, `monk1234`, {
+  //         email: `monk@gmail.com`,
+  //       });
+  //       expect(res)
+  //         .to.be.an(`object`)
+  //         .with.keys(`access_token`, `refresh_token`, `user`);
+  //       const { access, refresh } = tokenPair(res);
+  //       expect(access.user).to.include.keys([`ranks`, `groups`]);
+  //       expect(access.user).to.not.include.keys([`email`]);
 
-        access_token = res.access_token;
-        refresh_token = res.refresh_token;
-      });
+  //       access_token = res.access_token;
+  //       refresh_token = res.refresh_token;
+  //     });
 
-      it(`monk should be able to login again`, async function () {
-        const res = await i.login(`monk`, `monk1234`);
-        expect(res)
-          .to.be.an(`object`)
-          .with.keys(`access_token`, `refresh_token`, `user`);
-        const { access, refresh } = tokenPair(res);
-        validateAccessToken(access);
-      });
+  //     it(`monk should be able to login again`, async function () {
+  //       const res = await i.login(`monk`, `monk1234`);
+  //       expect(res)
+  //         .to.be.an(`object`)
+  //         .with.keys(`access_token`, `refresh_token`, `user`);
+  //       const { access, refresh } = tokenPair(res);
+  //       validateAccessToken(access);
+  //     });
 
-      it(`monk should be able to refresh his tokens`, async function () {
-        const res = await i.refresh(refresh_token);
-        expect(res).to.be.an(`object`).with.keys(`access_token`);
-        const { access } = tokenPair(res);
+  //     it(`monk should be able to refresh his tokens`, async function () {
+  //       const res = await i.refresh(refresh_token);
+  //       expect(res).to.be.an(`object`).with.keys(`access_token`);
+  //       const { access } = tokenPair(res);
 
-        validateAccessToken(access);
-      });
+  //       validateAccessToken(access);
+  //     });
 
-      it(`should allow logout`);
-    });
-    describe(`john (admin user)`, function () {
-      before(function () {
-        this.needs(mongo);
-      });
+  //     it(`should allow logout`);
+  //   });
+  //   describe(`john (admin user)`, function () {
+  //     before(function () {
+  //       this.needs(mongo);
+  //     });
 
-      let access_token, refresh_token;
+  //     let access_token, refresh_token;
 
-      it(`should allow login`, async function () {
-        const res = await i.login(`johndoe`, `password1`);
-        expect(res)
-          .to.be.an(`object`)
-          .with.keys(`access_token`, `refresh_token`, `user`);
-        ({ access_token, refresh_token } = res);
-        const { access, refresh } = tokenPair(res);
-        validateAccessToken(access);
-      });
-    });
-  });
+  //     it(`should allow login`, async function () {
+  //       const res = await i.login(`johndoe`, `password1`);
+  //       expect(res)
+  //         .to.be.an(`object`)
+  //         .with.keys(`access_token`, `refresh_token`, `user`);
+  //       ({ access_token, refresh_token } = res);
+  //       const { access, refresh } = tokenPair(res);
+  //       validateAccessToken(access);
+  //     });
+  //   });
+  // });
 
   describe(`Status`, function () {
     it(`should return the status /status`, async function () {
