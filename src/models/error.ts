@@ -19,13 +19,13 @@ const errorSchema = new mongoose.Schema(
       type: String,
       default: `No logger provided`,
     },
+
+    // TODO softcode expire after seconds to env variable
+    createdAt: { type: Date, expires: `30d`, default: Date.now },
   },
   {
     timestamps: true,
   }
 );
-
-// TODO softcode expire after seconds to env variable
-errorSchema.index({ createdAt: 1 }, { expireAfterSeconds: 30 * 24 * 60 * 60 });
 
 export default errorSchema;
