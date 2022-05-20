@@ -120,6 +120,7 @@
     "svg2img": "^0.9.4",
     "swagger-jsdoc": "^6.0.8",
     "swagger-ui-express": "^4.1.6",
+    "universal-cache": "https://github.com/nopeless/universal-cache.git",
     "urql": "^2.2.0",
     "validator": ">=13.7.0",
     "winston": "^3.2.1",

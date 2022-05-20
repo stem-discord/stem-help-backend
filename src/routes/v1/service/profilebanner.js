@@ -7,22 +7,7 @@ const config = lib.config;
 
 const router = lib.Router();
 
-const profileBannerCache = new lib.util.cache.FileSystemCache({
-  basePath: `./.cache/profile-banner-cache`,
-  transform: v => v,
-  ttl: `60s`,
-  toBuffer: v => v,
-  generator: async id => {
-    if (!id) return null;
-    if (!id.match(/\d+/)) return null;
-    return lib.service.generatePngFromHtml.generateUrl(
-      `${config.frontend.url}/component/user/${id}`,
-      {
-        deviceScaleFactor: 2,
-      }
-    );
-  },
-});
+const profileBannerCache = new lib.util.cache.MemoryCache();
 
 /**
  * EXPERIMENTAL
@@ -32,10 +17,17 @@ router.get(
   catchAsync(async (req, res) => {
     const id = req.params.id;
 
-    const buf = await profileBannerCache.get(id);
+    let buf = await profileBannerCache.get(id);
 
     if (!buf) {
-      throw new ApiError(404, `Not found`);
+      buf = lib.service.generatePngFromHtml.generateUrl(
+        `${config.frontend.url}/component/user/${id}`,
+        {
+          deviceScaleFactor: 2,
+        }
+      );
+      profileBannerCache.set(id, buf);
+      buf = await buf;
     }
 
     res.writeHead(200, {

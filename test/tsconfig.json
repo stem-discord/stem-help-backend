@@ -5,6 +5,10 @@
   },
   "typeRoots": [
     "../node_modules/@types",
-    "global.d.ts"
- ]
+    "types"
+  ],
+  "include": [
+    "./**/*.spec.ts",
+    "./**/*.d.ts"
+  ],
 }

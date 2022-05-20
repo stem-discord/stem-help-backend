@@ -1,5 +1,9 @@
 import NodeCache from "node-cache";
-import * as NopeFSCache from "nope-fs-cache";
+import {
+  CacheManager,
+  MemoryStore,
+  IndependentStoreCacheWrapper,
+} from "universal-cache";
 
 interface PlainCache<T> {
   get: (key: string, ...args: unknown[]) => T;
@@ -10,10 +14,16 @@ interface GetterCache<T> {
   get: (key: string, ...args: unknown[]) => T | Promise<T>;
 }
 
-// This class just works fine
-class FileSystemCache<T>
-  extends NopeFSCache.FileSystemCacheDelux<T>
-  implements GetterCache<T> {}
+function MemoryCache<T>(
+  this: CacheManager<T>,
+  options: ConstructorParameters<typeof IndependentStoreCacheWrapper>[1] = {
+    ttl: `30s`,
+  }
+): GetterCache<T | undefined> {
+  return new CacheManager<T>([
+    new IndependentStoreCacheWrapper(new MemoryStore(), options),
+  ]);
+}
 
 class NodeCacheIntern extends NodeCache {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,5 +76,5 @@ function ProxyCache<T>(instance: PlainCache<T>) {
   });
 }
 
-export { KeepAliveCache, NodeCache, ProxyCache, FileSystemCache };
+export { KeepAliveCache, NodeCache, ProxyCache, MemoryCache };
 export type { PlainCache as __PlainCache };
