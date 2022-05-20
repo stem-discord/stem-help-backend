@@ -9244,7 +9244,7 @@ unique-string@^2.0.0:
 
 "universal-cache@https://github.com/nopeless/universal-cache.git":
   version "1.0.0"
-  resolved "https://github.com/nopeless/universal-cache.git#f9e5ce7b146f871d80c6443d05bcb825ecaffdda"
+  resolved "https://github.com/nopeless/universal-cache.git#0dfdd290f323c5a92adab9500db58a294eebd7b7"
   dependencies:
     "@types/ms" "^0.7.31"
     ms "^2.1.3"
