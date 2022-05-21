@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import httpStatus from "http-status";
@@ -28,6 +31,23 @@ const isProd = config.env === `production`;
 client.on(`ready`, () => {
   if (client === null) return;
   logger.info(`Logged in as ${client.user?.tag}`);
+});
+
+const quotes = fs
+  .readFileSync(
+    path.join(process.cwd(), `/assets/content/text/quotes.txt`),
+    `utf8`
+  )
+  .split(`\n`);
+
+// Temporary test. Move to a separate discord bot framework later
+client.on(`messageCreate`, message => {
+  if (message.author.bot) return;
+  if (message.content === `qotd`) {
+    message.channel
+      .send(quotes[Math.floor(Math.random() * quotes.length)])
+      .catch(() => {});
+  }
 });
 
 const gql = graphqlHTTP({
