@@ -11,7 +11,12 @@
     "declarationMap": true,
     "moduleResolution": "node",
     "strictNullChecks": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [ "/*" ],
+      "@/": ["src/*"]
+    },
   },
   "ts-node": {
     "transpileOnly": true,
