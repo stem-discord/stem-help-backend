@@ -79,9 +79,6 @@ jobs:
           git reset --hard HEAD
         continue-on-error: true
 
-      - name: Set node version
-        run: n auto
-
       - name: Check out Git repository
         uses: actions/checkout@v2
         with:
