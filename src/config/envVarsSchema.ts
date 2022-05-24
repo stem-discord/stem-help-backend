@@ -84,6 +84,15 @@ const envVarsSchema = Joi.object()
     DISCORD_SERVER_GENERAL: Joi.string()
       .default(`839399426643591188`)
       .description(`general channel for the main discord server`),
+
+    GITAPP_ISSUES_RSA_KEY: Joi.string().description(
+      `RSA key for gitapp (prod only, test separately)`
+    ),
+    GITAPP_ISSUES_INSTALLATION_ID: Joi.string().description(
+      `installation id for gitapp ^^`
+    ),
+    GITAPP_ISSUES_APP_ID: Joi.string().description(`app id for gitapp ^^`),
+
     STATIC_SERVER: Joi.string()
       .valid(`true`, `false`)
       .description(`Enable static server`),

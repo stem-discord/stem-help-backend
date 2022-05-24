@@ -98,6 +98,13 @@ function generateConfig(env: Env): Env {
         general: envVars.DISCORD_SERVER_GENERAL,
       },
     },
+    github: {
+      issues: {
+        appId: envVars.GITAPP_ISSUES_RSA_KEY,
+        installationId: envVars.GITAPP_ISSUES_INSTALLATION_ID,
+        rsaKey: envVars.GITAPP_ISSUES_APP_ID,
+      },
+    },
     staticServer: bool(envVars.STATIC_SERVER),
     staticServerPort: envVars.STATIC_SERVER_PORT,
     staticServerApiURL: envVars.STATIC_SERVER_API_URL,
