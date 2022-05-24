@@ -24,10 +24,15 @@ export default (function (config) {
   }
 
   if (config.session.secret === undefined) {
-    if (process.env.NODE_ENV === `production`) {
-      throw new Error(`session.secret is required in production`);
-    }
-    config.session.secret = `super secret key`;
+    // Galaxybrain
+    Object.defineProperty(config.session, `secret`, {
+      get: function () {
+        if (process.env.NODE_ENV === `production`) {
+          throw new Error(`session.secret is required in production`);
+        }
+        return `super secret key`;
+      },
+    });
   }
 
   let w = config.discord.uploadWebhook;
