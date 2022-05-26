@@ -40,6 +40,9 @@ for (const name of Object.keys(modules)) {
 }
 
 function connDesc(connection: Connection) {
+  if (connection.disabled) {
+    return `🔒 this connection is not allowed by this application`;
+  }
   // The connection is configured
   if (!connection.null) {
     // configured and operational
@@ -83,10 +86,24 @@ function connDesc(connection: Connection) {
   return `❔ Unknown status ${connection.state}`;
 }
 
-const openConnections = async (selection: string[]) => {
+const openConnections = async (
+  selection: string[],
+  disabled: string[] = []
+) => {
   if (!hasLoggedRegister) {
-    logger.info(`Registered modules: ${moduleNames.join(`, `)}`);
+    logger.info(
+      `Registered modules: [${moduleNames.join(
+        `, `
+      )}], Disabled modules: [${disabled.join(`, `)}]`
+    );
     hasLoggedRegister = true;
+  }
+
+  for (const d of disabled) {
+    if (!moduleNames.includes(d)) {
+      throw new Error(`Unknown disabled module: ${d}`);
+    }
+    modules[d].connection.disabled = true;
   }
 
   if (selection === undefined) {

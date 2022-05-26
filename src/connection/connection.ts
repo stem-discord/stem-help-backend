@@ -16,6 +16,9 @@ type ConnectionOptions = {
  */
 class Connection extends EventEmitter {
   public description: string;
+
+  public disabled = false;
+
   public _state: keyof typeof ConnectionState;
   private _init: ConnectionOptions[`init`];
   private _heartbeat: ConnectionOptions[`heartbeat`];

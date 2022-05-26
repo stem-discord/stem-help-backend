@@ -31,7 +31,7 @@ apiServer.ready = (async () => {
       )}], initializing these`
     );
   }
-  await connection.openConnections(config.connections);
+  await connection.openConnections(config.connections, [`discord`]);
   return true;
 })();
 
