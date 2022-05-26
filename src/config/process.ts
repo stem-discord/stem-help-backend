@@ -35,6 +35,19 @@ export default (function (config) {
     });
   }
 
+  const issues = Object.values(config.github.issues);
+  if (
+    !issues.every(v => v === undefined) &&
+    issues.some(v => v === undefined)
+  ) {
+    // Incomplete
+    throw new Error(
+      `github.issues must be complete. All entries ${Object.keys(
+        config.github.issues
+      ).join(`, `)} should be provided`
+    );
+  }
+
   let w = config.discord.uploadWebhook;
   if (w) {
     const o = new URL(w);
