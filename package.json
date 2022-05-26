@@ -66,6 +66,8 @@
   ],
   "dependencies": {
     "@discordjs/collection": "^0.2.4",
+    "@octokit/auth-app": "^3.6.1",
+    "@octokit/rest": "^18.12.0",
     "bcryptjs": "^2.4.3",
     "canvas": "^2.8.0",
     "chrome-aws-lambda": "^9.1.0",
