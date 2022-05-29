@@ -309,7 +309,6 @@ router
     procPoem
   )
   .get(
-    tokenCheck,
     catchAsync(async (req, res) => {
       const db = await fetchNamespacedDB(`poem`, { poems: {} });
 
