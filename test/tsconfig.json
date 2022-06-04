@@ -1,14 +1,18 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["node", "mocha", "chai"],
-  },
-  "typeRoots": [
-    "../node_modules/@types",
-    "types"
-  ],
-  "include": [
-    "./**/*.spec.ts",
-    "./**/*.d.ts"
-  ],
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "types": [
+            "node",
+            "mocha",
+            "chai"
+        ],
+    },
+    "typeRoots": [
+        "../node_modules/@types",
+        "types"
+    ],
+    "include": [
+        "./prelude.ts",
+        "./**/*.spec.ts",
+    ],
 }
