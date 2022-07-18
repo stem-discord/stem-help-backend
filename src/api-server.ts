@@ -22,8 +22,8 @@ const apiServer: Server & {
   listeningCb(true);
 });
 
-apiServer.on(`error`, err => {
-  if (err.code === `EADDRINUSE`) {
+apiServer.on(`error`, (err: Error & { code: string }) => {
+  if (err?.code === `EADDRINUSE`) {
     logger.error(`Port ${config.port} is already in use`);
     listeningCb(false);
     process.emit(`SIGTERM`);
