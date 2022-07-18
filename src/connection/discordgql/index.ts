@@ -2,7 +2,6 @@
 import config from "../../config/index.js";
 
 import { gql, createClient, OperationResult } from "@urql/core";
-import fetch, { Headers, Request, Response } from "node-fetch";
 
 import { Connection, NullConnection, Namespace } from "../connection.js";
 
@@ -19,18 +18,6 @@ let query:
   | ((
       ...args: Parameters<typeof gql>
     ) => Promise<OperationResult<string, object>>) = null;
-
-// FIXME This is a terrible idea but until node implements fetch themselves this gon stay
-if (!globalThis.fetch) {
-  // @ts-ignore
-  globalThis.fetch = fetch;
-  // @ts-ignore
-  globalThis.Headers = Headers;
-  // @ts-ignore
-  globalThis.Request = Request;
-  // @ts-ignore
-  globalThis.Response = Response;
-}
 
 if (config.discord.gql.url) {
   const client = createClient({
