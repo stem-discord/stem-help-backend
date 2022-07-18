@@ -1365,7 +1365,6 @@
   resolved "https://registry.yarnpkg.com/@types/btoa-lite/-/btoa-lite-1.0.0.tgz#e190a5a548e0b348adb0df9ac7fa5f1151c7cca4"
   integrity sha512-wJsiX1tosQ+J5+bY5LrSahHxr2wT+uME5UDwdN1kg4frt40euqA+wzECkmq4t5QbveHiJepfdThgQrPw6KiSlg==
 
-"@types/chai@^4.3.1":
 "@types/chai-spies@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@types/chai-spies/-/chai-spies-1.0.3.tgz#a52dc61af3853ec9b80965040811d15dfd401542"
@@ -9493,10 +9492,10 @@ unique-string@^2.0.0:
   dependencies:
     crypto-random-string "^2.0.0"
 
-universal-cache@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/universal-cache/-/universal-cache-1.1.0.tgz#3de58e7f034c98ebc73e8047758535aa597bc948"
-  integrity sha512-cHMdmfSXAq8lOY/6uu5d/Wbwf/wAIOZa2NS6cPyjCOlztN3KTn6kXWGYo8INQWCl2MDSFr/QxwpjCENQQDAA5Q==
+universal-cache@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/universal-cache/-/universal-cache-1.1.1.tgz#e92ae564258383889926a1877df7105172503b95"
+  integrity sha512-z0MW/7KGrrdTxfGMtXumyZaihkPAMbXb8KR4JIZdl7VZ+UzJ+STMv0sCmEhB14xKMHD7MzwH09sV/qoIdDXWQw==
   dependencies:
     "@types/ms" "^0.7.31"
     ms "^2.1.3"
