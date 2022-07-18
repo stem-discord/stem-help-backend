@@ -77,10 +77,13 @@ describe(`util`, function () {
   });
 
   it(`getCallerDir.js`, function () {
+    // @ts-expect-error
     expect(() => util.getCallerDir()).to.throw(`not provided`);
     // No filepath can't be equal to symbol. So, this file path should return the current file path
     expect(util.getCallerDir(``)).to.equal(import.meta.url);
+    // @ts-expect-error
     console.log(util.getCallerDir({}, 1, false));
+    // @ts-expect-error
     expect(import.meta.url).to.startWith(util.getCallerDir({}, 1, false));
   });
 
@@ -114,6 +117,7 @@ describe(`util`, function () {
 
   describe(`isMain`, function () {
     it(`should work`, function () {
+      // @ts-expect-error
       expect(() => util.isMain()).to.throw(/required/i);
       expect(util.isMain(import.meta)).to.be.false;
     });
@@ -165,13 +169,16 @@ describe(`util`, function () {
   describe(`discord`, function () {
     describe(`oauth`, function () {
       it(`should throw errors`, function () {
+        // @ts-expect-error
         expect(() => util.discord.oauth.buildUri()).to.throw(/required/i);
+        // @ts-expect-error
         expect(() => util.discord.oauth.buildUri(1)).to.throw(/required/i);
       });
       it(`should work`, function () {
-        expect(util.discord.oauth.buildUri(1, 2)).to.be.a(`string`);
-        expect(isValidHttpUrl(util.discord.oauth.buildUri(1, 2))).to.be.true;
-        expect(() => util.discord.oauth.buildUri(1, 2)).to.not.throw();
+        expect(util.discord.oauth.buildUri(`1`, `2`)).to.be.a(`string`);
+        expect(isValidHttpUrl(util.discord.oauth.buildUri(`1`, `2`))).to.be
+          .true;
+        expect(() => util.discord.oauth.buildUri(`1`, `2`)).to.not.throw();
       });
     });
   });
@@ -180,7 +187,9 @@ describe(`util`, function () {
     describe(`status`, function () {
       describe(`isOperational`, function () {
         it(`should work`, function () {
+          // @ts-expect-error
           expect(() => util.http.status.isOperational()).to.throw(/required/i);
+          // @ts-expect-error
           expect(() => util.http.status.isOperational({})).to.throw();
           expect(() => util.http.status.isOperational(`test`)).to.throw(
             /integer/i
@@ -192,6 +201,7 @@ describe(`util`, function () {
       });
       describe(`getDescription`, function () {
         it(`should work`, function () {
+          // @ts-expect-error
           expect(() => util.http.status.getDescription()).to.throw(/required/i);
           expect(() => util.http.status.getDescription(`test`)).to.throw(
             /invalid/i

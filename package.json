@@ -122,7 +122,7 @@
     "svg2img": "^0.9.4",
     "swagger-jsdoc": "^6.0.8",
     "swagger-ui-express": "^4.1.6",
-    "universal-cache": "https://github.com/nopeless/universal-cache.git",
+    "universal-cache": "^1.1.0",
     "urql": "^2.2.0",
     "validator": ">=13.7.0",
     "winston": "^3.2.1",
@@ -131,6 +131,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.1",
+    "@types/chai-spies": "^1.0.3",
     "@types/connect-mongodb-session": "^2.4.3",
     "@types/express": "^4.17.13",
     "@types/express-session": "^1.17.4",

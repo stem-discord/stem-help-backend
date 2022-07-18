@@ -1,6 +1,6 @@
 import NodeCache from "node-cache";
 import {
-  CacheManager,
+  CacheManagerPromise,
   MemoryStore,
   IndependentStoreCacheWrapper,
 } from "universal-cache";
@@ -15,12 +15,12 @@ interface GetterCache<T> {
 }
 
 function MemoryCache<T>(
-  this: CacheManager<T>,
+  this: CacheManagerPromise<T>,
   options: ConstructorParameters<typeof IndependentStoreCacheWrapper>[1] = {
     ttl: `30s`,
   }
 ): GetterCache<T | undefined> {
-  return new CacheManager<T>([
+  return new CacheManagerPromise<T>([
     new IndependentStoreCacheWrapper(new MemoryStore(), options),
   ]);
 }

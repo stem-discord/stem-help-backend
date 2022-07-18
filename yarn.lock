@@ -1366,6 +1366,14 @@
   integrity sha512-wJsiX1tosQ+J5+bY5LrSahHxr2wT+uME5UDwdN1kg4frt40euqA+wzECkmq4t5QbveHiJepfdThgQrPw6KiSlg==
 
 "@types/chai@^4.3.1":
+"@types/chai-spies@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@types/chai-spies/-/chai-spies-1.0.3.tgz#a52dc61af3853ec9b80965040811d15dfd401542"
+  integrity sha512-RBZjhVuK7vrg4rWMt04UF5zHYwfHnpk5mIWu3nQvU3AKGDixXzSjZ6v0zke6pBcaJqMv3IBZ5ibLWPMRDL0sLw==
+  dependencies:
+    "@types/chai" "*"
+
+"@types/chai@*", "@types/chai@^4.3.1":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.1.tgz#e2c6e73e0bdeb2521d00756d099218e9f5d90a04"
   integrity sha512-/zPMqDkzSZ8t3VtxOa4KPq7uzzW978M9Tvh+j7GHKuo6k6GTLxPJ4J5gE5cjfJ26pnXst0N5Hax8Sr0T2Mi9zQ==
@@ -9485,9 +9493,10 @@ unique-string@^2.0.0:
   dependencies:
     crypto-random-string "^2.0.0"
 
-"universal-cache@https://github.com/nopeless/universal-cache.git":
-  version "1.0.0"
-  resolved "https://github.com/nopeless/universal-cache.git#0dfdd290f323c5a92adab9500db58a294eebd7b7"
+universal-cache@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/universal-cache/-/universal-cache-1.1.0.tgz#3de58e7f034c98ebc73e8047758535aa597bc948"
+  integrity sha512-cHMdmfSXAq8lOY/6uu5d/Wbwf/wAIOZa2NS6cPyjCOlztN3KTn6kXWGYo8INQWCl2MDSFr/QxwpjCENQQDAA5Q==
   dependencies:
     "@types/ms" "^0.7.31"
     ms "^2.1.3"

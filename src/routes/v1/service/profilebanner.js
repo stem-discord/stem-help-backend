@@ -7,7 +7,7 @@ const config = lib.config;
 
 const router = lib.Router();
 
-const profileBannerCache = new lib.util.cache.MemoryCache();
+const profileBannerCache = new lib.util.cache.MemoryCache({ ttl: `1h` });
 
 /**
  * EXPERIMENTAL
@@ -26,7 +26,9 @@ router.get(
           deviceScaleFactor: 2,
         }
       );
+
       profileBannerCache.set(id, buf);
+
       buf = await buf;
     }
 
