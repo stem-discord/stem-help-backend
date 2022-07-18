@@ -12,7 +12,7 @@ function generateError(msg, error) {
 /**
  * Checks if next has been called
  * @param {Function} mid middleware
- * @param {Object|Function} req if it is an object, a shallow 1 ke level merge will happen. If it is an object, the request object reference will be passed to the middleware.
+ * @param {Object|Function} req if it is an object, a shallow 1 key level merge will happen. If it is an object, the request object reference will be passed to the middleware.
  * @param {Object} opts Check out function
  */
 function middleware(mid, req, opts = {}) {
