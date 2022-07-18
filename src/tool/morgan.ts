@@ -8,6 +8,16 @@ morgan.token(`message`, (req, res) => res.locals.errorMessage || ``);
 // TODO: access.log append stream
 const getIpFormat = () =>
   config.env === `production` ? `:remote-addr - ` : ``;
+
+// I want to make this work but
+// This just won't work for some reason
+// morgan.token(`jbody`, function (req) {
+//   if (req.headers[`content-type`] === `application/json`) {
+//     return JSON.stringify(req.body);
+//   }
+//   return `non-json-body`;
+// });
+
 const successResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms`;
 const errorResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms - message: :message`;
 
