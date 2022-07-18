@@ -8,7 +8,7 @@ const routes = {
   v1,
 };
 
-const router = new lib.Router();
+const router = lib.Router();
 
 // Register routes
 for (const [k, v] of Object.entries(routes)) {
