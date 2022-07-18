@@ -1,3 +1,5 @@
+import "./prelude.js";
+
 import app from "./app.js";
 import config from "./config/index.js";
 
@@ -20,6 +22,14 @@ const apiServer: Server & {
   listeningCb(true);
 });
 
+apiServer.on(`error`, err => {
+  if (err.name === `EADDRINUSE`) {
+    logger.error(`Port ${config.port} is already in use`);
+    listeningCb(false);
+    process.emit(`SIGTERM`);
+  }
+});
+
 apiServer.ready = (async () => {
   await new Promise(r => {
     listeningCb = r;
@@ -38,6 +48,7 @@ apiServer.ready = (async () => {
 let staticServer;
 
 process.on(`SIGTERM`, async () => {
+  logger.info(`Received SIGTERM, closing connections`);
   try {
     const sc = staticServer?.close;
 
