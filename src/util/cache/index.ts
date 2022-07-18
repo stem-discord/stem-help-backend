@@ -11,7 +11,7 @@ interface PlainCache<T> {
 }
 
 interface GetterCache<T> {
-  get: (key: string, ...args: unknown[]) => T | Promise<T>;
+  get: (key: string, ...args: unknown[]) => Promise<T | undefined>;
 }
 
 function MemoryCache<T>(
@@ -19,7 +19,7 @@ function MemoryCache<T>(
   options: ConstructorParameters<typeof IndependentStoreCacheWrapper>[1] = {
     ttl: `30s`,
   }
-): GetterCache<T | undefined> {
+): GetterCache<T> {
   return new CacheManagerPromise<T>([
     new IndependentStoreCacheWrapper(new MemoryStore(), options),
   ]);
