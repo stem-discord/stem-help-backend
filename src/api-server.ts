@@ -23,11 +23,13 @@ const apiServer: Server & {
 });
 
 apiServer.on(`error`, err => {
-  if (err.name === `EADDRINUSE`) {
+  if (err.code === `EADDRINUSE`) {
     logger.error(`Port ${config.port} is already in use`);
     listeningCb(false);
     process.emit(`SIGTERM`);
+    return;
   }
+  logger.error(err);
 });
 
 apiServer.ready = (async () => {
