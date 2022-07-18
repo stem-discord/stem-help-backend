@@ -9,11 +9,21 @@ const config = lib.config;
 const router = lib.Router();
 
 async function lookup(q) {
-  const user = await lib.shared.discord.client.users.fetch(q);
-  const guild = lib.shared.discord.stem.guild;
+  const { data } = await lib.shared.discordgql.query`
+  query {
+    guild(id: "${config.discord.server.stem}") {
+      member(id: "${q}") {
+        user {
+          tag,
+          displayAvatarURL
+        }
+      }
+    }
+  }`;
 
-  const member = guild ? await guild.members.fetch(q) : null;
-  return { ...user, stem: member };
+  return data.guild
+    ? { ...data.guild.member.user, stem: data.guild.member }
+    : { stem: {} };
 }
 
 router.get(
