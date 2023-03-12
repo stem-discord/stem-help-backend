@@ -10,8 +10,6 @@
 
 </div>
 
-# Everything except auth under `/v1` is DEPRECATED (don't even ask why I have to announce this despite no one using the api)
-
 Enviroment file, do
 
 `npm run help:env`
